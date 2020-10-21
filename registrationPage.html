@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="registration.css">
+    <script type="module" src="registrationPage.js"></script>
+  </head>
+  <body>
+      <form class="boxR" action="registrationPage.html" method="post">
+       <table align="center" cellpadding="1">
+        <caption><h1>Регистрация</h1></caption>
+        <tr>
+          <td id="td1">Имя:</td>
+          <td><input id="name" type="text" name="" placeholder=""></td>
+        </tr>
+        <tr>
+          <td id="td1">Фамилия:</td>
+          <td><input type="text" name="" placeholder=""></td>
+        </tr>
+        <tr>
+          <td id="td1">Отчество:</td>
+          <td><input type="text" name="" placeholder=""></td>
+        </tr>
+        <tr>
+          <td id="td1">Пол</td>
+          <td><input type="radio" id="radioMale" name="sex" value="Male" checked>
+            <label id="radioMale">Муж.</label>
+        <input type="radio" for="radioFemale" name="sex" value="Female"><label for="radioFemale">Жен</label></td>
+        </tr>
+        <tr>
+          <td id="td1">E-mail:</td>
+          <td><input type="text" name="" placeholder=""></td>
+        </tr>
+        <tr>
+          <td id="td1">Год рождения:</td>
+          <td><input type="text" name=""></td>
+        </tr>
+        <tr>
+          <td id="td1">Пароль: </td>
+          <td><input type="password" name=""></td>
+        </tr>
+        <tr>
+          <td id="td1">Повторите пароль: </td>
+          <td><input type="password" name=""></td>
+        </tr>
+        <tr>
+          <td id="td1">Discord: </td>
+          <td><input type="text" name=""></td>
+        </tr>
+        <tr>
+          <td id="td1">Предметная область: </td>
+          <td><input type="text" name=""></td>
+        </tr>
+        <tr><td colspan="2" align="center"><input type="submit" name="" onclick="register()" value="Зарегистрироваться"></td></tr>
+        </table>
+        </form>
+  </body>
+</html>

@@ -1,0 +1,188 @@
+
+
+/*verh saita*/
+
+.main-head {
+  background: #D83F87;
+  padding:15px;
+  display:flex;
+}
+
+.main-head ul{
+  display: flex;
+  list-style:none;
+  margin-top:30px;
+}
+
+.nav-area li a{
+  font-family: Montserrat,serif;
+  color:white;
+  text-decoration: none;
+  padding: 5px;
+  font-size: 20px;
+}
+
+
+h1{
+  font-family: Montserrat,serif;
+  text-decoration: none;
+  letter-spacing: 0.2em;
+  color:white;
+}
+
+/*content*/
+
+.content{
+  position:relative;
+  width: 100%;
+}
+
+/*welcome-div*/
+.welcome-div{
+  height: 400px;
+  width: 100%;
+  background: #2A1B3D;
+  color:white;
+  display:flex;
+  position:relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.boxW{
+  margin-left: 100px;
+  margin-right: 100px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-words{
+  width:20vw;
+  font-family: Montserrat,serif;
+  font-size: 30px;
+  font-weight:900;
+}
+
+.boxW select{
+  background: #44318D;
+  color:#fff;
+  width:300px;
+  padding:10px;
+  border:none;
+  outline:none;
+}
+
+.boxW input[type="submit"]{
+  color:white;
+  margin:20px;
+  background-color: #8265a7;
+  padding:10px;
+  border:none;
+  outline:none;
+}
+
+.boxW input[type="submit"]:hover{
+   background:#604b7a;
+}
+
+/*2oi block posle welcome div*/
+
+.white-content{
+  height: 300px;
+  width: 100%;
+}
+
+/*image pod welcome div*/
+
+.welcome-image{
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 400px;
+  background: url("images/background4.jpg");
+  opacity:0.2;
+  position:absolute;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/*3iy block s inspirational textom*/
+
+.inspirational-text{
+  height: 400px;
+  width: 100%;
+  background: #2A1B3D;
+  position:relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.insp-div{
+  margin-left: 100px;
+  margin-right: 100px;
+  z-index: 5;
+  color:white;
+  width:40vw;
+  font-family: Montserrat,serif;
+  font-size: 20px;
+  font-weight:500;
+  background:#2A1B3D;
+  padding: 50px;
+  padding-top: 0;
+}
+
+.insp-div h2{
+  color: #A4B3B6;
+  font-weight: 900;
+  font-size: 40px;
+}
+
+/*izobrazhenie k nemy*/
+
+.following-image{
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 400px;
+  background: url("images/background3.jpg");
+  opacity:0.3;
+  position:absolute;
+  overflow: hidden;
+  z-index:0;
+}
+
+
+/*FOOTER*/
+
+.footer{
+  background: #a4b3b6;
+  color:#d3d3d3;
+  height:200px;
+  position: relative;
+}
+
+
+.footer .footer-content{
+  height: 100px;
+}
+
+.footer .footer-bottom{
+  background:#7c878a ;
+  color:#686868;
+  height:20px;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  bottom:0px;
+  left:0px;
+  padding-top: 5px;
+}
+
+.page-wrapper{
+  min-height: 50%;
+}

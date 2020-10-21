@@ -1,0 +1,56 @@
+html,body{
+   background-image: linear-gradient(to bottom right,#2A1B3D,#D83F87);
+}
+
+.boxR td[id="td1"]{
+  color:white;
+}
+.boxR{
+  width:300px;
+  padding:40px;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  background: #191919;
+  text-align: center;
+}
+.boxR h1{
+  color:white;
+  font-weight: 500;
+}
+.boxR input[type="text"],.boxR input[type="password"]{
+  border:0;
+  background: none;
+  display:block;
+  margin: 10px auto;
+  text-align: center;
+  border:2px solid #D83F87;
+  padding: 10px 10px;
+  width:200px;
+  outline:none;
+  color:white;
+  border-radius: 14px;
+}
+.boxR label {
+    font-size: 16px;
+    color:white;
+}
+.boxR input[type="submit"]{
+  border:0;
+  background: none;
+  display:block;
+  margin: 20px auto;
+  text-align: center;
+  border:2px solid #E98074;
+  padding: 14px 40px;
+  outline:none;
+  color:white;
+  border-radius: 24px;
+  transition: 0.25s;
+  cursor: pointer;
+}
+
+.boxR input[type="submit"]:hover{
+   background:#E98074;
+}
