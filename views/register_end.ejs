@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/aboutMe.css">
+</head>
+
+<body>
+
+    <form class="box" action="/user/register_end" method="post">
+
+        <h1>Заполните информацию о себе</h1>
+
+        <label for="">Ваш пол:</label>
+        <input type="text" id="gender" name="gender" placeholder="">
+
+        <label for="">Год рождения:</label>
+        <input type="text" name="yearOfBirth" id="yearOfBirth" placeholder="">
+
+        <label for="">Информация: </label>
+        <textarea type="text" name="additionalInfo" id="additionalInfo" rows="10" cols="40"></textarea>
+
+        <label for="">Ваши достижения:</label>
+        <textarea type="text" name="achievements" id="achievements" rows="8" cols="40"></textarea>
+
+        <label for="">Стоимость занятий:</label>
+        <input type="text" name="pricePerLesson" id="pricePerLesson" placeholder="">руб./занятие<br>
+
+        <label for="">Длительность занятия (в минутах):</label>
+        <input type="text" name="lengthOfLesson" id="lengthOfLesson" placeholder="">
+
+        <input type="submit" name="" value="Завершить регистрацию">
+
+    </form>
+
+</body>
+
+</html>

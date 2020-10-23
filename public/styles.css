@@ -1,0 +1,17 @@
+
+html, body{
+  height: 100%;
+  margin:0;
+  padding: 0;
+  font-family:sans-serif;
+  /*background-image: linear-gradient(to bottom right,#2A1B3D,#44318D);*/
+}
+
+@font-face {
+
+font-family: "RalewayRegular";
+
+src: url("fonts/Montserrat-Regular.ttf") format("truetype");
+font-style: normal;
+font-weight: normal;
+}

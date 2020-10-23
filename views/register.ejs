@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/registration.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:400,300" type="text/css">
+</head>
+
+<body>
+    <form class="boxR" action="/user/register" method="POST">
+
+        <fieldset>
+
+            <h1>Регистрация</h1>
+<legend><span class="section">1</span>Основная информация</legend>
+            <label for="">Имя:</label>
+            <input type="text" id="name" name="name" placeholder="" required>
+
+            <label for="">Фамилия:</label>
+            <input type="text" id="lastName" name="lastName" placeholder="" required>
+
+            <label for="">E-mail:</label>
+            <input type="text" id="email" name="email" placeholder="" required>
+
+            <label for="">Пароль:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="">Повторите пароль:</label>
+            <input type="password" id="password2" name="password2" required>
+
+            <label for="">Предметная область: </label>
+            <input type="text" id="subject" name="subject" required>
+
+            <label for="">Номер телефона: </label>
+            <input type="text" id="phone" name="phone" required>
+
+            <input type="submit" name="" value="Зарегистрироваться">
+
+        </fieldset>
+
+    </form>
+</body>
+
+</html>
