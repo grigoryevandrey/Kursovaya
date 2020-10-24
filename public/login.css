@@ -16,7 +16,7 @@ html,body{
   color:white;
   font-weight: 500;
 }
-.boxL input[type="text"],.boxL input[type="password"]{
+.boxL input[type="email"],.boxL input[type="password"]{
   border:0;
   background: none;
   display:block;
@@ -31,7 +31,7 @@ html,body{
   transition: 0.25s;
 }
 
-.boxL input[type="text"]:focus,.boxL input[type="password"]:focus{
+.boxL input[type="email"]:focus,.boxL input[type="password"]:focus{
   width:280px;
   border-color: #E98074;
 }

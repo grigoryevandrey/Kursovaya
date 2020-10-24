@@ -1,15 +1,25 @@
-const express = require ('express');
+const express = require('express');
 const app = express();
-const { pool } = require("./dbconfig");
+const {
+    pool
+} = require("./dbconfig");
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const flash = require('express-flash');
+const passport = require("passport");
+
+
+const initializePassport = require("./passportConfig");
+
+initializePassport(passport);
 
 const PORT = process.env.PORT || 5000;
 
 
 app.set('view engine', 'ejs');
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({
+    extended: false
+}));
 app.use(express.static(__dirname + '/public'));
 
 app.use(session({
@@ -20,96 +30,135 @@ app.use(session({
     saveUninitialized: false
 }));
 
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(flash());
 
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', { okOk: req.isAuthenticated()});
+    console.log(req.isAuthenticated());
 });
 
-app.get('/users/register', (req, res) => {
+app.get('/users/register', checkAuthenticated, (req, res) => {
     res.render('register');
 });
 
-app.get('/users/login', (req, res) => {
+app.get('/users/login', checkAuthenticated, (req, res) => {
     res.render('login');
 });
 
-app.get('/users/dashboard', (req, res) => {
-    res.render('dashboard', { user: 'Andrey'});
+app.get('/users/dashboard', checkNotAuthenticated, (req, res) => {
+    res.render('dashboard', {
+        user: req.user.first_name
+    });
 });
 
-app.get('/users/register_end', (req, res) =>{
+app.get('/users/logout', (req, res) => {
+    req.logOut();
+    req.flash('success_msg', "Вы вышли из системы");
+    res.redirect('/users/login');
+});
+
+app.get('/users/register_end', (req, res) => {
     res.render('register_end');
 });
 
 app.post("/user/register", async (req, res) => {
-    let { name, lastName, email, password, password2, subject, phone } = req.body;
+    let {
+        name,
+        lastName,
+        email,
+        password,
+        password2,
+        subject,
+        phone
+    } = req.body;
 
     let errors = [];
 
-    if (!name || !lastName || !email || !password || !password2 || !subject || !phone ){
-        errors.push({message: "Пожалуйста, заполните все поля"});
+    if (!name || !lastName || !email || !password || !password2 || !subject || !phone) {
+        errors.push({
+            message: "Пожалуйста, заполните все поля"
+        });
     }
 
-    if (password.length < 6){
-        errors.push({message: "Пароль должен состоять хотя бы из 6 символов"});
+    if (password.length < 6) {
+        errors.push({
+            message: "Пароль должен состоять хотя бы из 6 символов"
+        });
     }
 
-    if (password != password2){
-        errors.push({message: "Пароли не совпадают"});
+    if (password != password2) {
+        errors.push({
+            message: "Пароли не совпадают"
+        });
     }
-    
-    if (errors.length > 0){
-        res.render('register', {errors});
-        console.log({errors});
-    }else{
+
+    if (errors.length > 0) {
+        res.render('register', {
+            errors
+        });
+        console.log({
+            errors
+        });
+    } else {
 
         let hashedPassword = await bcrypt.hash(password, 10);
         console.log(hashedPassword);
-        let mistake = false; 
+        let mistake = false;
         pool.query(
             `SELECT * FROM teacher
             WHERE phone = $1`, [phone], (err, results) => {
-                if(err){
+                if (err) {
                     throw err;
                 }
-                if(results.rows.length > 0){
+                if (results.rows.length > 0) {
                     mistake = true;
-                    errors.push({message: 'Такой номер телефона уже используется'});
+                    errors.push({
+                        message: 'Такой номер телефона уже используется'
+                    });
                 }
             }
         )
 
-        pool.query (
+        pool.query(
             `SELECT * FROM teacher
             WHERE email = $1`, [email], (err, results) => {
-                if (err){
+                if (err) {
                     throw err
                 }
 
                 console.log(results.rows);
 
-                if (results.rows.length > 0){
-                    errors.push({message: 'Аккаунт с такой почтой уже существует'});
-                    res.render('register', {errors});
-                    console.log({errors});
-                }
-                else if (mistake === true){
-                    res.render('register', {errors});
-                    console.log({errors});
-                }
-                else{
+                if (results.rows.length > 0) {
+                    errors.push({
+                        message: 'Аккаунт с такой почтой уже существует'
+                    });
+                    res.render('register', {
+                        errors
+                    });
+                    console.log({
+                        errors
+                    });
+                } else if (mistake === true) {
+                    res.render('register', {
+                        errors
+                    });
+                    console.log({
+                        errors
+                    });
+                } else {
                     pool.query(
                         `INSERT INTO teacher (first_name, last_name, email, subject, password, phone)
                         VALUES ($1, $2, $3, $4, $5, $6)
                         RETURNING id, password`, [name, lastName, email, subject, hashedPassword, phone], (err, results) => {
-                          if(err){
-                              throw err
-                          }
-                          console.log(results.rows);
-                          req.flash('success_msg', "Вы зарегистрированы! Пожалуйста, войдите в систему.");
-                          res.redirect('/users/register_end');
+                            if (err) {
+                                throw err
+                            }
+                            console.log(results.rows);
+                            req.flash('success_msg', "Вы зарегистрированы! Пожалуйста, войдите в систему.");
+                            res.redirect('/users/register_end');
                         }
                     );
                 }
@@ -119,24 +168,51 @@ app.post("/user/register", async (req, res) => {
 });
 
 app.post("/user/register_end", async (req, res) => {
-    let {gender , yearOfBirth, additionalInfo, achievements, pricePerLesson, lengthOfLesson } = req.body;
+    let {
+        gender,
+        yearOfBirth,
+        additionalInfo,
+        achievements,
+        pricePerLesson,
+        lengthOfLesson
+    } = req.body;
 
     pool.query(
         `INSERT INTO teacher_info (gender, achievements , additional_info, price_per_lesson, length_of_lesson, year_of_birth)
         VALUES ($1, $2, $3, $4, $5, $6)
         RETURNING id`, [gender, achievements, additionalInfo, pricePerLesson, lengthOfLesson, yearOfBirth], (err, results) => {
-          if(err){
-              throw err
-          }
-          console.log(results.rows);
-          req.flash('success_msg', "Вы зарегистрированы! Пожалуйста, войдите в систему.");
-          res.redirect('/users/login');
+            if (err) {
+                throw err
+            }
+            console.log(results.rows);
+            req.flash('success_msg', "Вы зарегистрированы! Пожалуйста, войдите в систему.");
+            res.redirect('/users/login');
         }
     );
 });
 
+app.post('/user/login', passport.authenticate('local',{
+    successRedirect: "/users/dashboard",
+    failureRedirect: "/users/login",
+    failureFlash: true
+}));
 
-app.listen(PORT, ()=>{
+function checkAuthenticated (req, res, next) {
+    if (req.isAuthenticated()) {
+        return res.redirect('/users/dashboard');
+    }
+    next();
+}
+
+
+function checkNotAuthenticated (req, res, next) {
+    if (req.isAuthenticated()) {
+       return next();
+    }
+    res.redirect('/users/login');
+}
+
+app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
@@ -206,8 +282,8 @@ app.listen(PORT, ()=>{
 //             break;
 //     }
 
-    
-    
+
+
 //     fs.readFile(filePath, (err, content) => {
 //         if (err){
 //             if (err.code == 'ENOENT'){
@@ -244,7 +320,7 @@ app.listen(PORT, ()=>{
 //     alert(name);
 //     try{
 //     await client.connect();
-    
+
 //     alert("add");
 //     await client.query("insert into test value ("+name+")");
 //     }

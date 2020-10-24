@@ -3,16 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1</title>
+    <title>Главная</title>
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="/indexStyles.css">
+   
   </head>
   <body>
       <div class="main-head">
         <h1>Заголовок</h1>
         <ul class="nav-area">
-          <li><a href="/users/login">Войти</a></li>    
-               <li><a href="/users/register">Зарегистрироваться</a></li>
+          <li id="logHref"><a  href="/users/login">Войти</a></li>    
+               <li id="regHref"><a href="/users/register">Зарегистрироваться</a></li>
           <li><a href="#">Связаться с нами</a></li>
         </ul>
       </div>
@@ -32,7 +33,7 @@
                 <option>Технике прогуливания пар</option>
                 <option>Рыганию</option>
               </select>
-              <input type="submit" name="" value="Найти выбранное">
+              <input type="submit" name="submit" value="Найти выбранное">
             </div>
          </div>
          <div class="white-content"> </div>
@@ -55,5 +56,23 @@
              &copy; Designed by Andrey Grigoryev
            </div>
      </div>
+     <script>
+      
+      
+      function notDisplay() {
+        let isOk = <%= okOk %>;
+        if(isOk){
+        document.getElementById("logHref").style.display = "none";
+        document.getElementById("regHref").style.display = "none";
+        }
+        else{
+        document.getElementById("logHref").style.display = "block";
+        document.getElementById("regHref").style.display = "block";
+        }
+        
+      }
+
+      notDisplay();
+    </script>
   </body>
 </html>
