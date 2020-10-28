@@ -40,12 +40,75 @@ app.get('/', (req, res) => {
     console.log(req.isAuthenticated());
 });
 
+app.get('/profile', checkNotAuthenticated, (req, res) => {
+    // store userId on login into session or any global variable 
+    var userId = req.user.id;
+       res.redirect('/profile/'+userId) 
+    }); // =>directs to http://localhost:8080/profile for every signup.
+
+
+    
+app.get('/profile/:id', function (req, res) {
+    let id = req.params.id,
+    name = '',
+    lastName = '',
+    subject = '',
+    gender = '',
+    achievements = '',
+    additionalInfo = '',
+    pricePerLesson = '',
+    lengthOfLesson = '',
+    yearOfBirth = '';
+    pool.query(
+        `SELECT * 
+        FROM teacher
+        LEFT JOIN teacher_info ON teacher_info.id=teacher.id
+        WHERE teacher.id = $1`, [id], (err, results) => {
+            if (err){
+                throw(err);
+            }
+            if (results.rows[0].gender !== null) {
+                name = results.rows[0].first_name;
+                lastName = results.rows[0].last_name;
+                subject = results.rows[0].subject;
+                gender = results.rows[0].gender;
+                achievements = results.rows[0].achievements;
+                additionalInfo = results.rows[0].additional_info;
+                pricePerLesson = results.rows[0].price_per_lesson;
+                lengthOfLesson = results.rows[0].length_of_lesson;
+                yearOfBirth = results.rows[0].year_of_birth;
+                res.render('userPage', {
+                    name: name,
+                    lastName: lastName,
+                    subject: subject,
+                    gender: gender,
+                    achievements: achievements,
+                    additionalInfo: additionalInfo,
+                    pricePerLesson: pricePerLesson,
+                    lengthOfLesson: lengthOfLesson,
+                    yearOfBirth: yearOfBirth
+                }); 
+            }
+            else{
+                res.redirect('/');
+            }
+            
+        }
+    );
+    
+     
+    });
+
 app.get('/users/register', checkAuthenticated, (req, res) => {
     res.render('register');
 });
 
 app.get('/users/login', checkAuthenticated, (req, res) => {
     res.render('login');
+});
+
+app.get('/users/userpage', (req, res) => {
+    res.render('userPage');
 });
 
 app.get('/users/dashboard', checkNotAuthenticated, (req, res) => {
@@ -64,6 +127,7 @@ app.get('/users/register_end', (req, res) => {
     res.render('register_end');
 });
 
+
 app.post("/user/register", async (req, res) => {
     let {
         name,
@@ -72,7 +136,7 @@ app.post("/user/register", async (req, res) => {
         password,
         password2,
         subject,
-        phone
+        phone,
     } = req.body;
 
     let errors = [];
@@ -199,7 +263,7 @@ app.post('/user/login', passport.authenticate('local',{
 
 function checkAuthenticated (req, res, next) {
     if (req.isAuthenticated()) {
-        return res.redirect('/users/dashboard');
+        return res.redirect('/profile/:id');
     }
     next();
 }

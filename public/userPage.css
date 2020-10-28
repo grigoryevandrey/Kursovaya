@@ -1,0 +1,13 @@
+
+.mainBox{
+    width:700px;
+    height: 500px;
+    padding:40px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    background: #191919;
+    text-align: center;
+    color:white;
+}
