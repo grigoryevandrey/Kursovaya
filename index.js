@@ -36,36 +36,38 @@ app.use(passport.session());
 app.use(flash());
 
 app.get('/', (req, res) => {
-    res.render('index', { okOk: req.isAuthenticated()});
+    res.render('index', {
+        okOk: req.isAuthenticated()
+    });
     console.log(req.isAuthenticated());
 });
 
 app.get('/profile', checkNotAuthenticated, (req, res) => {
     // store userId on login into session or any global variable 
     var userId = req.user.id;
-       res.redirect('/profile/'+userId) 
-    }); // =>directs to http://localhost:8080/profile for every signup.
+    res.redirect('/profile/' + userId)
+}); // =>directs to http://localhost:8080/profile for every signup.
 
 
-    
+
 app.get('/profile/:id', function (req, res) {
     let id = req.params.id,
-    name = '',
-    lastName = '',
-    subject = '',
-    gender = '',
-    achievements = '',
-    additionalInfo = '',
-    pricePerLesson = '',
-    lengthOfLesson = '',
-    yearOfBirth = '';
+        name = '',
+        lastName = '',
+        subject = '',
+        gender = '',
+        achievements = '',
+        additionalInfo = '',
+        pricePerLesson = '',
+        lengthOfLesson = '',
+        yearOfBirth = '';
     pool.query(
         `SELECT * 
         FROM teacher
         LEFT JOIN teacher_info ON teacher_info.id=teacher.id
         WHERE teacher.id = $1`, [id], (err, results) => {
-            if (err){
-                throw(err);
+            if (err) {
+                throw (err);
             }
             if (results.rows[0].gender !== null) {
                 name = results.rows[0].first_name;
@@ -87,17 +89,16 @@ app.get('/profile/:id', function (req, res) {
                     pricePerLesson: pricePerLesson,
                     lengthOfLesson: lengthOfLesson,
                     yearOfBirth: yearOfBirth
-                }); 
-            }
-            else{
+                });
+            } else {
                 res.redirect('/');
             }
-            
+
         }
     );
-    
-     
-    });
+
+
+});
 
 app.get('/users/register', checkAuthenticated, (req, res) => {
     res.render('register');
@@ -125,6 +126,34 @@ app.get('/users/logout', (req, res) => {
 
 app.get('/users/register_end', (req, res) => {
     res.render('register_end');
+});
+
+app.get('/search', (req, res) => {
+    let resultat = [];
+    pool.query(
+        `SELECT * 
+        FROM teacher
+        LEFT JOIN teacher_info 
+        ON teacher_info.id=teacher.id`, (err, results) => {
+            if (err) {
+                throw (err);
+            }
+            for (let i = 0; i < results.rows.length;i++){
+                resultat[i] = {};
+                for (let key in results.rows[i]){
+                    resultat[i][key] = results.rows[i][key];
+                    
+                }
+            }
+            // console.log(typeof(resultat[0].first_name));
+            res.render('search', {
+                resultatF: function() {
+                    return 'Base64.decode("' + Buffer.from(JSON.stringify(resultat)).toString('base64') + '")';
+                },
+                length: resultat.length
+            });
+        }
+    );
 });
 
 
@@ -255,13 +284,13 @@ app.post("/user/register_end", async (req, res) => {
     );
 });
 
-app.post('/user/login', passport.authenticate('local',{
+app.post('/user/login', passport.authenticate('local', {
     successRedirect: "/users/dashboard",
     failureRedirect: "/users/login",
     failureFlash: true
 }));
 
-function checkAuthenticated (req, res, next) {
+function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return res.redirect('/profile/:id');
     }
@@ -269,9 +298,9 @@ function checkAuthenticated (req, res, next) {
 }
 
 
-function checkNotAuthenticated (req, res, next) {
+function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-       return next();
+        return next();
     }
     res.redirect('/users/login');
 }
