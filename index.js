@@ -158,6 +158,7 @@ app.get('/search', (req, res) => {
 
 
 app.post("/user/register", async (req, res) => {
+    let option = req.body.subject;
     let {
         name,
         lastName,
@@ -167,6 +168,26 @@ app.post("/user/register", async (req, res) => {
         subject,
         phone,
     } = req.body;
+
+    switch (option){
+        case "1": 
+        subject = "Мастерство выпивания пива";
+        break;
+        case "2": 
+        subject = "Техника прогуливания пар";
+        break;
+        case "3": 
+        subject = "Искусство ругательств";
+        break;
+        case "4": 
+        subject = "Навык курения";
+        break;
+        case "5": 
+        subject = "Рыгание";
+        break;
+        default:
+            subject = "'Err'";
+    }
 
     let errors = [];
 
@@ -260,7 +281,67 @@ app.post("/user/register", async (req, res) => {
     }
 });
 
+app.post("/search/go", async (req, res) =>{
+    let option = req.body.searchSelector;
+    let resultat = [];
+    let subject = "";
+    console.log(typeof(option));
+    switch (option){
+        case "2": 
+        subject = "Мастерство выпивания пива";
+        break;
+        case "3": 
+        subject = "Техника прогуливания пар";
+        break;
+        case "4": 
+        subject = "Искусство ругательств";
+        break;
+        case "5": 
+        subject = "Навык курения";
+        break;
+        case "6": 
+        subject = "Рыгание";
+        break;
+        default:
+            subject = "'Err'";
+    }
+
+    if (option === "1" || subject === "'Err'"){
+       res.redirect('/search');
+    }
+    else{
+        
+    pool.query(
+        `SELECT * 
+        FROM teacher
+        LEFT JOIN teacher_info 
+        ON teacher_info.id=teacher.id
+        WHERE subject = $1`,[subject], (err, results) => {
+            if (err) {
+                throw (err);
+            }
+            for (let i = 0; i < results.rows.length;i++){
+                resultat[i] = {};
+                for (let key in results.rows[i]){
+                    resultat[i][key] = results.rows[i][key];
+                    
+                }
+            }
+            // console.log(typeof(resultat[0].first_name));
+            res.render('search', {
+                resultatF: function() {
+                    return 'Base64.decode("' + Buffer.from(JSON.stringify(resultat)).toString('base64') + '")';
+                },
+                length: resultat.length
+            });
+        }
+    );
+
+}
+});
+
 app.post("/user/register_end", async (req, res) => {
+    let option = req.body.gender;
     let {
         gender,
         yearOfBirth,
@@ -270,6 +351,17 @@ app.post("/user/register_end", async (req, res) => {
         lengthOfLesson
     } = req.body;
 
+    switch (option){
+        case "1": 
+        gender = "Мужской";
+        break;
+        case "2": 
+        gender = "Женский";
+        break;
+        default:
+        gender = "'Err'";
+    }
+// сделать проверку авторизован ли пользователь, и заносить по айдишнику юзера который это вносит 
     pool.query(
         `INSERT INTO teacher_info (gender, achievements , additional_info, price_per_lesson, length_of_lesson, year_of_birth)
         VALUES ($1, $2, $3, $4, $5, $6)

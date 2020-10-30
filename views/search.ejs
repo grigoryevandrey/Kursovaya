@@ -8,6 +8,22 @@
     <link rel="stylesheet" href="/search.css">
 </head>
 <body>
+    <div class="searchWrapper" id="searchWrapper"> 
+        <form class="searchForm" action="/search/go" method="POST">
+
+            <select name="searchSelector" id="searchSelector">
+                     <option value="1">Все</option>
+                     <option value="2">Мастерство выпивания пива</option>
+                     <option value="3">Техника прогуливания пар</option>
+                     <option value="4">Искусство ругательств</option>
+                     <option value="5">Навык курения</option>
+                     <option value="6">Рыгание</option>
+            </select>  
+
+            <button id='submit'>Искать</button>
+
+        </form>
+    </div>
     <div class="resultsWrapper" id="resultsWrapper">
         
     </div>
@@ -37,7 +53,7 @@
             let subjCont = document.createElement('div');
             subjCont.id = 'subjCont';
             subjCont.className = 'subjCont';
-            subjCont.innerHTML = "Репетитор по " + resultsArray[i].subject;
+            subjCont.innerHTML = "Предмет: " + resultsArray[i].subject;
             searchContainer.appendChild(subjCont);
 
             let priceCont = document.createElement('div');
