@@ -124,8 +124,41 @@ app.get('/users/logout', (req, res) => {
     res.redirect('/users/login');
 });
 
-app.get('/users/register_end', (req, res) => {
-    res.render('register_end');
+app.get('/users/register_end',checkNotAuthenticated, (req, res) => {
+    const id = req.user.id;
+    let gender = '',
+    achievements = '',
+    additionalInfo ='',
+    pricePerLesson = '',
+    lengthOfLesson = '',
+    yearOfBirth = '';
+    pool.query(
+        `SELECT *
+        FROM teacher_info
+        WHERE id = $1`, [id], (err, results) => {
+            if (err) {
+                throw (err);
+            }
+            if(results.rows.length > 0){    
+                gender = results.rows[0].gender;
+                achievements = results.rows[0].achievements;
+                additionalInfo = results.rows[0].additional_info;
+                pricePerLesson = results.rows[0].price_per_lesson;
+                lengthOfLesson = results.rows[0].length_of_lesson;
+                yearOfBirth = results.rows[0].year_of_birth;   
+               res.render('register_end', {
+                gender: gender,
+                achievements: achievements,
+                additionalInfo: additionalInfo,
+                pricePerLesson: pricePerLesson,
+                lengthOfLesson: lengthOfLesson,
+                yearOfBirth: yearOfBirth
+            });
+            }
+            else{
+                res.render('register_end');
+            }
+        });
 });
 
 app.get('/search', (req, res) => {
@@ -270,7 +303,6 @@ app.post("/user/register", async (req, res) => {
                             if (err) {
                                 throw err
                             }
-                            console.log(results.rows);
                             req.flash('success_msg', "Вы зарегистрированы! Пожалуйста, войдите в систему.");
                             res.redirect('/users/register_end');
                         }
@@ -377,7 +409,7 @@ app.post("/user/register_end", async (req, res) => {
 });
 
 app.post('/user/login', passport.authenticate('local', {
-    successRedirect: "/users/dashboard",
+    successRedirect: "/users/register_end",
     failureRedirect: "/users/login",
     failureFlash: true
 }));

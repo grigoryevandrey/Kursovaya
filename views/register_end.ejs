@@ -39,7 +39,17 @@
         <input type="submit" name="" value="Завершить регистрацию">
 
     </form>
-
+<script>
+    document.getElementById('yearOfBirth').value = <%= yearOfBirth%>;
+    document.getElementById('additionalInfo').value = <%= additionalInfo%>;
+    document.getElementById('achievements').value = <%= achievements%>;
+    document.getElementById('pricePerLesson').value = <%= pricePerLesson%>;
+    document.getElementById('lengthOfLesson').value = <%= lengthOfLesson%>;
+    let gender = <%= gender %>;
+    if (gender === "Женский") {
+       document.getElementById('gender').options[1].selected = true;
+    }
+</script>
 </body>
 
 </html>
