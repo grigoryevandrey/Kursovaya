@@ -8,3 +8,18 @@
    color: black;
    margin:20px;
 }
+
+.avatar {
+    height:100px;
+    width:80px;
+}
+
+.buyWindow {
+  width:500px;
+  padding:40px;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+}

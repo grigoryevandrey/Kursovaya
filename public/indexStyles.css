@@ -59,6 +59,13 @@ h1{
   align-items: center;
 }
 
+.boxW > form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .welcome-words{
   width:20vw;
   font-family: Montserrat,serif;

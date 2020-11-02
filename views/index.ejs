@@ -26,15 +26,20 @@
              Крутые вступительные слова побуждающие воспользоваться сайтом
              </div>
              <div class="boxW search">
-               <h2>Я хочу научиться</h2>
-              <select class="selection">
-                <option>Мастерству выпивания пива</option>
-                <option>Искусству ругательств</option>
-                <option>Развить навык курения</option>
-                <option>Технике прогуливания пар</option>
-                <option>Рыганию</option>
-              </select>
-              <input type="submit" name="submit" value="Найти выбранное">
+               <h2>Меня интересует</h2>
+              <form class="searchForm" action="/search/go" method="POST">
+
+                <select class="selection" name="searchSelector" id="searchSelector">
+                         <option value="2">Мастерство выпивания пива</option>
+                         <option value="3">Техника прогуливания пар</option>
+                         <option value="4">Искусство ругательств</option>
+                         <option value="5">Навык курения</option>
+                         <option value="6">Рыгание</option>
+                </select>  
+    
+                <input type="submit" name="submit" value="Найти выбранное">
+    
+            </form>
             </div>
          </div>
          <div class="white-content"> </div>

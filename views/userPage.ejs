@@ -10,7 +10,7 @@
   </head>
   <body>
  <div class="mainBox">
-     <div><img src="/userPhotos/2.jpg" width="100px" alt="Нет аватара"></div>
+     <div><img  id="avatar"  height="200px" width="200px" alt="Нет аватара"></div>
      <div id="name">Имя: <%= name%></div>
      <div id="lastName">Фамилия: <%= lastName%></div>
      <div id="subject">Предмет: <%= subject%></div>
@@ -21,6 +21,12 @@
      <div id="lengthOfLesson">Длительность занятия: <%= lengthOfLesson%></div>
      <div id="yearOfBirth">Год рождения: <%= yearOfBirth%></div>
  </div>
-
+ <script>
+  document.addEventListener('DOMContentLoaded', function (){
+    if(<%= id%>){
+    document.getElementById('avatar').src = "/userPhotos/" + <%= id%> + ".jpg";
+    }
+  }, false);
+</script>
   </body>
 </html>

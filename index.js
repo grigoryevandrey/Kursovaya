@@ -43,10 +43,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('/profile', checkNotAuthenticated, (req, res) => {
-    // store userId on login into session or any global variable 
+    
     var userId = req.user.id;
     res.redirect('/profile/' + userId)
-}); // =>directs to http://localhost:8080/profile for every signup.
+});
 
 
 
@@ -69,7 +69,7 @@ app.get('/profile/:id', function (req, res) {
             if (err) {
                 throw (err);
             }
-            if (results.rows[0].gender !== null) {
+            if (results.rows.length > 0) {
                 name = results.rows[0].first_name;
                 lastName = results.rows[0].last_name;
                 subject = results.rows[0].subject;
@@ -80,6 +80,7 @@ app.get('/profile/:id', function (req, res) {
                 lengthOfLesson = results.rows[0].length_of_lesson;
                 yearOfBirth = results.rows[0].year_of_birth;
                 res.render('userPage', {
+                    id: id,
                     name: name,
                     lastName: lastName,
                     subject: subject,
@@ -112,12 +113,6 @@ app.get('/users/userpage', (req, res) => {
     res.render('userPage');
 });
 
-app.get('/users/dashboard', checkNotAuthenticated, (req, res) => {
-    res.render('dashboard', {
-        user: req.user.first_name
-    });
-});
-
 app.get('/users/logout', (req, res) => {
     req.logOut();
     req.flash('success_msg', "Вы вышли из системы");
@@ -131,7 +126,8 @@ app.get('/users/register_end',checkNotAuthenticated, (req, res) => {
     additionalInfo ='',
     pricePerLesson = '',
     lengthOfLesson = '',
-    yearOfBirth = '';
+    yearOfBirth = '',
+    showMe = false;
     pool.query(
         `SELECT *
         FROM teacher_info
@@ -146,28 +142,39 @@ app.get('/users/register_end',checkNotAuthenticated, (req, res) => {
                 pricePerLesson = results.rows[0].price_per_lesson;
                 lengthOfLesson = results.rows[0].length_of_lesson;
                 yearOfBirth = results.rows[0].year_of_birth;   
+                showMe = results.rows[0].show_me;
                res.render('register_end', {
                 gender: gender,
                 achievements: achievements,
                 additionalInfo: additionalInfo,
                 pricePerLesson: pricePerLesson,
                 lengthOfLesson: lengthOfLesson,
-                yearOfBirth: yearOfBirth
+                yearOfBirth: yearOfBirth,
+                showMe: showMe
             });
             }
             else{
-                res.render('register_end');
+                res.render('register_end', {
+                    gender: gender,
+                    achievements: achievements,
+                    additionalInfo: additionalInfo,
+                    pricePerLesson: pricePerLesson,
+                    lengthOfLesson: lengthOfLesson,
+                    yearOfBirth: yearOfBirth
+                });
             }
         });
 });
 
 app.get('/search', (req, res) => {
     let resultat = [];
+    let option = 1;
     pool.query(
         `SELECT * 
         FROM teacher
         LEFT JOIN teacher_info 
-        ON teacher_info.id=teacher.id`, (err, results) => {
+        ON teacher_info.id=teacher.id
+        WHERE show_me = $1`, [true], (err, results) => {
             if (err) {
                 throw (err);
             }
@@ -183,7 +190,8 @@ app.get('/search', (req, res) => {
                 resultatF: function() {
                     return 'Base64.decode("' + Buffer.from(JSON.stringify(resultat)).toString('base64') + '")';
                 },
-                length: resultat.length
+                length: resultat.length,          
+                option: option
             });
         }
     );
@@ -317,7 +325,6 @@ app.post("/search/go", async (req, res) =>{
     let option = req.body.searchSelector;
     let resultat = [];
     let subject = "";
-    console.log(typeof(option));
     switch (option){
         case "2": 
         subject = "Мастерство выпивания пива";
@@ -337,7 +344,6 @@ app.post("/search/go", async (req, res) =>{
         default:
             subject = "'Err'";
     }
-
     if (option === "1" || subject === "'Err'"){
        res.redirect('/search');
     }
@@ -348,7 +354,7 @@ app.post("/search/go", async (req, res) =>{
         FROM teacher
         LEFT JOIN teacher_info 
         ON teacher_info.id=teacher.id
-        WHERE subject = $1`,[subject], (err, results) => {
+        WHERE subject = $1 AND show_me = $2`,[subject, true], (err, results) => {
             if (err) {
                 throw (err);
             }
@@ -364,7 +370,8 @@ app.post("/search/go", async (req, res) =>{
                 resultatF: function() {
                     return 'Base64.decode("' + Buffer.from(JSON.stringify(resultat)).toString('base64') + '")';
                 },
-                length: resultat.length
+                length: resultat.length,
+                option: option
             });
         }
     );
@@ -372,16 +379,33 @@ app.post("/search/go", async (req, res) =>{
 }
 });
 
-app.post("/user/register_end", async (req, res) => {
+app.post("/user/register_end", checkNotAuthenticated,  (req, res) => {
     let option = req.body.gender;
+    let id = req.user.id;
     let {
         gender,
         yearOfBirth,
         additionalInfo,
         achievements,
         pricePerLesson,
-        lengthOfLesson
+        lengthOfLesson,
+        showMe
     } = req.body;
+    console.log(showMe);
+    
+    let showMeToDB = false;
+
+    if (showMe){
+        showMeToDB = true;
+    }
+
+    let errors = [];
+
+    if (! yearOfBirth || !additionalInfo || !achievements || !pricePerLesson || !lengthOfLesson) {
+        errors.push({
+            message: "Заполните все поля"
+        })
+    }
 
     switch (option){
         case "1": 
@@ -394,18 +418,59 @@ app.post("/user/register_end", async (req, res) => {
         gender = "'Err'";
     }
 // сделать проверку авторизован ли пользователь, и заносить по айдишнику юзера который это вносит 
-    pool.query(
-        `INSERT INTO teacher_info (gender, achievements , additional_info, price_per_lesson, length_of_lesson, year_of_birth)
-        VALUES ($1, $2, $3, $4, $5, $6)
-        RETURNING id`, [gender, achievements, additionalInfo, pricePerLesson, lengthOfLesson, yearOfBirth], (err, results) => {
-            if (err) {
-                throw err
-            }
-            console.log(results.rows);
-            req.flash('success_msg', "Вы зарегистрированы! Пожалуйста, войдите в систему.");
-            res.redirect('/users/login');
+
+if (errors.length > 0) {
+    res.render('register_end', {
+        errors
+    });
+    console.log({
+        errors
+    });
+} else {
+    
+    pool.query(`SELECT * FROM teacher_info
+    WHERE id = $1`, [id],  (err, results) =>  {
+        if (err){
+            throw err;
         }
-    );
+        if (results.rows.length > 0) {
+            pool.query(
+                `UPDATE teacher_info
+                SET gender = $1,
+                achievements = $2,
+                additional_info = $3, 
+                price_per_lesson = $4, 
+                length_of_lesson = $5, 
+                year_of_birth = $6, 
+                show_me = $7
+                WHERE id = $8`, [gender, achievements, additionalInfo, pricePerLesson, lengthOfLesson, yearOfBirth, showMeToDB, id], (err, results) => {
+                 if (err) {
+                     throw err;
+                 }
+                 console.log("update");
+                 req.flash('success_msg', "Данные обновлены.");
+                    res.redirect('/search');
+                }
+            );
+        }
+        else {
+
+            pool.query(
+                `INSERT INTO teacher_info (gender, achievements , additional_info, price_per_lesson, length_of_lesson, year_of_birth, show_me, id)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                RETURNING id`, [gender, achievements, additionalInfo, pricePerLesson, lengthOfLesson, yearOfBirth, showMe, id], (err, results) => {
+                    if (err) {
+                        throw err
+                    }
+                    console.log("insert");
+                    req.flash('success_msg', "Вы зарегистрированы! Пожалуйста, войдите в систему.");
+                    res.redirect('/search');
+                }
+            );
+        }
+    });
+    
+}
 });
 
 app.post('/user/login', passport.authenticate('local', {
@@ -416,7 +481,8 @@ app.post('/user/login', passport.authenticate('local', {
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-        return res.redirect('/profile/:id');
+    let id = req.user.id;
+        return res.redirect('/profile/' + id);
     }
     next();
 }

@@ -36,6 +36,9 @@
         <label for="">Длительность занятия (в минутах):</label>
         <input type="text" name="lengthOfLesson" id="lengthOfLesson" placeholder="">
 
+        <label for="">Показывать меня в поиске</label>
+        <input type="checkbox" name="showMe" id="showMe" value="showMe">
+
         <input type="submit" name="" value="Завершить регистрацию">
 
     </form>
@@ -45,9 +48,13 @@
     document.getElementById('achievements').value = <%= achievements%>;
     document.getElementById('pricePerLesson').value = <%= pricePerLesson%>;
     document.getElementById('lengthOfLesson').value = <%= lengthOfLesson%>;
-    let gender = <%= gender %>;
+    let gender = "<%= gender %>";
     if (gender === "Женский") {
        document.getElementById('gender').options[1].selected = true;
+    }
+    let showMe = <%= showMe %>;
+    if (showMe) {
+        document.getElementById('showMe').checked = true;
     }
 </script>
 </body>
