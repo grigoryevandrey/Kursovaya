@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,110 +8,194 @@
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="/search.css">
 </head>
+
 <body>
-<div class="megaWrapper" id="megaWrapper">
-    <div class="searchWrapper" id="searchWrapper"> 
-        <form class="searchForm" action="/search/go" method="POST">
+    <div class="megaWrapper" id="megaWrapper">
+        <div class="searchWrapper" id="searchWrapper">
+            <form class="searchForm" action="/search/go" method="POST">
 
-            <select name="searchSelector" id="searchSelector">
-                     <option value="1">Все</option>
-                     <option value="2">Мастерство выпивания пива</option>
-                     <option value="3">Техника прогуливания пар</option>
-                     <option value="4">Искусство ругательств</option>
-                     <option value="5">Навык курения</option>
-                     <option value="6">Рыгание</option>
-            </select>  
+                <select name="searchSelector" id="searchSelector">
+                    <option value="1">Все</option>
+                    <option value="2">Мастерство выпивания пива</option>
+                    <option value="3">Техника прогуливания пар</option>
+                    <option value="4">Искусство ругательств</option>
+                    <option value="5">Навык курения</option>
+                    <option value="6">Рыгание</option>
+                </select>
 
-            <button id='submit'>Искать</button>
+                <button id='submit'>Искать</button>
 
-        </form>
+            </form>
+        </div>
+        <div class="resultsWrapper" id="resultsWrapper">
+
+        </div>
     </div>
-    <div class="resultsWrapper" id="resultsWrapper">
-        
-    </div>
-</div> 
     <script>
         //Тут может быть надо добавить АБВГД итд
-        var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9\+\/\=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/\r\n/g,"\n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}}
-        
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            let lengthArray = "<%= length %>"; 
+        var Base64 = {
+            _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+            encode: function (e) {
+                var t = "";
+                var n, r, i, s, o, u, a;
+                var f = 0;
+                e = Base64._utf8_encode(e);
+                while (f < e.length) {
+                    n = e.charCodeAt(f++);
+                    r = e.charCodeAt(f++);
+                    i = e.charCodeAt(f++);
+                    s = n >> 2;
+                    o = (n & 3) << 4 | r >> 4;
+                    u = (r & 15) << 2 | i >> 6;
+                    a = i & 63;
+                    if (isNaN(r)) {
+                        u = a = 64
+                    } else if (isNaN(i)) {
+                        a = 64
+                    }
+                    t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this
+                        ._keyStr.charAt(a)
+                }
+                return t
+            },
+            decode: function (e) {
+                var t = "";
+                var n, r, i;
+                var s, o, u, a;
+                var f = 0;
+                e = e.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+                while (f < e.length) {
+                    s = this._keyStr.indexOf(e.charAt(f++));
+                    o = this._keyStr.indexOf(e.charAt(f++));
+                    u = this._keyStr.indexOf(e.charAt(f++));
+                    a = this._keyStr.indexOf(e.charAt(f++));
+                    n = s << 2 | o >> 4;
+                    r = (o & 15) << 4 | u >> 2;
+                    i = (u & 3) << 6 | a;
+                    t = t + String.fromCharCode(n);
+                    if (u != 64) {
+                        t = t + String.fromCharCode(r)
+                    }
+                    if (a != 64) {
+                        t = t + String.fromCharCode(i)
+                    }
+                }
+                t = Base64._utf8_decode(t);
+                return t
+            },
+            _utf8_encode: function (e) {
+                e = e.replace(/\r\n/g, "\n");
+                var t = "";
+                for (var n = 0; n < e.length; n++) {
+                    var r = e.charCodeAt(n);
+                    if (r < 128) {
+                        t += String.fromCharCode(r)
+                    } else if (r > 127 && r < 2048) {
+                        t += String.fromCharCode(r >> 6 | 192);
+                        t += String.fromCharCode(r & 63 | 128)
+                    } else {
+                        t += String.fromCharCode(r >> 12 | 224);
+                        t += String.fromCharCode(r >> 6 & 63 | 128);
+                        t += String.fromCharCode(r & 63 | 128)
+                    }
+                }
+                return t
+            },
+            _utf8_decode: function (e) {
+                var t = "";
+                var n = 0;
+                var r = c1 = c2 = 0;
+                while (n < e.length) {
+                    r = e.charCodeAt(n);
+                    if (r < 128) {
+                        t += String.fromCharCode(r);
+                        n++
+                    } else if (r > 191 && r < 224) {
+                        c2 = e.charCodeAt(n + 1);
+                        t += String.fromCharCode((r & 31) << 6 | c2 & 63);
+                        n += 2
+                    } else {
+                        c2 = e.charCodeAt(n + 1);
+                        c3 = e.charCodeAt(n + 2);
+                        t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
+                        n += 3
+                    }
+                }
+                return t
+            }
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            let lengthArray = "<%= length %>";
             let option = "<%= option %>";
-            let resultsArray = {}; 
-            resultsArray = <%- resultatF() %>;
+            let resultsArray = {};
+            resultsArray = <%- resultatF() %> ;
             resultsArray = JSON.parse(resultsArray);
 
-            document.getElementById('searchSelector').options[option-1].selected = true;
+            document.getElementById('searchSelector').options[option - 1].selected = true;
 
             for (let i = 0; i < lengthArray; i++) {
-            let searchResults = document.getElementById("resultsWrapper");
-            let searchContainer = document.createElement('div');
-            searchContainer.id = 'searchContainer';
-            searchContainer.className = 'searchContainer';
+                let searchResults = document.getElementById("resultsWrapper");
+                let searchContainer = document.createElement('div');
+                searchContainer.id = 'searchContainer';
+                searchContainer.className = 'searchContainer';
 
-            let avatarCont = document.createElement('div');
-            avatarCont.id = 'avatarCont';
-            avatarCont.className = 'avatarCont'; 
-            searchContainer.append(avatarCont);
+                let avatarCont = document.createElement('div');
+                avatarCont.id = 'avatarCont';
+                avatarCont.className = 'avatarCont';
+                searchContainer.append(avatarCont);
 
-            let avatar = document.createElement('img');
-            avatar.id = 'avatar';
-            avatar.className = 'avatar';
-            avatar.src = "/userPhotos/" + resultsArray[i].id + ".jpg";
-            avatarCont.append(avatar);
+                let avatar = document.createElement('img');
+                avatar.id = 'avatar';
+                avatar.className = 'avatar';
+                avatar.src = "/userPhotos/" + resultsArray[i].id + ".jpg";
+                avatarCont.append(avatar);
 
-            let nameCont = document.createElement('div');
-            nameCont.id = 'nameCont';
-            nameCont.className = 'nameCont';
-            searchContainer.append(nameCont);
-            
-            let nameHref = document.createElement('a');
-            let nameLinkText = document.createTextNode(resultsArray[i].first_name + " " + resultsArray[i].last_name);
-            nameHref.append(nameLinkText);
-            nameHref.title = resultsArray[i].first_name + " " + resultsArray[i].last_name;
-            nameHref.id = 'nameHref';
-            nameHref.className = 'nameHref';
-            nameHref.href = "/profile/" +  resultsArray[i].id;
-            nameCont.append(nameHref);
+                let nameCont = document.createElement('div');
+                nameCont.id = 'nameCont';
+                nameCont.className = 'nameCont';
+                searchContainer.append(nameCont);
 
-            let subjCont = document.createElement('div');
-            subjCont.id = 'subjCont';
-            subjCont.className = 'subjCont';
-            subjCont.textContent = "Предмет: " + resultsArray[i].subject;
-            searchContainer.append(subjCont);
+                let nameHref = document.createElement('a');
+                let nameLinkText = document.createTextNode(resultsArray[i].first_name + " " + resultsArray[i]
+                    .last_name);
+                nameHref.append(nameLinkText);
+                nameHref.title = resultsArray[i].first_name + " " + resultsArray[i].last_name;
+                nameHref.id = 'nameHref';
+                nameHref.className = 'nameHref';
+                nameHref.href = "/profile/" + resultsArray[i].id;
+                nameCont.append(nameHref);
 
-            let priceCont = document.createElement('div');
-            priceCont.id = 'priceCont';
-            priceCont.className = 'priceCont';
-            priceCont.textContent =  resultsArray[i].price_per_lesson + " руб/занятие";
-            searchContainer.append(priceCont);
+                let subjCont = document.createElement('div');
+                subjCont.id = 'subjCont';
+                subjCont.className = 'subjCont';
+                subjCont.textContent = "Предмет: " + resultsArray[i].subject;
+                searchContainer.append(subjCont);
 
-            let achCont = document.createElement('div');
-            achCont.id = 'achCont';
-            achCont.className = 'achCont';
-            achCont.textContent = "Достижения: " + resultsArray[i].achievements;
-            searchContainer.append(achCont);
+                let priceCont = document.createElement('div');
+                priceCont.id = 'priceCont';
+                priceCont.className = 'priceCont';
+                priceCont.textContent = resultsArray[i].price_per_lesson + " руб/занятие";
+                searchContainer.append(priceCont);
 
-            let infoCont = document.createElement('div');
-            infoCont.id = 'infoCont';
-            infoCont.className = 'infoCont';
-            infoCont.textContent = "Информация: " + resultsArray[i].additional_info;
-            searchContainer.append(infoCont);
-            
-            let button = document.createElement('button');
-            button.textContent = "Купить уроки";
-            button.className = 'buyButton';
-            button.onclick = createBuyWindow;
-            searchContainer.append(button);
+                let achCont = document.createElement('div');
+                achCont.id = 'achCont';
+                achCont.className = 'achCont';
+                achCont.textContent = "Достижения: " + resultsArray[i].achievements;
+                searchContainer.append(achCont);
 
-            searchResults.append(searchContainer);
-            }
-            
-          }, false);
+                let infoCont = document.createElement('div');
+                infoCont.id = 'infoCont';
+                infoCont.className = 'infoCont';
+                infoCont.textContent = "Информация: " + resultsArray[i].additional_info;
+                searchContainer.append(infoCont);
 
-          function createBuyWindow() {
-            let megaWrapper = document.getElementById('megaWrapper');
+                let button = document.createElement('button');
+                button.textContent = "Купить уроки";
+                button.className = 'buyButton';
+                button.addEventListener('click', function () {
+                    let megaWrapper = document.getElementById('megaWrapper');
             let buyWindow = document.createElement('div');
             buyWindow.style.display = 'block';
             buyWindow.className = 'buyWindow';
@@ -122,51 +207,99 @@
             buyWindow.append(closeBuy);
 
             let buyForm = document.createElement('form');
+            buyForm.className = "buyForm";
             buyForm.setAttribute('method', "POST");
             buyForm.setAttribute('action', "/buy");
 
-            let numberOfLessonsInput = document.createElement('input');
-            numberOfLessonsInput.setAttribute('type',"text");
-            numberOfLessonsInput.setAttribute('name',"numberOfLessons");
+            
+            let teacherId = document.createElement('input');
+            teacherId.id ="teacherId";
+            teacherId.setAttribute('type', "text");
+            teacherId.setAttribute('name', "teacherId");
+            teacherId.value = resultsArray[i].id;
+
+            let teacherPrice = document.createElement('input');
+            teacherPrice.id = "teacherPrice";
+            teacherPrice.setAttribute('type', "text");
+            teacherPrice.setAttribute('name', "teacherPrice");
+            teacherPrice.value = resultsArray[i].price_per_lesson;
 
             let numberOfLessonsLabel = document.createElement('label');
             numberOfLessonsLabel.textContent = "Введите количество уроков, которое вы бы хотели приобрести: ";
 
+            let numberOfLessonsInput = document.createElement('input');
+            numberOfLessonsInput.id ="numberOfLessonsInput";
+            numberOfLessonsInput.setAttribute('type', "text");
+            numberOfLessonsInput.setAttribute('name', "numberOfLessons");
+
+
             let fullName = document.createElement('input');
-            fullName.setAttribute('type',"text");
-            fullName.setAttribute('name',"fullName");
+            fullName.id = "fullName";
+            fullName.setAttribute('type', "text");
+            fullName.setAttribute('name', "fullName");
 
             let fullNameLabel = document.createElement('label');
-fullNameLabel.textContent = "Введите ваше имя и фамилию: ";
-fullNameLabel.setAttribute("for","fullName");
+            fullNameLabel.textContent = "Ваше имя: ";
+            fullNameLabel.setAttribute("for", "fullName");
 
             let emailOfCustomer = document.createElement('input');
-            emailOfCustomer.setAttribute('type',"email");
-            emailOfCustomer.setAttribute('name',"emailOfCustomer");
+            emailOfCustomer.id = "emailOfCustomer";
+            emailOfCustomer.setAttribute('type', "email");
+            emailOfCustomer.setAttribute('name', "emailOfCustomer");
 
             let emailLabel = document.createElement('label');
-            emailLabel.textContent = "Введите вашу электронную почту: "; 
-            emailLabel.setAttribute("for","emailOfCustomer");
+            emailLabel.textContent = "E-mail: ";
+            emailLabel.setAttribute("for", "emailOfCustomer");
+
+            let phoneOfCustomer = document.createElement('input');
+            phoneOfCustomer.id = "phoneOfCustomer";
+            phoneOfCustomer.setAttribute('type', "text");
+            phoneOfCustomer.setAttribute('name', "phoneOfCustomer");
+
+            let phoneLabel = document.createElement('label');
+            phoneLabel.textContent = "Номер телефона: ";
+            phoneLabel.setAttribute("for", "phoneOfCustomer");
 
 
             let submitButton = document.createElement('input');
-            submitButton.setAttribute('type',"submit");
-            submitButton.setAttribute('value',"submit");
+            submitButton.setAttribute('type', "submit");
+            submitButton.setAttribute('value', "Перейти к оплате");
+            
+            buyForm.append(teacherPrice);
+            buyForm.append(teacherId);
 
-            buyForm.append(numberOfLessonsInput);
-            buyForm.prepend(numberOfLessonsLabel);
+            buyForm.append(fullNameLabel);
             buyForm.append(fullName);
-            buyForm.prepend(fullNameLabel);
-            buyForm.append(emailOfCustomer);
+
+            
+            buyForm.append(phoneLabel);
+            buyForm.append(phoneOfCustomer);
+
+            buyForm.append(numberOfLessonsLabel);
+            buyForm.append(numberOfLessonsInput);
+            
             buyForm.append(emailLabel);
+            buyForm.append(emailOfCustomer);
+            
             buyForm.append(submitButton);
             buyWindow.append(buyForm);
 
             function closeBuyWindow() {
                 buyWindow.style.display = 'none';
             }
-          }
-          </script>
+                } );
+                searchContainer.append(button);
+
+                searchResults.append(searchContainer);
+            }
+
+        }, false);
+
+        function createBuyWindow() {
+            
+        }
+    </script>
     <script src="/js/search.js"></script>
 </body>
+
 </html>

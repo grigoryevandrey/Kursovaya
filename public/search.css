@@ -23,3 +23,10 @@
   transform: translate(-50%,-50%);
   text-align: center;
 }
+.buyForm > input {
+  display:block;
+  margin: 20px auto;
+  text-align: center;
+  width:200px;
+  outline:none;
+}

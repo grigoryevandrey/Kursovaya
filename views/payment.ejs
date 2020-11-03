@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/purchase" method="POST">
+        <input type="text" name="price" id="price" value="<%= price%>">
+        <input type="text" name="teacherId" id="teacherId" value="<%= teacherId %>">
+        <input type="text" name="fullName" id="fullName" value="<%= fullName %>">
+        <input type="text" name="phoneOfCustomer" id="phoneOfCustomer" value="<%= phoneOfCustomer %>">
+        <input type="text" name="numberOfLessons" id="numberOfLessons" value="<%= numberOfLessons %>">
+        <input type="text" name="emailOfCustomer" id="emailOfCustomer" value="<%= emailOfCustomer %>">
+        <input type="submit" value="Оплатить">
+    </form>
+</body>
+</html>

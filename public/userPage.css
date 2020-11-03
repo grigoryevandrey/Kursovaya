@@ -1,7 +1,7 @@
 
 .mainBox{
     width:700px;
-    height: 500px;
+    height: 800px;
     padding:40px;
     position:absolute;
     top:50%;
@@ -10,4 +10,14 @@
     background: #191919;
     text-align: center;
     color:white;
+}
+
+.reviewBox > input,
+.reviewBox > textarea {
+  display:block;
+  margin: 20px auto;
+  text-align: center;
+  padding: 14px 10px;
+  width:200px;
+  outline:none;
 }
