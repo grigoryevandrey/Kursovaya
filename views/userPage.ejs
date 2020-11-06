@@ -148,36 +148,52 @@
       if ( <%= id %> ) {
         document.getElementById('avatar').src = "/userPhotos/" + <%= id %> +".jpg";
       }
-      let lengthArray = "<%= length %>";
-      let resultsArray = {};
-            resultsArray = <%- resultsReviewFunction() %> ;
-            resultsArray = JSON.parse(resultsArray);
+      let lengthReviewsArray = "<%= reviewLength %>";
+      let reviewsArray = {};
+      reviewsArray  = <%- resultsReviewFunction() %> ;
+      reviewsArray = JSON.parse(reviewsArray);
 
-      console.log(resultsArray);
       let reviewsContainer = document.getElementById('reviews');
 
-      for (let i = 0; i < lengthArray; i++) {
 
+      for (let i = 0; i < lengthReviewsArray; i++) {
 
-                let searchResults = document.getElementById("resultsWrapper");
-                let searchContainer = document.createElement('div');
-                searchContainer.id = 'searchContainer';
-                searchContainer.className = 'searchContainer';
+        let searchReviewsContainer = document.createElement('div');
+                searchReviewsContainer.id = 'searchReviewsContainer';
+                searchReviewsContainer.className = 'searchReviewsContainer';
 
-                let nameCont = document.createElement('div');
-                nameCont.id = 'nameCont';
-                nameCont.className = 'nameCont';
-                nameCont.textContent = `Написал: ${resultsArray[i].full_name}`;
-                searchContainer.append(nameCont);
+                if (reviewsArray[0].message === "Нет отзывов"){
+                    let noReviewsCont = document.createElement('div');
+                noReviewsCont.id = 'noReviewsCont';
+                noReviewsCont.className = 'noReviewsCont';
+                noReviewsCont.textContent = `Нет отзывов`;
+                searchReviewsContainer.append(noReviewsCont);
+
+                }
+                else{
+
+                    let nameReviewsCont = document.createElement('div');
+                nameReviewsCont.id = 'nameReviewsCont';
+                nameReviewsCont.className = 'nameReviewsCont';
+                nameReviewsCont.textContent = `Написал: ${reviewsArray[i].full_name}`;
+                searchReviewsContainer.append(nameReviewsCont);
 
                 let reviewCont = document.createElement('div');
                 reviewCont.id = 'reviewCont';
                 reviewCont.className ='reviewCont';
-                reviewCont.textContent = `Отзыв: ${resultsArray[i].review}`;
-                searchContainer.append(reviewCont);
+                reviewCont.textContent = `Отзыв: ${reviewsArray[i].review}`;
+                searchReviewsContainer.append(reviewCont);
+
+                let ratingCont = document.createElement('div');
+                ratingCont.id = 'ratingCont';
+                ratingCont.className = 'ratingCont';
+                ratingCont.textContent = `Оценка: ${reviewsArray[i].rating}`;
+                searchReviewsContainer.append(ratingCont);
                 
-                reviewsContainer.append(searchContainer);
               }
+
+              reviews.append(searchReviewsContainer);
+            }
     }, false);
   </script>
 </body>

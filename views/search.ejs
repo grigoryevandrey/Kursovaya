@@ -133,9 +133,15 @@
             resultsArray = <%- resultatF() %> ;
             resultsArray = JSON.parse(resultsArray);
 
+            let lengthReviewsArray = "<%= reviewLength %>";
+let reviewsArray  = <%- resultsReviewFunction() %> ;
+reviewsArray = JSON.parse(reviewsArray);
+
+console.log(reviewsArray);
             document.getElementById('searchSelector').options[option - 1].selected = true;
 
             for (let i = 0; i < lengthArray; i++) {
+
                 let searchResults = document.getElementById("resultsWrapper");
                 let searchContainer = document.createElement('div');
                 searchContainer.id = 'searchContainer';
@@ -191,11 +197,60 @@
                 infoCont.textContent = "Информация: " + resultsArray[i].additional_info;
                 searchContainer.append(infoCont);
 
+                let reviewsContainer = document.createElement('div');
+            reviewsContainer.id = 'reviewsContainer';
+            reviewsContainer.className ='reviewsContainer';
+            searchContainer.append(reviewsContainer);
+
+            
+            
+            for (let j = 0; j < reviewsArray[i].length; j++) {
+                
+                
+                let searchReviewsContainer = document.createElement('div');
+                searchReviewsContainer.id = 'searchReviewsContainer';
+                searchReviewsContainer.className = 'searchReviewsContainer';
+
+                if (reviewsArray[i][0].message === "Нет отзывов"){
+                    let noReviewsCont = document.createElement('div');
+                noReviewsCont.id = 'noReviewsCont';
+                noReviewsCont.className = 'noReviewsCont';
+                noReviewsCont.textContent = `Нет отзывов`;
+                searchReviewsContainer.append(noReviewsCont);
+
+                }
+                else{
+
+                    let nameReviewsCont = document.createElement('div');
+                nameReviewsCont.id = 'nameReviewsCont';
+                nameReviewsCont.className = 'nameReviewsCont';
+                nameReviewsCont.textContent = `Написал: ${reviewsArray[i][j].full_name}`;
+                searchReviewsContainer.append(nameReviewsCont);
+
+                let reviewCont = document.createElement('div');
+                reviewCont.id = 'reviewCont';
+                reviewCont.className ='reviewCont';
+                reviewCont.textContent = `Отзыв: ${reviewsArray[i][j].review}`;
+                searchReviewsContainer.append(reviewCont);
+
+                let ratingCont = document.createElement('div');
+                ratingCont.id = 'ratingCont';
+                ratingCont.className = 'ratingCont';
+                ratingCont.textContent = `Оценка: ${reviewsArray[i][j].rating}`;
+                searchReviewsContainer.append(ratingCont);
+                }
+
+                
+                
+                reviewsContainer.append(searchReviewsContainer);
+            }
+
                 let button = document.createElement('button');
                 button.textContent = "Купить уроки";
                 button.className = 'buyButton';
+
                 button.addEventListener('click', function () {
-                    let megaWrapper = document.getElementById('megaWrapper');
+            let megaWrapper = document.getElementById('megaWrapper');
             let buyWindow = document.createElement('div');
             buyWindow.style.display = 'block';
             buyWindow.className = 'buyWindow';
@@ -264,6 +319,7 @@
             let submitButton = document.createElement('input');
             submitButton.setAttribute('type', "submit");
             submitButton.setAttribute('value', "Перейти к оплате");
+
             
             buyForm.append(teacherPrice);
             buyForm.append(teacherId);
@@ -283,6 +339,11 @@
             
             buyForm.append(submitButton);
             buyWindow.append(buyForm);
+
+        
+
+            
+
 
             function closeBuyWindow() {
                 buyWindow.style.display = 'none';

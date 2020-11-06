@@ -22,6 +22,10 @@ app.use(express.urlencoded({
 }));
 app.use(express.static(__dirname + '/public'));
 
+
+
+
+
 app.use(session({
     secret: 'secret',
 
@@ -88,12 +92,22 @@ app.get('/profile/:id', function (req, res) {
                 if(err){
                     throw(err);
                 }
+                
+                let checker = false;
+
                 for (let i = 0; i < results.rows.length; i++) {
                     reviewResults[i] = {};
                     for (let key in results.rows[i]) {
                         reviewResults[i][key] = results.rows[i][key];
                     }
+                    checker = true;
                 }
+                if (!checker) {
+                reviewResults = [{
+                    message: "Нет отзывов"
+                }];
+            }
+
                 res.render('userPage', {
                     id: id,
                     name: name,
@@ -108,7 +122,7 @@ app.get('/profile/:id', function (req, res) {
                     resultsReviewFunction: function() {
                         return 'Base64.decode("' + Buffer.from(JSON.stringify(reviewResults)).toString('base64') + '")';
                     },
-                    length: reviewResults.length
+                    reviewLength: reviewResults.length
                 });
                 });
 
@@ -182,7 +196,8 @@ app.get('/users/register_end',checkNotAuthenticated, (req, res) => {
                     additionalInfo: additionalInfo,
                     pricePerLesson: pricePerLesson,
                     lengthOfLesson: lengthOfLesson,
-                    yearOfBirth: yearOfBirth
+                    yearOfBirth: yearOfBirth,
+                    showMe: showMe
                 });
             }
         });
@@ -190,6 +205,8 @@ app.get('/users/register_end',checkNotAuthenticated, (req, res) => {
 
 app.get('/search', (req, res) => {
     let resultat = [];
+    let reviewResults = [[]];
+    let teachId = [];
     let option = 1;
     pool.query(
         `SELECT * 
@@ -204,21 +221,55 @@ app.get('/search', (req, res) => {
                 resultat[i] = {};
                 for (let key in results.rows[i]){
                     resultat[i][key] = results.rows[i][key];
-                    
                 }
+                teachId[i] = results.rows[i].id;
             }
             // console.log(typeof(resultat[0].first_name));
-            res.render('search', {
-                resultatF: function() {
-                    return 'Base64.decode("' + Buffer.from(JSON.stringify(resultat)).toString('base64') + '")';
-                },
-                length: resultat.length,          
-                option: option
-            });
+            pool.query(`SELECT * 
+            FROM reviews`,async (err,resultss) => {
+            if(err){
+                throw(err);
+            }
+            
+        for (let i = 0; i < teachId.length; i++) {
+            let checker = false;
+            for (let j = 0; j < resultss.rows.length; j++) {
+                if (teachId[i] === resultss.rows[j].teacher_id) {
+                if (reviewResults[i] === undefined) {
+                    reviewResults[i] = [];
+                    reviewResults[i][0] = resultss.rows[j];
+                }
+                else {
+                reviewResults[i].push(resultss.rows[j]);  
+                 }   
+                 
+            checker = true;
+                }
+                
+            }
+            
+            if (!checker) {
+                reviewResults[i] = [{
+                    message: "Нет отзывов"
+                }];
+            }
+        }
+
+        res.render('search', {
+            resultatF: function() {
+                return 'Base64.decode("' + Buffer.from(JSON.stringify(resultat)).toString('base64') + '")';
+            },
+            resultsReviewFunction: function() {
+                return 'Base64.decode("' + Buffer.from(JSON.stringify(reviewResults)).toString('base64') + '")';
+            },
+            reviewLength: reviewResults.length,
+            length: resultat.length,
+            option: option
+        });
+        });
         }
     );
 });
-
 
 app.post("/buy", async (req, res) => {
    
@@ -260,6 +311,11 @@ app.post("/purchase", async (req, res) => {
         if (err) {
             throw err
         }
+
+        res.render('successfullBuy', {
+            price: price,
+            numberOfLessons: numberOfLessons            
+        });
         req.flash('success_msg', "Заказ зарегистрирован.");
     }
     
@@ -267,6 +323,7 @@ app.post("/purchase", async (req, res) => {
 });
 
 app.post("/review", async(req,res) => {
+    
     let {
         teacherId,
         phoneOfCustomer,
@@ -322,9 +379,84 @@ app.post("/review", async(req,res) => {
         }
 
         if (errors.length > 0) {
-            res.render(`profile`, {
-                errors
-            });
+        let id = teacherId,
+        name = '',
+        lastName = '',
+        subject = '',
+        gender = '',
+        achievements = '',
+        additionalInfo = '',
+        pricePerLesson = '',
+        lengthOfLesson = '',
+        yearOfBirth = '';
+
+    let reviewResults = [];
+    pool.query(
+        `SELECT * 
+        FROM teacher
+        LEFT JOIN teacher_info ON teacher_info.id=teacher.id
+        WHERE teacher.id = $1`, [id], (err, results) => {
+            if (err) {
+                throw (err);
+            }
+            if (results.rows.length > 0) {
+                name = results.rows[0].first_name;
+                lastName = results.rows[0].last_name;
+                subject = results.rows[0].subject;
+                gender = results.rows[0].gender;
+                achievements = results.rows[0].achievements;
+                additionalInfo = results.rows[0].additional_info;
+                pricePerLesson = results.rows[0].price_per_lesson;
+                lengthOfLesson = results.rows[0].length_of_lesson;
+                yearOfBirth = results.rows[0].year_of_birth;
+
+                pool.query(`SELECT * 
+                FROM reviews
+                WHERE teacher_id = $1`, [id], (err,results) => {
+                if(err){
+                    throw(err);
+                }
+                
+                let checker = false;
+
+                for (let i = 0; i < results.rows.length; i++) {
+                    reviewResults[i] = {};
+                    for (let key in results.rows[i]) {
+                        reviewResults[i][key] = results.rows[i][key];
+                    }
+                    checker = true;
+                }
+                if (!checker) {
+                reviewResults = [{
+                    message: "Нет отзывов"
+                }];
+            }
+                res.render('userPage', {
+                    id: id,
+                    name: name,
+                    lastName: lastName,
+                    subject: subject,
+                    gender: gender,
+                    achievements: achievements,
+                    additionalInfo: additionalInfo,
+                    pricePerLesson: pricePerLesson,
+                    lengthOfLesson: lengthOfLesson,
+                    yearOfBirth: yearOfBirth,
+                    errors: errors,
+                    resultsReviewFunction: function() {
+                        return 'Base64.decode("' + Buffer.from(JSON.stringify(reviewResults)).toString('base64') + '")';
+                    },
+                    reviewLength: reviewResults.length
+                });
+                });
+
+                
+            } else {
+                res.redirect('/');
+            }
+
+        }
+    );
             console.log({
                 errors
             });
@@ -334,7 +466,79 @@ app.post("/review", async(req,res) => {
                 if(err){
                     throw err;
                 }
-                res.redirect('/');
+
+                switch (rating) {
+                    case 1:      
+                    pool.query(`UPDATE teacher_rating
+                    SET one = one + 1,
+                    number_of_ratings = number_of_ratings + 1
+                    WHERE teacher_id = $1`, [teacherId], (err) => {
+                        if (err){
+                            throw err;
+                        }
+                    });
+                    break;
+                    case 2:
+                    pool.query(`UPDATE teacher_rating
+                    SET two = two + 1,
+                    number_of_ratings = number_of_ratings + 1
+                    WHERE teacher_id = $1`, [teacherId], (err) => {
+                        if (err){
+                            throw err;
+                        }
+                    });
+                    break;
+                    case 3:
+                    pool.query(`UPDATE teacher_rating
+                    SET three = three + 1,
+                    number_of_ratings = number_of_ratings + 1
+                    WHERE teacher_id = $1`, [teacherId], (err) => {
+                        if (err){
+                            throw err;
+                        }
+                    });
+                    break;
+                    case 4:
+                    pool.query(`UPDATE teacher_rating
+                    SET four = four + 1,
+                    number_of_ratings = number_of_ratings + 1
+                    WHERE teacher_id = $1`, [teacherId], (err) => {
+                        if (err){
+                            throw err;
+                        }
+                    });
+                    break;
+                    case 5:
+                    pool.query(`UPDATE teacher_rating
+                    SET five = five + 1,
+                    number_of_ratings = number_of_ratings + 1
+                    WHERE teacher_id = $1`, [teacherId], (err) => {
+                        if (err){
+                            throw err;
+                        }
+                    });
+                    break;
+                    default:
+                        throw err;
+                }
+
+                pool.query (`UPDATE teacher_rating
+                SET average = (one + two * 2 + three * 3 + four * 4 + five * 5) / number_of_ratings
+                WHERE teacher_id = $1`, [teacherId], (err) => {
+                    if (err) {
+                        throw err;
+                    }
+                });
+
+                pool.query(`UPDATE deals
+                SET reviewed = $1
+                WHERE id = $2`, [true, orderId], (err) => {
+                    if(err){
+                        throw err;
+                    }
+                });
+
+                res.render('successfulReview');
             } );
         }
     });
@@ -430,7 +634,6 @@ app.post("/user/register", async (req, res) => {
                     throw err
                 }
 
-                console.log(results.rows);
 
                 if (results.rows.length > 0) {
                     errors.push({
@@ -457,8 +660,20 @@ app.post("/user/register", async (req, res) => {
                             if (err) {
                                 throw err
                             }
+                            
+                            let teacherId = results.rows[0].id; 
+
+                            pool.query(
+                                `INSERT INTO teacher_rating (teacher_id, one, two, three, four, five, average, number_of_ratings)
+                                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,[teacherId, 0, 0, 0, 0, 0, 0, 0,], (err, results) => {
+                                    if(err) {
+                                        throw err;
+                                    }
+                                    
                             req.flash('success_msg', "Вы зарегистрированы! Пожалуйста, войдите в систему.");
                             res.redirect('/users/register_end');
+                                }
+                            );
                         }
                     );
                 }
@@ -467,10 +682,16 @@ app.post("/user/register", async (req, res) => {
     }
 });
 
+
+
+
+
 app.post("/search/go", async (req, res) =>{
     let option = req.body.searchSelector;
     let resultat = [];
+    let reviewResults = [[]];
     let subject = "";
+    let teachId = [];
     switch (option){
         case "2": 
         subject = "Мастерство выпивания пива";
@@ -500,25 +721,59 @@ app.post("/search/go", async (req, res) =>{
         FROM teacher
         LEFT JOIN teacher_info 
         ON teacher_info.id=teacher.id
-        WHERE subject = $1 AND show_me = $2`,[subject, true], (err, results) => {
+        WHERE subject = $1 AND show_me = $2`,[subject, true], async (err, results) => {
             if (err) {
                 throw (err);
             }
             for (let i = 0; i < results.rows.length;i++){
                 resultat[i] = {};
                 for (let key in results.rows[i]){
-                    resultat[i][key] = results.rows[i][key];
+                    resultat[i][key] = results.rows[i][key];   
+                }
+                teachId[i] = results.rows[i].id;
+            }
+            
+                pool.query(`SELECT * 
+                FROM reviews`,async (err,resultss) => {
+                if(err){
+                    throw(err);
+                }
+                
+            for (let i = 0; i < teachId.length; i++) {
+                let checker = false;
+                for (let j = 0; j < resultss.rows.length; j++) {
+                    if (teachId[i] === resultss.rows[j].teacher_id) {
+                    reviewResults[i].push(resultss.rows[j]);  
+                    checker = true;
+                    }
                     
                 }
+                
+                if (!checker) {
+                    reviewResults[i].push ([{
+                        message: "Нет отзывов"
+                    }])
+                }
             }
-            // console.log(typeof(resultat[0].first_name));
+
             res.render('search', {
                 resultatF: function() {
                     return 'Base64.decode("' + Buffer.from(JSON.stringify(resultat)).toString('base64') + '")';
                 },
+                resultsReviewFunction: function() {
+                    return 'Base64.decode("' + Buffer.from(JSON.stringify(reviewResults)).toString('base64') + '")';
+                },
+                reviewLength: reviewResults.length,
                 length: resultat.length,
                 option: option
             });
+            });
+            
+            
+            
+            // console.log(typeof(resultat[0].first_name));
+            
+            
         }
     );
 
@@ -604,7 +859,7 @@ if (errors.length > 0) {
             pool.query(
                 `INSERT INTO teacher_info (gender, achievements , additional_info, price_per_lesson, length_of_lesson, year_of_birth, show_me, id)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-                RETURNING id`, [gender, achievements, additionalInfo, pricePerLesson, lengthOfLesson, yearOfBirth, showMe, id], (err, results) => {
+                RETURNING id`, [gender, achievements, additionalInfo, pricePerLesson, lengthOfLesson, yearOfBirth, showMeToDB, id], (err, results) => {
                     if (err) {
                         throw err
                     }
@@ -647,6 +902,9 @@ app.listen(PORT, () => {
 
 
 
+app.use(function (req, res, next) {
+    res.status(404).render('404');
+});
 
 
 
