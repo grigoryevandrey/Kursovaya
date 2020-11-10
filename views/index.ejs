@@ -1,84 +1,227 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная</title>
-    <link rel="stylesheet" href="/styles.css">
-    <link rel="stylesheet" href="/indexStyles.css">
-   
-  </head>
-  <body>
-      <div class="main-head">
-        <h1>Заголовок</h1>
-        <ul class="nav-area">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Главная</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/indexStyles.css">
+
+</head>
+
+<body>
+  <!--  <div class="header"><h1>Заголовок</h1></div>-->
+
+  <nav>
+    <div class="logo">
+      <h4>Заголовок</h4>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a href="/users/login">Войти</a>
+      </li>
+      <li>
+        <a href="/users/register">Зарегистрироваться</a>
+      </li>
+      <li>
+        <a href="/search">Поиск</a>
+      </li>
+      <li>
+        <a href="#">Связаться с нами</a>
+      </li>
+    </ul>
+    <div class="burger">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+
+
+    <!-- <label for="toggle">&#9776;</label>
+        <input type="checkbox" id="toggle">
+
+         <div class="menu">
+          <a  href="/users/login">Войти</a>
+          <a href="/users/register">Зарегистрироваться</a>
+          <a href="/search">Поиск</a>
+          <a href="#">Связаться с нами</a>
+         </div>-->
+
+    <!--     <ul class="nav-area">
           <li id="logHref"><a  href="/users/login">Войти</a></li>    
           <li id="regHref"><a href="/users/register">Зарегистрироваться</a></li>
           <li id="searchHref"><a href="/search">Поиск</a></li>
           <li><a href="#">Связаться с нами</a></li>
         </ul>
+        -->
+  </nav>
+
+  <div class="dummy-div">
+
+  </div>
+  <div class="content">
+    <div class="welcome-div">
+      <div class="welcome-image">
       </div>
-      <div class="content">
-         <div class="welcome-div">  
-         <div class="welcome-image">
-           </div>
-           <div class="boxW welcome-words">
-             Крутые вступительные слова побуждающие воспользоваться сайтом
-             </div>
-             <div class="boxW search">
-               <h2>Меня интересует</h2>
-              <form class="searchForm" action="/search/go" method="POST">
+      <div class="welcome-container">
+        <div class="boxW welcome-words">
+          Крутые вступительные слова побуждающие воспользоваться сайтом
+        </div>
+        <div class="boxW search">
+          <h2>Меня интересует</h2>
+          <form class="searchForm" action="/search/go" method="POST">
 
-                <select class="selection" name="searchSelector" id="searchSelector">
-                         <option value="2">Мастерство выпивания пива</option>
-                         <option value="3">Техника прогуливания пар</option>
-                         <option value="4">Искусство ругательств</option>
-                         <option value="5">Навык курения</option>
-                         <option value="6">Рыгание</option>
-                </select>  
-    
-                <input type="submit" name="submit" value="Найти выбранное">
-    
-            </form>
-            </div>
-         </div>
-         <div class="white-content"> </div>
-         <div class="inspirational-text">
-             <div class="following-image">
-             </div>
-           <div class="insp-div">
-           <h2>Ну че, не ожидали?</h2>
-           А тут то тем временем еще текст подъехал. Типа, пользуйтесь нашим сайтом, и все ваще четко будет. Иначе сдохнете<br><br>Не поняли что ли? давайте пользуйтесь уже!
-         </div>
-          </div>
-    </div>
-    <div class="page-wrapper">
-    </div>
-     <div class="footer">
-       <div class="footer-content">
-       </div>
+            <select class="selection" name="searchSelector" id="searchSelector">
+              <option value="2">Мастерство выпивания пива</option>
+              <option value="3">Техника прогуливания пар</option>
+              <option value="4">Искусство ругательств</option>
+              <option value="5">Навык курения</option>
+              <option value="6">Рыгание</option>
+            </select>
 
-           <div class="footer-bottom">
-             &copy; Designed by Andrey Grigoryev
-           </div>
-     </div>
-     <script>
-      
-      
-      function notDisplay() {
-        let isOk = <%= okOk %>;
-        if(isOk){
-        document.getElementById("logHref").style.display = "none";
-        document.getElementById("regHref").style.display = "none";
+            <input type="submit" name="submit" value="Найти выбранное">
+
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="white-content"> </div>
+    <div class="inspirational-text">
+      <div class="following-image">
+      </div>
+      <div class="insp-div">
+        <h2>Ну че, не ожидали?</h2>
+        А тут то тем временем еще текст подъехал. Типа, пользуйтесь нашим сайтом, и все ваще четко будет. Иначе
+        сдохнете<br><br>Не поняли что ли? давайте пользуйтесь уже!
+      </div>
+    </div>
+  </div>
+  <div class="page-wrapper">
+  </div>
+  <div class="footer">
+    <div class="footer-content">
+    </div>
+
+    <div class="footer-bottom">
+      &copy; Designed by Andrey Grigoryev
+    </div>
+  </div>
+
+  <script src="/js/mainPage.js"></script>
+  <script>
+    var Base64 = {
+      _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+      encode: function (e) {
+        var t = "";
+        var n, r, i, s, o, u, a;
+        var f = 0;
+        e = Base64._utf8_encode(e);
+        while (f < e.length) {
+          n = e.charCodeAt(f++);
+          r = e.charCodeAt(f++);
+          i = e.charCodeAt(f++);
+          s = n >> 2;
+          o = (n & 3) << 4 | r >> 4;
+          u = (r & 15) << 2 | i >> 6;
+          a = i & 63;
+          if (isNaN(r)) {
+            u = a = 64
+          } else if (isNaN(i)) {
+            a = 64
+          }
+          t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this
+            ._keyStr.charAt(a)
         }
-        else{
-        document.getElementById("logHref").style.display = "block";
-        document.getElementById("regHref").style.display = "block";
+        return t
+      },
+      decode: function (e) {
+        var t = "";
+        var n, r, i;
+        var s, o, u, a;
+        var f = 0;
+        e = e.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+        while (f < e.length) {
+          s = this._keyStr.indexOf(e.charAt(f++));
+          o = this._keyStr.indexOf(e.charAt(f++));
+          u = this._keyStr.indexOf(e.charAt(f++));
+          a = this._keyStr.indexOf(e.charAt(f++));
+          n = s << 2 | o >> 4;
+          r = (o & 15) << 4 | u >> 2;
+          i = (u & 3) << 6 | a;
+          t = t + String.fromCharCode(n);
+          if (u != 64) {
+            t = t + String.fromCharCode(r)
+          }
+          if (a != 64) {
+            t = t + String.fromCharCode(i)
+          }
         }
-        
+        t = Base64._utf8_decode(t);
+        return t
+      },
+      _utf8_encode: function (e) {
+        e = e.replace(/\r\n/g, "\n");
+        var t = "";
+        for (var n = 0; n < e.length; n++) {
+          var r = e.charCodeAt(n);
+          if (r < 128) {
+            t += String.fromCharCode(r)
+          } else if (r > 127 && r < 2048) {
+            t += String.fromCharCode(r >> 6 | 192);
+            t += String.fromCharCode(r & 63 | 128)
+          } else {
+            t += String.fromCharCode(r >> 12 | 224);
+            t += String.fromCharCode(r >> 6 & 63 | 128);
+            t += String.fromCharCode(r & 63 | 128)
+          }
+        }
+        return t
+      },
+      _utf8_decode: function (e) {
+        var t = "";
+        var n = 0;
+        var r = c1 = c2 = 0;
+        while (n < e.length) {
+          r = e.charCodeAt(n);
+          if (r < 128) {
+            t += String.fromCharCode(r);
+            n++
+          } else if (r > 191 && r < 224) {
+            c2 = e.charCodeAt(n + 1);
+            t += String.fromCharCode((r & 31) << 6 | c2 & 63);
+            n += 2
+          } else {
+            c2 = e.charCodeAt(n + 1);
+            c3 = e.charCodeAt(n + 2);
+            t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
+            n += 3
+          }
+        }
+        return t
       }
+    }
+      
+    let teachersResults  = <%- teachersFunction() %>;
+    teachersResults = JSON.parse(teachersResults);
+    console.log(teachersResults);
 
-      notDisplay();
-    </script>
-  </body>
+
+    // function notDisplay() {
+    //   let isOk = <%= okOk %>;
+    //   if(isOk){
+    //   document.getElementById("logHref").style.display = "none";
+    //   document.getElementById("regHref").style.display = "none";
+    //   }
+    //   else{
+    //   document.getElementById("logHref").style.display = "block";
+    //   document.getElementById("regHref").style.display = "block";
+    //   }
+
+    // }
+
+    // notDisplay();
+  </script>
+</body>
+
 </html>

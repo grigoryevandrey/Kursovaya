@@ -10,6 +10,7 @@ const passport = require("passport");
 
 
 const initializePassport = require("./passportConfig");
+const e = require('express');
 
 initializePassport(passport);
 
@@ -40,10 +41,73 @@ app.use(passport.session());
 app.use(flash());
 
 app.get('/', (req, res) => {
-    res.render('index', {
-        okOk: req.isAuthenticated()
+    let teachers = [];
+
+    pool.query(`SELECT * 
+    FROM teacher_rating
+    WHERE average > 4`, (err, results) => {
+        if (err) {
+            throw err;
+        }
+        
+
+        let len = results.rows.length;
+        let randNums = [];
+
+        if (len === 1) {
+          randNums = [0,0,0];
+        }
+        else if (len === 2) {
+            randNums = [0,1,0];
+            
+        } else {
+            randNums.forEach((item, i, arr) => {
+                arr[i] = getRandomInt(len);
+        });
+            while (randNums[1] == randNums[0]) {
+                randNums[1] = getRandomInt(len);
+            }
+            while (randNums[2] == randNums[0] || randNums[2] == randNums[1]) {
+                randNums[2] = getRandomInt(len);
+            }
+          
+        }
+
+        randNums.forEach((item, i, arr) => {
+                arr[i] = results.rows[item].teacher_id;
+        });
+        
+        pool.query (`SELECT *
+        FROM teacher
+        LEFT JOIN teacher_info ON teacher_info.id=teacher.id
+        WHERE teacher.id = $1 OR teacher.id = $2 OR teacher.id = $3`, [randNums[0], randNums[1], randNums[2]], (err, results) => {
+            if (err) {
+                throw err;
+            }
+
+            results.rows.forEach((item, i, arr) => {
+                 teachers[i] = item; 
+            });
+            console.log(teachers);
+            res.render('index', {
+                okOk: req.isAuthenticated(),
+                teachersFunction: function() {
+                    return 'Base64.decode("' + Buffer.from(JSON.stringify(teachers)).toString('base64') + '")';
+                }
+            });
+              
+        });
+        
+        
+        // console.log(getRandomInt(len));
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * Math.floor(max));
+          }
+          
     });
-    console.log(req.isAuthenticated());
+
+    
 });
 
 app.get('/profile', checkNotAuthenticated, (req, res) => {
@@ -523,7 +587,7 @@ app.post("/review", async(req,res) => {
                 }
 
                 pool.query (`UPDATE teacher_rating
-                SET average = (one + two * 2 + three * 3 + four * 4 + five * 5) / number_of_ratings
+                SET average = (one + two * 2 + three * 3 + four * 4 + five * 5) ::float / number_of_ratings
                 WHERE teacher_id = $1`, [teacherId], (err) => {
                     if (err) {
                         throw err;

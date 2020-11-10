@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/indexStyles.css">
+   
+  </head>
+  <body>
+      <div class="main-head">
+        <h1>Заголовок</h1>
+        <ul class="nav-area">
+          <li id="logHref"><a  href="/users/login">Войти</a></li>    
+          <li id="regHref"><a href="/users/register">Зарегистрироваться</a></li>
+          <li id="searchHref"><a href="/search">Поиск</a></li>
+          <li><a href="#">Связаться с нами</a></li>
+        </ul>
+      </div>
+      <div class="content">
+         <div class="welcome-div">  
+         <div class="welcome-image">
+           </div>
+           <div class="boxW welcome-words">
+             Крутые вступительные слова побуждающие воспользоваться сайтом
+             </div>
+             <div class="boxW search">
+               <h2>Меня интересует</h2>
+              <form class="searchForm" action="/search/go" method="POST">
+
+                <select class="selection" name="searchSelector" id="searchSelector">
+                         <option value="2">Мастерство выпивания пива</option>
+                         <option value="3">Техника прогуливания пар</option>
+                         <option value="4">Искусство ругательств</option>
+                         <option value="5">Навык курения</option>
+                         <option value="6">Рыгание</option>
+                </select>  
+    
+                <input type="submit" name="submit" value="Найти выбранное">
+    
+            </form>
+            </div>
+         </div>
+         <div class="white-content"> </div>
+         <div class="inspirational-text">
+             <div class="following-image">
+             </div>
+           <div class="insp-div">
+           <h2>Ну че, не ожидали?</h2>
+           А тут то тем временем еще текст подъехал. Типа, пользуйтесь нашим сайтом, и все ваще четко будет. Иначе сдохнете<br><br>Не поняли что ли? давайте пользуйтесь уже!
+         </div>
+          </div>
+    </div>
+    <div class="page-wrapper">
+    </div>
+     <div class="footer">
+       <div class="footer-content">
+       </div>
+
+           <div class="footer-bottom">
+             &copy; Designed by Andrey Grigoryev
+           </div>
+     </div>
+     <script>
+      
+      
+      function notDisplay() {
+        let isOk = <%= okOk %>;
+        if(isOk){
+        document.getElementById("logHref").style.display = "none";
+        document.getElementById("regHref").style.display = "none";
+        }
+        else{
+        document.getElementById("logHref").style.display = "block";
+        document.getElementById("regHref").style.display = "block";
+        }
+        
+      }
+
+      notDisplay();
+    </script>
+  </body>
+</html>
