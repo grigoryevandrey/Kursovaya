@@ -7,7 +7,7 @@
   <title>Главная</title>
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/indexStyles.css">
-
+ <link rel="stylesheet" href="/fontawesome/css/all.min.css">
 </head>
 
 <body>
@@ -36,25 +36,6 @@
       <div class="line2"></div>
       <div class="line3"></div>
     </div>
-
-
-    <!-- <label for="toggle">&#9776;</label>
-        <input type="checkbox" id="toggle">
-
-         <div class="menu">
-          <a  href="/users/login">Войти</a>
-          <a href="/users/register">Зарегистрироваться</a>
-          <a href="/search">Поиск</a>
-          <a href="#">Связаться с нами</a>
-         </div>-->
-
-    <!--     <ul class="nav-area">
-          <li id="logHref"><a  href="/users/login">Войти</a></li>    
-          <li id="regHref"><a href="/users/register">Зарегистрироваться</a></li>
-          <li id="searchHref"><a href="/search">Поиск</a></li>
-          <li><a href="#">Связаться с нами</a></li>
-        </ul>
-        -->
   </nav>
 
   <div class="dummy-div">
@@ -86,7 +67,55 @@
         </div>
       </div>
     </div>
-    <div class="white-content"> </div>
+    <div class="white-content">
+      <div class="carousel-container-teachers">
+        <i class="fas fa-angle-double-right"></i>
+        <div class="carousel-slide">
+          <div class="thirdRev" id="lastClone" name="teacherDivSlide">
+            <img id="avatar3" height="100px" width="100px" alt="Нет аватара">
+            <div class="name">  </div>
+            <div class="average"></div>
+            <div class="subject"></div>
+            <div class="achievements"></div>
+          </div>
+
+          <div class="firstRev" name="teacherDivSlide">
+            <img id="avatar1" height="100px" width="100px" alt="Нет аватара">
+            <div class="name">  </div>
+            <div class="average"></div>
+            <div class="subject"></div>
+            <div class="achievements"></div>
+          </div>
+
+          <div class="secondRev" name="teacherDivSlide">
+            <img id="avatar2" height="100px" width="100px" alt="Нет аватара">
+            <div class="name">  </div>
+            <div class="average"></div>
+            <div class="subject"></div>
+            <div class="achievements"></div>
+          </div>
+
+          <div class="thirdRev" name="teacherDivSlide">
+            <img id="avatar3" height="100px" width="100px" alt="Нет аватара">
+            <div class="name">  </div>
+            <div class="average"></div>
+            <div class="subject"></div>
+            <div class="achievements"></div>
+          </div>
+
+          <div class="firstRev" id="firstClone" name="teacherDivSlide">
+            <img id="avatar1" height="100px" width="100px" alt="Нет аватара">
+            <div class="name">  </div>
+            <div class="average"></div>
+            <div class="subject"></div>
+            <div class="achievements"></div>
+          </div>
+        </div>
+      </div>
+      
+      <button id="prevBtn">Prev<i class="fas fa-angle-double-right"></i></button>
+      <button id="nextBtn">Next</button> <i class="fab fa-500px"></i>
+    </div>
     <div class="inspirational-text">
       <div class="following-image">
       </div>
@@ -107,7 +136,6 @@
       &copy; Designed by Andrey Grigoryev
     </div>
   </div>
-
   <script src="/js/mainPage.js"></script>
   <script>
     var Base64 = {
@@ -204,8 +232,43 @@
       
     let teachersResults  = <%- teachersFunction() %>;
     teachersResults = JSON.parse(teachersResults);
-    console.log(teachersResults);
 
+    let reviewResults = <%- reviewsFunction() %>;
+    reviewResults = JSON.parse(reviewResults);
+    console.log(teachersResults);
+    let divname = [];
+
+    teachersResults.forEach((item, i, arr) => {
+      
+
+    switch (i) {
+      case 0:
+      divname = document.querySelectorAll('.firstRev');
+      break;
+      case 1:
+      divname = document.querySelectorAll('.secondRev');
+      break;
+      case 2:
+      divname = document.querySelectorAll('.thirdRev');
+      break;
+      default:
+      divname = document.querySelector('.firstRev');
+ 
+    }
+
+    
+
+    divname.forEach((item, ind, arr) => {
+    arr[ind].querySelector(`#avatar${i+1}`).src = `/userPhotos/${teachersResults[i].id}.jpg`;
+
+    arr[ind].querySelector('.name').textContent = teachersResults[i].first_name +"  " + teachersResults[i].last_name;
+    arr[ind].querySelector('.average').textContent = `Средняя оценка: ${teachersResults[i].average}`;
+    arr[ind].querySelector('.achievements').textContent = `Достижения: ${teachersResults[i].achievements}`;
+    arr[ind].querySelector('.subject').textContent = `Предмет: ${teachersResults[i].subject}`; 
+    });
+
+    
+    });
 
     // function notDisplay() {
     //   let isOk = <%= okOk %>;

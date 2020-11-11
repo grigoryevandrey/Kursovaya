@@ -226,8 +226,30 @@ h4{
 /*2oi block posle welcome div*/
 
 .white-content{
-  height: 300px;
+  height: 900px;
+}
+
+.carousel-container-teachers {
+  width: 60%;
+  margin: auto;
+  border: 5px solid black;
+  overflow: hidden;
+}
+
+.carousel-slide {
+  display: flex;
+  width: 500%;
+  height: 500px;
+  
+  
+}
+
+.firstRev,
+.secondRev,
+.thirdRev {
   width: 100%;
+  background-color:red;
+  border: 5px solid blue;
 }
 
 /*image pod welcome div*/

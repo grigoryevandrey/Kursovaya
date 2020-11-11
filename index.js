@@ -41,7 +41,8 @@ app.use(passport.session());
 app.use(flash());
 
 app.get('/', (req, res) => {
-    let teachers = [];
+    let teachers = [],
+    reviews = [];
 
     pool.query(`SELECT * 
     FROM teacher_rating
@@ -52,7 +53,7 @@ app.get('/', (req, res) => {
         
 
         let len = results.rows.length;
-        let randNums = [];
+        let randNums = [0,0,0];
 
         if (len === 1) {
           randNums = [0,0,0];
@@ -80,22 +81,108 @@ app.get('/', (req, res) => {
         pool.query (`SELECT *
         FROM teacher
         LEFT JOIN teacher_info ON teacher_info.id=teacher.id
+        LEFT JOIN teacher_rating ON teacher_rating.teacher_id=teacher.id
         WHERE teacher.id = $1 OR teacher.id = $2 OR teacher.id = $3`, [randNums[0], randNums[1], randNums[2]], (err, results) => {
             if (err) {
                 throw err;
             }
-
-            results.rows.forEach((item, i, arr) => {
-                 teachers[i] = item; 
-            });
-            console.log(teachers);
-            res.render('index', {
-                okOk: req.isAuthenticated(),
-                teachersFunction: function() {
-                    return 'Base64.decode("' + Buffer.from(JSON.stringify(teachers)).toString('base64') + '")';
+            
+            if(results.rows.length == 1) {
+                for (let i = 0; i < 3; i++) {
+                    teachers[i] = results.rows[0];
                 }
+            }
+            else if (results.rows.length == 2){
+                    teachers[0] = results.rows[0];
+                    teachers[1] = results.rows[1];
+                    teachers[2] = results.rows[0];
+            }
+            else {
+                results.rows.forEach((item, i, arr) => {
+                    teachers[i] = item; 
+               });
+            }
+
+           
+            // console.log(teachers);
+            
+           
+            
+            pool.query (`SELECT *
+            FROM reviews
+            WHERE rating > 3`, (err, results) => {
+                let lenRev = results.rows.length;
+                let randRev = [0,0,0];
+
+
+                if (lenRev  === 1) {
+                    randRev = [0,0,0];
+                    
+                  }
+                  else if (lenRev  === 2) {
+                    randRev = [0,1,0];
+                      
+                  } else {
+                      
+                    randRev.forEach((item, i, arr) => {
+                          arr[i] = getRandomInt(lenRev);
+                  });
+                      while (randRev[1] == randRev[0]) {
+                        randRev[1] = getRandomInt(lenRev);
+                      }
+                      while (randRev[2] == randRev[0] || randRev[2] == randRev[1]) {
+                        randRev[2] = getRandomInt(lenRev);
+                      }
+                    
+                  }
+          
+                //   console.log(randRev);
+
+                  randRev.forEach((item, i, arr) => {
+                          arr[i] = results.rows[item].id;
+                  });
+
+                  pool.query (`SELECT *
+                  FROM reviews
+                WHERE id = $1 OR id = $2 OR id = $3`, [randRev[0], randRev[1], randRev[2]], (err, results) => {
+                    if (err) {
+                        throw err;
+                    }
+
+                    if(results.rows.length == 1) {
+                        for (let i = 0; i < 3; i++) {
+                            reviews[i] = results.rows[0];
+                        }
+                    }
+                    else if (results.rows.length == 2){
+                        reviews[0] = results.rows[0];
+                            reviews[1] = results.rows[1];
+                            reviews[2] = results.rows[0];
+                    }
+                    else {
+                        results.rows.forEach((item, i, arr) => {
+                            reviews[i] = item; 
+                     }); 
+                    }
+                    
+                //    console.log(reviews);
+
+                   res.render('index', {
+                    okOk: req.isAuthenticated(),
+                    teachersFunction: function() {
+                        return 'Base64.decode("' + Buffer.from(JSON.stringify(teachers)).toString('base64') + '")';
+                    },
+                    reviewsFunction: function() {
+                        return 'Base64.decode("' + Buffer.from(JSON.stringify(reviews)).toString('base64') + '")';
+                    }
+
+                });
+                });
+
+                function getRandomInt(max) {
+                    return Math.floor(Math.random() * Math.floor(max));
+                  }
             });
-              
         });
         
         
