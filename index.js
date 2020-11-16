@@ -74,10 +74,13 @@ app.get('/', (req, res) => {
           
         }
 
+        
+
         randNums.forEach((item, i, arr) => {
                 arr[i] = results.rows[item].teacher_id;
         });
         
+
         pool.query (`SELECT *
         FROM teacher
         LEFT JOIN teacher_info ON teacher_info.id=teacher.id
@@ -86,7 +89,7 @@ app.get('/', (req, res) => {
             if (err) {
                 throw err;
             }
-            
+
             if(results.rows.length == 1) {
                 for (let i = 0; i < 3; i++) {
                     teachers[i] = results.rows[0];
@@ -144,7 +147,8 @@ app.get('/', (req, res) => {
 
                   pool.query (`SELECT *
                   FROM reviews
-                WHERE id = $1 OR id = $2 OR id = $3`, [randRev[0], randRev[1], randRev[2]], (err, results) => {
+                  LEFT JOIN teacher ON teacher.id=reviews.teacher_id
+                WHERE reviews.id = $1 OR reviews.id = $2 OR reviews.id = $3`, [randRev[0], randRev[1], randRev[2]], (err, results) => {
                     if (err) {
                         throw err;
                     }

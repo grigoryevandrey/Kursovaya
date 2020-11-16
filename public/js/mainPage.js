@@ -5,12 +5,12 @@ const navSlide = () => {
     const navLinks = document.querySelectorAll('.nav-links li');
 
     burger.addEventListener('click', () => {
-        //toggle nav
-       actualNav.classList.toggle('nav-opa');
-       nav.classList.toggle('nav-active');
-       //animate links
-       navLinks.forEach((link, index) => {
-        if (link.style.animation) {
+            //toggle nav
+        actualNav.classList.toggle('nav-opa');
+        nav.classList.toggle('nav-active');
+        //animate links
+        navLinks.forEach((link, index) => {
+            if (link.style.animation) {
             link.style.animation = '';
         }
         else {
@@ -54,8 +54,6 @@ const teachersSlide = () => {
     let counter = 1;
     let size = carouselSlide.clientWidth/5;
 
-    // console.log(carouselDivs[0].clientWidth)
-    // console.log(carouselSlide.clientWidth/5);
 
     
     carouselSlide.style.transform = `translateX(${(-size * counter)}px)`;
@@ -101,3 +99,56 @@ const teachersSlide = () => {
 teachersSlide();
 
 
+const reviewsSlide = () => {
+    const carouselSlide = document.querySelector('.carousel-slide-review');
+    const carouselDivs = document.querySelectorAll('[name="reviewDivSlide"]');
+    
+    //buttons
+    const prevBtn = document.querySelector('#prevBtnRev');
+    const nextBtn = document.querySelector('#nextBtnRev');
+ 
+    //counter
+    let counter = 1;
+    let size = carouselSlide.clientWidth/5;
+    
+    carouselSlide.style.transform = `translateX(${(-size * counter)}px)`;
+
+    //Button listeners
+    window.addEventListener('resize', () => {
+        size = carouselSlide.clientWidth/5;
+        carouselSlide.style.transition = "none";
+        carouselSlide.style.transform = `translateX(${(-size * counter)}px)`;
+    });
+    
+
+    nextBtn.addEventListener('click', () => {
+        if (counter >= carouselDivs.length - 1 ) return;
+         carouselSlide.style.transition = "transform 0.4s ease-in-out";
+         counter++;
+         carouselSlide.style.transform = `translateX(${(-size * counter)}px)`;
+             });
+    
+    prevBtn.addEventListener('click', () => {
+    if (counter <= 0 ) return;
+     carouselSlide.style.transition = "transform 0.4s ease-in-out";
+    counter--;
+     carouselSlide.style.transform = `translateX(${(-size * counter)}px)`;
+          });
+      
+          carouselSlide.addEventListener('transitionend', ()=> {
+                 if(carouselDivs[counter].id === 'lastCloneReview') {
+                     carouselSlide.style.transition = 'none';
+                     counter = carouselDivs.length - 2;
+                     carouselSlide.style.transform = `translateX(${(-size * counter)}px)`;
+                 }
+
+                 if(carouselDivs[counter].id === 'firstCloneReview') {
+                    carouselSlide.style.transition = 'none';
+                    counter = carouselDivs.length - counter;
+                    carouselSlide.style.transform = `translateX(${(-size * counter)}px)`;
+                 }
+          });
+             
+}
+
+reviewsSlide();

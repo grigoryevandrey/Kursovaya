@@ -5,6 +5,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Главная</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,200;1,400;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/indexStyles.css">
  <link rel="stylesheet" href="/fontawesome/css/all.min.css">
@@ -61,60 +63,72 @@
               <option value="6">Рыгание</option>
             </select>
 
-            <input type="submit" name="submit" value="Найти выбранное">
+            <input type="submit" name="submit" value="НАЙТИ ВЫБРАННОЕ">
 
           </form>
         </div>
       </div>
     </div>
     <div class="white-content">
+      <div class="slider-header"><h2>Наши эксперты</h2></div>
       <div class="carousel-container-teachers">
-        <i class="fas fa-angle-double-right"></i>
+        <i class="fas fa-angle-double-left" id="prevBtn" ></i>
+        <i class="fas fa-angle-double-right" id="nextBtn"></i>
+
         <div class="carousel-slide">
           <div class="thirdRev" id="lastClone" name="teacherDivSlide">
-            <img id="avatar3" height="100px" width="100px" alt="Нет аватара">
+            <div class="teacher-cont">
+              <div class="avatar"><img id="avatar3" height="50%" width="50%" alt="Нет аватара"></div>
+            <div class="name">  </div>
+            <div class="average"></div>
+            <div class="subject"></div>
+            <div class="achievements"></div>
+          </div></div>
+
+          <div class="firstRev" name="teacherDivSlide">
+            <div class="teacher-cont">
+
+            <div class="avatar"><img id="avatar1" height="300px" width="200px" alt="Нет аватара"></div>
             <div class="name">  </div>
             <div class="average"></div>
             <div class="subject"></div>
             <div class="achievements"></div>
           </div>
-
-          <div class="firstRev" name="teacherDivSlide">
-            <img id="avatar1" height="100px" width="100px" alt="Нет аватара">
-            <div class="name">  </div>
-            <div class="average"></div>
-            <div class="subject"></div>
-            <div class="achievements"></div>
           </div>
 
           <div class="secondRev" name="teacherDivSlide">
-            <img id="avatar2" height="100px" width="100px" alt="Нет аватара">
+            <div class="teacher-cont">
+              <div class="avatar"><img id="avatar2" height="300px" width="50%" alt="Нет аватара"></div>
             <div class="name">  </div>
             <div class="average"></div>
             <div class="subject"></div>
             <div class="achievements"></div>
+          </div>
           </div>
 
           <div class="thirdRev" name="teacherDivSlide">
-            <img id="avatar3" height="100px" width="100px" alt="Нет аватара">
+            <div class="teacher-cont">
+              <div class="avatar"> <img id="avatar3" height="50%" width="50%" alt="Нет аватара"></div>
             <div class="name">  </div>
             <div class="average"></div>
             <div class="subject"></div>
             <div class="achievements"></div>
           </div>
+          </div>
 
           <div class="firstRev" id="firstClone" name="teacherDivSlide">
-            <img id="avatar1" height="100px" width="100px" alt="Нет аватара">
+            <div class="teacher-cont">
+              <div class="avatar"><img id="avatar1" height="50%" width="50%" alt="Нет аватара"></div>
             <div class="name">  </div>
             <div class="average"></div>
             <div class="subject"></div>
             <div class="achievements"></div>
+          </div>
           </div>
         </div>
       </div>
       
-      <button id="prevBtn">Prev<i class="fas fa-angle-double-right"></i></button>
-      <button id="nextBtn">Next</button> <i class="fab fa-500px"></i>
+
     </div>
     <div class="inspirational-text">
       <div class="following-image">
@@ -126,9 +140,58 @@
       </div>
     </div>
   </div>
-  <div class="page-wrapper">
+  <div class="second-slider-container">
+    <div class="slider-header-review"><h2>Наши отзывы</h2></div>
+      <div class="carousel-container-review">
+        <i class="fas fa-angle-double-left" id="prevBtnRev" ></i>
+        <i class="fas fa-angle-double-right" id="nextBtnRev"></i>
+
+        <div class="carousel-slide-review">
+          <div class="thirdReview" id="lastCloneReview" name="reviewDivSlide">
+            <div class="review-cont">
+            <div class="review"></div>
+            <div class="name-of-customer"></div>
+            <div class="subject"></div>
+          </div></div>
+
+          <div class="firstReview" name="reviewDivSlide">
+            <div class="review-cont">
+              <div class="review"></div>
+              <div class="name-of-customer"></div>
+              <div class="subject"></div>
+          </div>
+          </div>
+
+          <div class="secondReview" name="reviewDivSlide">
+            <div class="review-cont">
+              <div class="review"></div>
+              <div class="name-of-customer"></div>
+              <div class="subject"></div>
+          </div>
+          </div>
+
+          <div class="thirdReview" name="reviewDivSlide">
+            <div class="review-cont">
+              <div class="review"></div>
+              <div class="name-of-customer"></div>
+              <div class="subject"></div>
+          </div>
+          </div>
+
+          <div class="firstReview" id="firstCloneReview" name="reviewDivSlide">
+            <div class="review-cont">
+              <div class="review"></div>
+              <div class="name-of-customer"></div>
+              <div class="subject"></div>
+          </div>
+          </div>
+        </div>
+      </div>
+      
   </div>
   <div class="footer">
+    <div class="page-wrapper">
+    </div>
     <div class="footer-content">
     </div>
 
@@ -235,7 +298,7 @@
 
     let reviewResults = <%- reviewsFunction() %>;
     reviewResults = JSON.parse(reviewResults);
-    console.log(teachersResults);
+    console.log(reviewResults);
     let divname = [];
 
     teachersResults.forEach((item, i, arr) => {
@@ -253,21 +316,43 @@
       break;
       default:
       divname = document.querySelector('.firstRev');
- 
     }
 
-    
 
     divname.forEach((item, ind, arr) => {
     arr[ind].querySelector(`#avatar${i+1}`).src = `/userPhotos/${teachersResults[i].id}.jpg`;
 
-    arr[ind].querySelector('.name').textContent = teachersResults[i].first_name +"  " + teachersResults[i].last_name;
-    arr[ind].querySelector('.average').textContent = `Средняя оценка: ${teachersResults[i].average}`;
-    arr[ind].querySelector('.achievements').textContent = `Достижения: ${teachersResults[i].achievements}`;
-    arr[ind].querySelector('.subject').textContent = `Предмет: ${teachersResults[i].subject}`; 
+    arr[ind].querySelector('.name').innerHTML = teachersResults[i].first_name +"  " + teachersResults[i].last_name;
+    arr[ind].querySelector('.average').innerHTML = `<span class="averSpan">Средняя оценка:  </span><span class="averNumSpan">${teachersResults[i].average}</span>`;
+    arr[ind].querySelector('.achievements').innerHTML = `<span>Достижения: </span>${teachersResults[i].achievements}`;
+    arr[ind].querySelector('.subject').innerHTML = `<span>Предмет: </span>${teachersResults[i].subject}`; 
     });
 
     
+    });
+
+
+    reviewResults.forEach((item, i, arr) => {
+        
+      switch (i) {
+        case 0:
+          divname = document.querySelectorAll('.firstReview');
+          break;
+        case 1:
+          divname = document.querySelectorAll('.secondReview');
+          break;
+        case 2:
+          divname = document.querySelectorAll('.thirdReview');
+          break;
+        default: 
+         divname = document.querySelector('.firstReview');
+      }
+
+      divname.forEach((item, ind, arr) => { 
+        arr[ind].querySelector('.review').innerHTML = `"${reviewResults[i].review}"`;
+        arr[ind].querySelector('.name-of-customer').innerHTML = `Имя ученика: ${reviewResults[i].full_name}`;
+        arr[ind].querySelector('.subject').innerHTML = `Предмет: ${reviewResults[i].subject}`;
+      });
     });
 
     // function notDisplay() {
