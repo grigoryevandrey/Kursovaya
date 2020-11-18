@@ -6,47 +6,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Регистрация</title>
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/nav.css">
     <link rel="stylesheet" href="/registration.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:400,300" type="text/css">
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
 </head>
 
 <body>
+    <nav>
+        <div class="logo">
+          <a href="/"><h4>Заголовок</h4></a>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="/users/login">Войти</a>
+          </li>
+          <li>
+            <a href="/users/register">Зарегистрироваться</a>
+          </li>
+          <li>
+            <a href="/search">Поиск</a>
+          </li>
+          <li>
+            <a href="#">Связаться с нами</a>
+          </li>
+        </ul>
+        <div class="burger">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+      </nav>
     <form class="boxR" action="/user/register" method="POST">
 
-        <fieldset>
 
-            <h1>Регистрация</h1>
-<legend><span class="section">1</span>Основная информация</legend>
-            <label for="">Имя:</label>
-            <input type="text" id="name" name="name" placeholder="" required>
+            <div class="header">
+                <h1>Регистрация</h1>
+            </div>
 
-            <label for="">Фамилия:</label>
-            <input type="text" id="lastName" name="lastName" placeholder="" required>
+            <div class="box box1">
+                <i class="far fa-user"></i>
+                <input type="text" id="name" name="name" placeholder="Имя" required>
+            </div>
 
-            <label for="">E-mail:</label>
-            <input type="text" id="email" name="email" placeholder="" required>
-
-            <label for="">Пароль:</label>
-            <input type="password" id="password" name="password" required>
-
-            <label for="">Повторите пароль:</label>
-            <input type="password" id="password2" name="password2" required>
+            <div class="box box2">
+                <i class="far fa-user"></i>
+                <input type="text" id="lastName" name="lastName" placeholder="Фамилия" required>
+            </div>
             
-            <label for="">Предметная область</label>
-            <select name="subject" id="subject">
-                <option value="1">Мастерство выпивания пива</option>
-                <option value="2">Техника прогуливания пар</option>
-                <option value="3">Искусство ругательств</option>
-                <option value="4">Навык курения</option>
-                <option value="5">Рыгание</option>
-       </select>  
 
-            <label for="">Номер телефона: </label>
-            <input type="text" id="phone" name="phone" required>
+            <div class="box box3">
+                <i class="far fa-envelope"></i>
+                <input type="text" id="email" name="email" placeholder="Email" required>
+            </div>
+            
+            
+            <div class="box box4">
+                <i class="fas fa-mobile-alt"></i>
+                <input type="text" id="phone" name="phone" placeholder="Номер телефона" required>
+            </div>
+            
 
-            <input type="submit" name="" value="Зарегистрироваться">
+            <div class="box box5">
+                <i class="fas fa-key"></i>
+                <input type="password" id="password" name="password" placeholder="Пароль" required>
+            </div>
+            
 
-        </fieldset>
+            <div class="box box6">
+                <i class="fas fa-key"></i>
+                <input type="password" id="password2" name="password2" placeholder="Пароль повторно" required>
+            </div>
+            
+            
+            <div class="box7 selectBox">
+            <div>
+                <label for="">Предметная область </label> 
+                <i class="far fa-hand-point-right"></i>
+            </div>
+            <div>
+                <select name="subject" id="subject">
+                    <option value="1">Мастерство выпивания пива</option>
+                    <option value="2">Техника прогуливания пар</option>
+                    <option value="3">Искусство ругательств</option>
+                    <option value="4">Навык курения</option>
+                    <option value="5">Рыгание</option>
+           </select>  
+        </div>
+        </div>
+            
+
+
+       <div class="box8">
+           <input type="submit" name="" value="РЕГИСТРАЦИЯ">
+    </div>
+            
 
     </form>
 </body>

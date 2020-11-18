@@ -4,44 +4,94 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1</title>
+    <title>Информация</title>
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/nav.css">
     <link rel="stylesheet" href="/aboutMe.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
 </head>
 
 <body>
+    <nav>
+        <div class="logo">
+          <a href="/"><h4>Заголовок</h4></a>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="/users/login">Войти</a>
+          </li>
+          <li>
+            <a href="/users/register">Зарегистрироваться</a>
+          </li>
+          <li>
+            <a href="/search">Поиск</a>
+          </li>
+          <li>
+            <a href="#">Связаться с нами</a>
+          </li>
+        </ul>
+        <div class="burger">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+      </nav>
+      <div class="form-wrapper">
+    <form class="boxR" action="/user/register_end" method="post">
 
-    <form class="box" action="/user/register_end" method="post">
+        <div class="header"><h1>Заполните информацию о себе</h1></div>
 
-        <h1>Заполните информацию о себе</h1>
+        <div class="box box1">
+            <label for="">Ваш пол:</label>
+            <select name="gender" id="gender">
+                <option value="1">Мужской</option>
+                <option value="2">Женский</option>
+            </select> 
+        </div>
 
-        <label for="">Ваш пол:</label>
-        <select name="gender" id="gender">
-            <option value="1">Мужской</option>
-            <option value="2">Женский</option>
-   </select>  
+        <div class="box box2">
+            <label for="">Год рождения:</label>
+            <input type="text" name="yearOfBirth" id="yearOfBirth" placeholder="">
+        </div>
+        
 
-        <label for="">Год рождения:</label>
-        <input type="text" name="yearOfBirth" id="yearOfBirth" placeholder="">
+        <div class="box box3"> 
+            <label for="">Информация: </label>
+            <textarea type="text" name="additionalInfo" id="additionalInfo" rows="10" cols="40"></textarea>
+        </div>
+       
 
-        <label for="">Информация: </label>
-        <textarea type="text" name="additionalInfo" id="additionalInfo" rows="10" cols="40"></textarea>
+        <div class="box box4">
+            <label for="">Ваши достижения:</label>
+            <textarea type="text" name="achievements" id="achievements" rows="10" cols="40"></textarea>
+        </div>
+        
 
-        <label for="">Ваши достижения:</label>
-        <textarea type="text" name="achievements" id="achievements" rows="8" cols="40"></textarea>
+        <div class="box box5">
+            <label for="">Стоимость занятий:</label>
+            <input type="text" name="pricePerLesson" id="pricePerLesson" placeholder=""><span>руб./занятие</span>
+        </div>
+        
 
-        <label for="">Стоимость занятий:</label>
-        <input type="text" name="pricePerLesson" id="pricePerLesson" placeholder="">руб./занятие<br>
+        <div class="box box6">
+            <label for="">Длительность занятия (в минутах):</label>
+            <input type="text" name="lengthOfLesson" id="lengthOfLesson" placeholder="">
+        </div>
+        
 
-        <label for="">Длительность занятия (в минутах):</label>
-        <input type="text" name="lengthOfLesson" id="lengthOfLesson" placeholder="">
+        <div class="box box7">
+            <label for="showMe">Показывать меня в поиске</label>
+            <input type="checkbox" name="showMe" id="showMe" value="showMe">
+        </div>
+        
 
-        <label for="">Показывать меня в поиске</label>
-        <input type="checkbox" name="showMe" id="showMe" value="showMe">
-
-        <input type="submit" name="" value="Завершить регистрацию">
+        <div class="box8">
+            <input type="submit" name="" value="СОХРАНИТЬ">
+        </div>
+        
 
     </form>
+</div>
 <script>
     document.getElementById('yearOfBirth').value = "<%= yearOfBirth %>";
     document.getElementById('additionalInfo').value = "<%= additionalInfo %>";

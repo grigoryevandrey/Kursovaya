@@ -366,8 +366,8 @@ app.get('/search', (req, res) => {
     pool.query(
         `SELECT * 
         FROM teacher
-        LEFT JOIN teacher_info 
-        ON teacher_info.id=teacher.id
+        LEFT JOIN teacher_info ON teacher_info.id=teacher.id
+        LEFT JOIN teacher_rating ON teacher_rating.teacher_id=teacher.id
         WHERE show_me = $1`, [true], (err, results) => {
             if (err) {
                 throw (err);

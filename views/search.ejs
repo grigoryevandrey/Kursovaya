@@ -6,27 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Поиск</title>
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/nav.css">
     <link rel="stylesheet" href="/search.css">
 </head>
 
 <body>
     <div class="megaWrapper" id="megaWrapper">
-        <div class="searchWrapper" id="searchWrapper">
-            <form class="searchForm" action="/search/go" method="POST">
+        <nav>
+            <div class="logo">
+                <a href="/"><h4>Заголовок</h4></a>
+            </div>
+            <div class="searchWrapper" id="searchWrapper">
+                <form class="searchForm" action="/search/go" method="POST">
+    
+                    <select name="searchSelector" id="searchSelector">
+                        <option value="1">Все</option>
+                        <option value="2">Мастерство выпивания пива</option>
+                        <option value="3">Техника прогуливания пар</option>
+                        <option value="4">Искусство ругательств</option>
+                        <option value="5">Навык курения</option>
+                        <option value="6">Рыгание</option>
+                    </select>
+    
+                    <input id='submit' type="submit" value="Искать">
+    
+                </form>
+            </div>
+            <div class="burger">
+              <div class="line1"></div>
+              <div class="line2"></div>
+              <div class="line3"></div>
+            </div>
+          </nav>
 
-                <select name="searchSelector" id="searchSelector">
-                    <option value="1">Все</option>
-                    <option value="2">Мастерство выпивания пива</option>
-                    <option value="3">Техника прогуливания пар</option>
-                    <option value="4">Искусство ругательств</option>
-                    <option value="5">Навык курения</option>
-                    <option value="6">Рыгание</option>
-                </select>
-
-                <button id='submit'>Искать</button>
-
-            </form>
-        </div>
         <div class="resultsWrapper" id="resultsWrapper">
 
         </div>
@@ -176,14 +188,15 @@ console.log(reviewsArray);
                 let subjCont = document.createElement('div');
                 subjCont.id = 'subjCont';
                 subjCont.className = 'subjCont';
-                subjCont.textContent = "Предмет: " + resultsArray[i].subject;
+                subjCont.innerHTML = `Предмет:  <span>${resultsArray[i].subject}</span>`;
                 searchContainer.append(subjCont);
 
-                let priceCont = document.createElement('div');
-                priceCont.id = 'priceCont';
-                priceCont.className = 'priceCont';
-                priceCont.textContent = resultsArray[i].price_per_lesson + " руб/занятие";
-                searchContainer.append(priceCont);
+                let averCont = document.createElement('div');
+                averCont.id = 'averCont';
+                averCont.classList.add('averCont');
+                averCont.innerHTML  = `Средняя оценка: <span>${resultsArray[i].average}</span>`;
+                searchContainer.append(averCont);
+
 
                 let achCont = document.createElement('div');
                 achCont.id = 'achCont';
@@ -196,6 +209,17 @@ console.log(reviewsArray);
                 infoCont.className = 'infoCont';
                 infoCont.textContent = "Информация: " + resultsArray[i].additional_info;
                 searchContainer.append(infoCont);
+
+                let buyFormRight = document.createElement('div');
+                buyFormRight.id = 'buyFormRight';
+                buyFormRight.classList.add('buyFormRight');
+                searchContainer.append(buyFormRight);
+                
+                let priceCont = document.createElement('div');
+                priceCont.id = 'priceCont';
+                priceCont.className = 'priceCont';
+                priceCont.textContent = resultsArray[i].price_per_lesson + " руб/занятие";
+                buyFormRight.append(priceCont);
 
                 let reviewsContainer = document.createElement('div');
             reviewsContainer.id = 'reviewsContainer';
@@ -250,6 +274,7 @@ console.log(reviewsArray);
                 button.className = 'buyButton';
 
                 button.addEventListener('click', function () {
+
             let megaWrapper = document.getElementById('megaWrapper');
             let buyWindow = document.createElement('div');
             buyWindow.style.display = 'block';
@@ -320,6 +345,8 @@ console.log(reviewsArray);
             submitButton.setAttribute('type', "submit");
             submitButton.setAttribute('value', "Перейти к оплате");
 
+            let backgroundStuff = document.createElement('div');
+            backgroundStuff.classList.add('backgroundStuff');
             
             buyForm.append(teacherPrice);
             buyForm.append(teacherId);
@@ -340,6 +367,8 @@ console.log(reviewsArray);
             buyForm.append(submitButton);
             buyWindow.append(buyForm);
 
+            megaWrapper.append(backgroundStuff);
+
         
 
             
@@ -347,9 +376,10 @@ console.log(reviewsArray);
 
             function closeBuyWindow() {
                 buyWindow.style.display = 'none';
+                backgroundStuff.remove();
             }
                 } );
-                searchContainer.append(button);
+                buyFormRight.append(button);
 
                 searchResults.append(searchContainer);
             }

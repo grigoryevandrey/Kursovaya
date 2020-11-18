@@ -1,56 +1,130 @@
 *{ box-sizing: border-box;}
 
 html,body{
-   background-image: linear-gradient(to bottom right,#2A1B3D,#D83F87);
-   font-family: 'Nunito', sans-serif;
+   background-color: white;
+   color: #0d1d4a;
 }
 
 .boxR{
-  width:400px;
+  width:800px;
+  height: 700px;
   padding:40px;
   position:absolute;
   top:50%;
   left:50%;
   transform: translate(-50%,-50%);
-  background: #191919;
+  background: #f1f4f9;
   text-align: center;
+  border-radius: 20px;
+  box-shadow: 5px 5px 10px rgba(77, 77, 77, 0.2);
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 100px 100px 100px 100px 100px;
+  align-items: center;
 }
-.boxR h1{
-  color:white; 
+
+.header {
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
+
+.box7 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.box8 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
 .boxR input[type="text"],.boxR input[type="password"]{
+  border-radius: 10px;
   border:0;
-  background:#E98074;
-  display:block;
+  background:white;
   margin: 10px auto;
-  text-align: center;
   border:0;
   padding: 10px 10px;
   width:300px;
-  height: 30px;
+  height: 50px;
   outline:none;
-  color:white;
-  font-size: 20px;
+  font-size: 17px;
+  text-align: left;
+  padding-left: 55px;
 }
+
+.box {
+  position: relative;
+}
+
+.box > i {
+  position: absolute;
+  left: 45px; 
+  top: 23px; 
+  font-size: 25px;
+  color: #f635a7 ;
+}
+
+.box4 > i {
+  left: 47px; 
+}
+
+.box7 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box7 > div {
+  width: 100%;
+  position: relative;
+}
+
+.box7 > div > i {
+  position: absolute;
+  right: -10px; 
+  top: 0px; 
+  font-size: 30px;
+  color: #f635a7 ;
+}
+
+.box7 > div > select {
+  background: white;
+  color:#0d1d4a;
+  width:300px;
+  height: 50px;
+  padding:10px;
+  border:none;
+  outline:none;
+  box-shadow: 8px 8px 7px rgba(197, 197, 197, 0.4);  
+  font-size: 18px;
+  border-radius: 10px;
+}
+
 .boxR label {
-    font-size: 16px;
-    color:white;
+    font-size: 25px;
 }
 .boxR input[type="submit"]{
   border:0;
+  height: 70px;
+  width: 300px;
   background: none;
   display:block;
   margin: 20px auto;
   text-align: center;
-  border:2px solid #E98074;
+  border:2px solid #f635a7;
+  color: #f635a7;
   padding: 14px 40px;
   outline:none;
-  color:white;
-  border-radius: 24px;
+  border-radius: 50px;
   transition: 0.25s;
   cursor: pointer;
+  font-size: 20px;
+  letter-spacing: 0.2em;
+  font-weight: 600;
 }
 
 .boxR input[type="submit"]:hover{
-   background:#E98074;
+   background:#f635a7;
+   color: white;
 }
