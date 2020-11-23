@@ -79,7 +79,7 @@
         <div class="carousel-slide">
           <div class="thirdRev" id="lastClone" name="teacherDivSlide">
             <div class="teacher-cont">
-              <div class="avatar"><img id="avatar3" height="50%" width="50%" alt="Нет аватара"></div>
+              <div class="avatar"><img id="avatar3" height="300px" width="200px" alt="Нет аватара"></div>
             <div class="name">  </div>
             <div class="average"></div>
             <div class="subject"></div>
@@ -99,7 +99,7 @@
 
           <div class="secondRev" name="teacherDivSlide">
             <div class="teacher-cont">
-              <div class="avatar"><img id="avatar2" height="300px" width="50%" alt="Нет аватара"></div>
+              <div class="avatar"><img id="avatar2" height="300px" width="200px" alt="Нет аватара"></div>
             <div class="name">  </div>
             <div class="average"></div>
             <div class="subject"></div>
@@ -109,7 +109,7 @@
 
           <div class="thirdRev" name="teacherDivSlide">
             <div class="teacher-cont">
-              <div class="avatar"> <img id="avatar3" height="50%" width="50%" alt="Нет аватара"></div>
+              <div class="avatar"> <img id="avatar3" height="300px" width="200px" alt="Нет аватара"></div>
             <div class="name">  </div>
             <div class="average"></div>
             <div class="subject"></div>
@@ -119,7 +119,7 @@
 
           <div class="firstRev" id="firstClone" name="teacherDivSlide">
             <div class="teacher-cont">
-              <div class="avatar"><img id="avatar1" height="50%" width="50%" alt="Нет аватара"></div>
+              <div class="avatar"><img id="avatar1" height="300px" width="50%" alt="Нет аватара"></div>
             <div class="name">  </div>
             <div class="average"></div>
             <div class="subject"></div>
@@ -152,14 +152,14 @@
             <div class="review-cont">
             <div class="review"></div>
             <div class="name-of-customer"></div>
-            <div class="subject"></div>
+            <div class="subjectRev"></div>
           </div></div>
 
           <div class="firstReview" name="reviewDivSlide">
             <div class="review-cont">
               <div class="review"></div>
               <div class="name-of-customer"></div>
-              <div class="subject"></div>
+              <div class="subjectRev"></div>
           </div>
           </div>
 
@@ -167,7 +167,7 @@
             <div class="review-cont">
               <div class="review"></div>
               <div class="name-of-customer"></div>
-              <div class="subject"></div>
+              <div class="subjectRev"></div>
           </div>
           </div>
 
@@ -175,7 +175,7 @@
             <div class="review-cont">
               <div class="review"></div>
               <div class="name-of-customer"></div>
-              <div class="subject"></div>
+              <div class="subjectRev"></div>
           </div>
           </div>
 
@@ -183,13 +183,21 @@
             <div class="review-cont">
               <div class="review"></div>
               <div class="name-of-customer"></div>
-              <div class="subject"></div>
+              <div class="subjectRev"></div>
           </div>
           </div>
         </div>
       </div>
       
   </div>
+
+  <div class="button-box" onclick="/search">
+
+      <h2>Найди своего учителя сейчас</h2>
+
+      <button>Искать!</button>
+  </div>
+
   <div class="footer">
     <div class="page-wrapper">
     </div>
@@ -352,7 +360,7 @@
       divname.forEach((item, ind, arr) => { 
         arr[ind].querySelector('.review').innerHTML = `"${reviewResults[i].review}"`;
         arr[ind].querySelector('.name-of-customer').innerHTML = `Имя ученика: ${reviewResults[i].full_name}`;
-        arr[ind].querySelector('.subject').innerHTML = `Предмет: ${reviewResults[i].subject}`;
+        arr[ind].querySelector('.subjectRev').innerHTML = `Предмет: ${reviewResults[i].subject}`;
       });
     });
 

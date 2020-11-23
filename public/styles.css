@@ -15,19 +15,11 @@
   box-sizing: border-box;
 }
 
-::-moz-selection { /* Code for Firefox */
-  color:black;
-  background: yellow;
-}
-
-::selection {
-  color: black;
-  background: yellow;
-}
 
 html, body{
   width: 100%;
   height: 100%;
+  overflow-X: hidden;
 }
 
 html {

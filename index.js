@@ -219,13 +219,15 @@ app.get('/profile/:id', function (req, res) {
         additionalInfo = '',
         pricePerLesson = '',
         lengthOfLesson = '',
-        yearOfBirth = '';
+        yearOfBirth = '',
+        rating = '';
 
     let reviewResults = [];
     pool.query(
         `SELECT * 
         FROM teacher
         LEFT JOIN teacher_info ON teacher_info.id=teacher.id
+        LEFT JOIN teacher_rating ON teacher_rating.teacher_id=teacher.id
         WHERE teacher.id = $1`, [id], (err, results) => {
             if (err) {
                 throw (err);
@@ -240,6 +242,7 @@ app.get('/profile/:id', function (req, res) {
                 pricePerLesson = results.rows[0].price_per_lesson;
                 lengthOfLesson = results.rows[0].length_of_lesson;
                 yearOfBirth = results.rows[0].year_of_birth;
+                rating = results.rows[0].average;
 
                 pool.query(`SELECT * 
                 FROM reviews
@@ -274,6 +277,7 @@ app.get('/profile/:id', function (req, res) {
                     pricePerLesson: pricePerLesson,
                     lengthOfLesson: lengthOfLesson,
                     yearOfBirth: yearOfBirth,
+                    rating: rating,
                     resultsReviewFunction: function() {
                         return 'Base64.decode("' + Buffer.from(JSON.stringify(reviewResults)).toString('base64') + '")';
                     },

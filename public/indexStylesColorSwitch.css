@@ -21,17 +21,14 @@ nav {
 .welcome-div{
   height: 400px;
   width: 100%;
-  color:white;
-  background-color: #7a52b2;  
+  color:#0d1d4a;
   display:flex;
   position:relative;
   align-items: center;
 }
 
 .welcome-container {
-  /* text-shadow: 5px 5px 6px rgba(17, 17, 17, 0.2); */
-  
-  text-shadow: 7px 7px 13px rgba(34, 7, 73, 0.95);
+  text-shadow: 5px 5px 6px rgba(17, 17, 17, 0.2);
   height:400px ;
   width: 100%;
   z-index: 5;
@@ -69,7 +66,7 @@ nav {
   padding:10px;
   border:none;
   outline:none;
-  box-shadow: 8px 8px 7px  rgba(34, 7, 73, 0.4);  
+  box-shadow: 8px 8px 7px rgba(197, 197, 197, 0.4);  
   font-size: 18px;
   border-radius: 10px;
 }
@@ -89,43 +86,29 @@ nav {
   width: 300px;
   height: 50px;
   margin:30px;
-  background-color:#f635a7;
+  background-color:#f85db9;
   font-size: 18px;
   padding:10px;
   border:none;
   outline:none;
   transition: 0.2s;
-  box-shadow: 8px 8px 7px rgba(34, 7, 73, 0.4);  
+  box-shadow: 8px 8px 7px rgba(197, 197, 197, 0.4);  
   border-radius: 10px; 
-  cursor: pointer;
 }
 
 .boxW input[type="submit"]:hover{
-   background:#f85db9 ;
-   box-shadow: 8px 8px 7px rgba(34, 7, 73, 0.6);  
-}
-
-@media screen and (max-width: 1024px) {
-  .welcome-words{
-    padding-left: 10vw ; 
-  }
+   background:#f635a7;
+   box-shadow: 8px 8px 7px rgba(197, 197, 197, 0.6);  
 }
 
 
 @media screen and (max-width: 768px) {
-  .welcome-div {
-    align-items: start;
-    height: 600px;
-  }
    .welcome-container {
      grid-template-columns: 1fr;
-     grid-template-rows: 270px 270px;
+     grid-template-rows: 1fr 1fr;
    }
-   .boxW > h2 {
-    text-align: center;
-   }
+
    .welcome-words {
-     text-align: center;
      padding-left: auto;
    }
    .search {
@@ -146,46 +129,20 @@ nav {
   z-index: 0;
 }
   
-
-@media screen and (max-width: 768px) {
-  .welcome-words{
-    padding-left: 0; 
-  }
-  .search {
-    padding-left: 0; 
-  }
-}
-
-
-@media screen and (max-width: 500px) {
-  .welcome-words{
-    padding-left: 0; 
-  }
-  .search {
-    padding-left: 0; 
-  }
-  .boxW input[type="submit"] {
-    margin:0;
-    margin-top: 20px;
-  }
-}
-
 /*2oi block posle welcome div*/
 
 .white-content{
   overflow: auto;
-  background-color: white;
-  color:#0d1d4a;
+  background-color: #9971d1;
+  color:white;
   height: 900px;
   display: flex;
   flex-direction: column;
 }
 
 .slider-header {
-  margin: 40px 0;
-  color:#0d1d4a;
-  text-align: center;
-  width: 100%;
+  color:white;
+  margin: auto;
   padding-top: 0px; 
   font-size: 30px;
 }
@@ -196,7 +153,6 @@ nav {
   margin: auto;
   margin-top: 100px; 
   overflow: hidden;
-  color:white;
 }
 
 .carousel-slide {
@@ -209,11 +165,11 @@ nav {
 .secondRev,
 .thirdRev {
   width: 100%;
-  background-color: white;
+  background-color: #9971d1;
 
   background-image: url(/images/ellipse.svg);
   background-repeat: no-repeat;
-  background-position: 35%;
+  background-position: 20%;
   background-size: contain;
   text-align: center;
   font-size: 30px;
@@ -225,7 +181,7 @@ nav {
   display: grid;
   height: 70%;
   width: 50%;
-  grid-template-columns: 50% 30%;
+  grid-template-columns: 50% 50%;
   grid-template-rows: 7rem 3rem 3rem;
   grid-template-areas: "name avatar"
   "average avatar"
@@ -239,7 +195,11 @@ nav {
   background-size: 7%; */
 }
 
-
+@media screen and (max-width: 1024px) {
+  .teacher-cont {
+     width: 70%;
+  }
+}
 
 
 
@@ -307,7 +267,7 @@ nav {
   z-index: 5;
   left: 5%;
   font-size: 50px;
-  color:#0d1d4a;
+  color:white;
   cursor: pointer;
 }
 
@@ -317,39 +277,23 @@ nav {
   z-index: 5;
   right: 5%;
   font-size: 50px;
-  color:#0d1d4a;
+  color:white;
   cursor: pointer;
-}
-
-@media screen and (max-width: 1024px) {
-  .teacher-cont {
-     width: 70%;
-  }
-  .slider-header {
-    text-align: center;
-  }
-
-#prevBtn,
-#nextBtn {
-  color: white;
-}
-
 }
 
 @media screen and (max-width: 768px) {
   .white-content{
     height: 900px; 
-    align-items: end;
   }
   .avatar > img {
     height: 150px;
     width: 100px;
   }
   .teacher-cont {
-    width: 100%;
+    width: 80%;
     height: 90%;
     grid-template-columns: 1fr;
-    grid-template-rows: 10rem 8rem 3rem 5rem;
+    grid-template-rows: 10rem 3rem 3rem 5rem;
     grid-template-areas: "avatar"
   "name"
   "average"
@@ -359,38 +303,24 @@ nav {
  }
  .name {
    justify-self: center;
-   align-self: start;
  }
  .average{
-   justify-self: start;
-   margin-left: 20px;
+   justify-self: center;
  }
  .achievements{
-  justify-self: start;
-  margin-left: 20px;
+  justify-self: center;
+  max-width: 80%;
  }
  .subject {
-  justify-self: start;
-  margin-left: 20px;
-   max-width: 80%;
+   justify-self: center;
+   max-width: 70%;
  }
  .carousel-container-teachers {
-   height: 800px;
-   margin: 0;
+   height: 600px;
  }
  .carousel-slide {
-   height: 800px;
+   height: 600px;
  }
- .firstRev,
-.secondRev,
-.thirdRev {
-  background-image: none;
-  background-color: #6435a5;
-}
-#prevBtn,
-#nextBtn {
- top: 20%;
-}
 }
 
 
@@ -400,39 +330,27 @@ nav {
   height: 400px;
   width: 100%;
   position:relative;
-  background-color: #7a52b2;
-  background-image: url(/images/pinkthing.svg);
-  background-repeat: no-repeat;
-  background-size: auto 100%;
-  /* background-position: 35%;
-  background-size: contain; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .insp-div{
-  position: absolute;
-  left:65%;
-  top:50%;
-  transform: translate(-50%, -50%);
   z-index: 5;
   color:white;
-  width:700px;
+  width:400px;
   font-size: 20px;
   font-weight:500;
+  background:#000000;
+  padding: 50px;
+  padding-top: 0;
 }
 
 .insp-div h2{
+  color: #A4B3B6;
   font-weight: 900;
   font-size: 40px;
-}
-
-@media screen and (max-width: 768px) { 
-  .insp-div {
-    left:50%;
-    width: 90%;
-  }
-  .inspirational-text {
-    background-image: none;
-  }
 }
 
 /*izobrazhenie k nemy*/
@@ -453,9 +371,8 @@ nav {
 /* Отзывы */
 .second-slider-container{
   overflow: auto;
-  background-color: #6435a5;
-  color:white;
-  height: 900px;
+  background-color: black;
+  height: 700px;
   display: flex;
   flex-direction: column;
 }
@@ -473,6 +390,7 @@ nav {
   margin: auto;
   margin-top: 100px; 
   overflow: hidden;
+  box-shadow: 20px 20px 30px rgba(197, 197, 197, 0.3);
 }
 
 .carousel-slide-review {
@@ -484,17 +402,12 @@ nav {
 .firstReview,
 .secondReview,
 .thirdReview {
-  color:white;
   width: 100%;
-  background-color:#6435a5;
+  background-color:white;
   text-align: center;
   font-size: 30px;
   display: flex;
   height: 100%;
-  background-image: url(/images/ellipsereviews.svg);
-  background-repeat: no-repeat;
-  background-position: 35%;
-  background-size: contain;
 }
 
 .review-cont {
@@ -503,7 +416,7 @@ nav {
   width: 50%;
   grid-template-areas: "review"
   "name-of-customer"
-  "subjectRev";
+  "subject";
   margin: auto;
 }
 
@@ -530,10 +443,10 @@ nav {
   text-align: start;
 }
 
-.subjectRev {
+.subject {
   justify-self: start;
   align-self: start;
-  grid-area: subjectRev;
+  grid-area: subject;
   font-size: 20px;
   text-align: start;
 }
@@ -545,7 +458,7 @@ nav {
   z-index: 5;
   left: 5%;
   font-size: 50px;
-  color:white;
+  color:black;
   cursor: pointer;
 }
 
@@ -555,94 +468,27 @@ nav {
   z-index: 5;
   right: 5%;
   font-size: 50px;
-  color:white;
+  color:black;
   cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
+  .white-content{
+    height: 900px; 
+  }
   .review-cont {
-    width: 95%;
+    width: 80%;
     height: 90%;
-    grid-template-rows: 350px 5rem 7rem;
   justify-content: center;
  }
  .carousel-container-review {
    height: 600px;
-   margin-top: 0;
  }
  .carousel-slide-review {
    height: 600px;
  }
- .firstReview,
-.secondReview,
-.thirdReview {
-  background-image: none;
-}
-.slider-header-review {
-  padding-top: 0;
 }
 
-#nextBtnRev {
-  top: 90%;
-  right: 20%;
-}
-#prevBtnRev {
-  top: 90%;
-  left: 20%;
-}
-.review-cont {
-  margin: 0px;
-  margin-left: 10px;
-}
-}
-
-/* Кнопка с поиском */ 
-
-.button-box {
-  width: 100%;
-  height: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.button-box > h2 {
-  margin: 30px;
-  color:#0d1d4a;
-  font-size: 40px;
-  text-shadow: 20px 15px 30px rgb(121, 121, 121);  
-}
-
-.button-box > button {
-  color:white;
-  width: 300px;
-  height: 80px;
-  background-color:#f635a7;
-  font-size: 30px;
-  padding:10px;
-  border:none;
-  outline:none;
-  transition: 0.5s;
-  box-shadow: 20px 15px 40px rgb(121, 121, 121);  
-  border-radius: 50px; 
-  cursor: pointer;
-  border: 2px solid #f635a7;
-}
-
-.button-box > button:hover {
-  background-color:white;
-  color:#f635a7;
-}
-
-@media screen and (max-width: 768px) {
-.button-box > h2 {
-  text-align: center;
-}
-  .button-box {
-    height: 400px;
-  }
-}
 
 /*FOOTER*/
 

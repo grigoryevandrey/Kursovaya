@@ -4,29 +4,70 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Главная</title>
+  <title><%= name%> <%= lastName%></title>
   <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/nav.css">
   <link rel="stylesheet" href="/userPage.css">
 
 </head>
 
 <body>
-  <div class="mainBox">
-    <div><img id="avatar" height="200px" width="200px" alt="Нет аватара"></div>
-    <div id="name">Имя: <%= name%></div>
-    <div id="lastName">Фамилия: <%= lastName%></div>
-    <div id="subject">Предмет: <%= subject%></div>
-    <div id="gender">Пол: <%= gender%></div>
-    <div id="achievements">Достижения: <%= achievements%></div>
-    <div id="additionalInfo">Доп инфа: <%= additionalInfo%></div>
-    <div id="pricePerLesson">Стоимость занятия: <%= pricePerLesson%></div>
-    <div id="lengthOfLesson">Длительность занятия: <%= lengthOfLesson%></div>
-    <div id="yearOfBirth">Год рождения: <%= yearOfBirth%></div>
+  <nav>
+    <div class="logo">
+      <a href="/"><h4>Заголовок</h4></a>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a href="/users/login">Войти</a>
+      </li>
+      <li>
+        <a href="/users/register">Зарегистрироваться</a>
+      </li>
+      <li>
+        <a href="/search">Поиск</a>
+      </li>
+      <li>
+        <a href="#">Связаться с нами</a>
+      </li>
+    </ul>
+    <div class="burger">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+  </nav>
 
+
+  <div class="mainBox">
+    <div class="headbox">    
+      <div id="avatarCont"><img id="avatar" height="200px" width="160px" alt="Нет аватара"></div>
+      <div id="name"><%= name%> <%= lastName%></div>
+      <div id="subject"><%= subject%></div>
+      <div id="rating">Средняя оценка: <span><%= rating%></span></div> 
+   </div>
+    <div class="bodyBox">   
+      <div id="gender">Пол: <%= gender%></div>
+      <div id="yearOfBirth">Год рождения: <%= yearOfBirth%></div>
+      <div id="lengthOfLesson">Длительность занятия: <%= lengthOfLesson%></div>
+      <div id="achievements">Достижения: <%= achievements%></div>
+      <div id="additionalInfo">Доп инфа: <%= additionalInfo%></div>
+      <div id="buyFormBottom">
+        <div id="pricePerLesson"><%= pricePerLesson%> руб/занятие
+        </div>
+        <div id="buyBtn">
+          <button>
+            Купить уроки
+          </button>
+        </div>
+      </div>
+      
     <div class="reviews" id="reviews">
 
 
     </div>
+  </div>
+
+
 
     <form action="/review" method="post" class="reviewBox">
 
@@ -150,13 +191,21 @@
       }
       let lengthReviewsArray = "<%= reviewLength %>";
       let reviewsArray = {};
+      let counter = 1;
       reviewsArray  = <%- resultsReviewFunction() %> ;
       reviewsArray = JSON.parse(reviewsArray);
 
       let reviewsContainer = document.getElementById('reviews');
+      let pageReviewsContainer = '';
 
 
       for (let i = 0; i < lengthReviewsArray; i++) {
+
+        if (counter === 1) {
+          pageReviewsContainer = document.createElement('div');
+          pageReviewsContainer.id = 'pageReviewsContainer';
+          pageReviewsContainer.className = 'pageReviewsContainer';
+        }
 
         let searchReviewsContainer = document.createElement('div');
                 searchReviewsContainer.id = 'searchReviewsContainer';
@@ -172,11 +221,28 @@
                 }
                 else{
 
+                  
+                let ratingCont = document.createElement('div');
+                ratingCont.id = 'ratingCont';
+                ratingCont.className = 'ratingCont';
+                ratingCont.innerHTML = `Оценка: <span>${reviewsArray[i].rating}</span>`;
+                searchReviewsContainer.append(ratingCont);
+
+
+                let dateCont = document.createElement('div');
+                dateCont.id = 'dateCont';
+                dateCont.className = 'dateCont';
+                dateCont.textContent = `Дата: ${i}`;
+                searchReviewsContainer.append(dateCont);
+
                     let nameReviewsCont = document.createElement('div');
                 nameReviewsCont.id = 'nameReviewsCont';
                 nameReviewsCont.className = 'nameReviewsCont';
                 nameReviewsCont.textContent = `Написал: ${reviewsArray[i].full_name}`;
                 searchReviewsContainer.append(nameReviewsCont);
+
+                  
+
 
                 let reviewCont = document.createElement('div');
                 reviewCont.id = 'reviewCont';
@@ -184,16 +250,25 @@
                 reviewCont.textContent = `Отзыв: ${reviewsArray[i].review}`;
                 searchReviewsContainer.append(reviewCont);
 
-                let ratingCont = document.createElement('div');
-                ratingCont.id = 'ratingCont';
-                ratingCont.className = 'ratingCont';
-                ratingCont.textContent = `Оценка: ${reviewsArray[i].rating}`;
-                searchReviewsContainer.append(ratingCont);
                 
               }
 
-              reviews.append(searchReviewsContainer);
+              pageReviewsContainer.append(searchReviewsContainer);
+              
+
+              if (counter === 5) {
+                reviews.append(pageReviewsContainer);
+                counter = 1;
+              } else { 
+              counter++;
+              }
+              
+              
             }
+
+            let reviewPages = document.querySelectorAll('#pageReviewsContainer');
+
+            reviewPages[0].classList.add('visible-review-page');
     }, false);
   </script>
 </body>
