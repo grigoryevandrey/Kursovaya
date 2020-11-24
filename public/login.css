@@ -1,56 +1,105 @@
 html,body{
-   background-image: linear-gradient(to bottom right,#2A1B3D,#D83F87);
+   background-color: white;
+   color: #0d1d4a;
 }
 
 .boxL{
-  width:300px;
+  width:400px;
+  height: 500px;
   padding:40px;
   position:absolute;
-  top:50%;
+  top: 50%;
   left:50%;
   transform: translate(-50%,-50%);
-  background: #191919;
+  background: #f1f4f9;
   text-align: center;
-}
-.boxL h1{
-  color:white;
-  font-weight: 500;
-}
-.boxL input[type="email"],.boxL input[type="password"]{
-  border:0;
-  background: none;
-  display:block;
-  margin: 20px auto;
-  text-align: center;
-  border:2px solid #D83F87;
-  padding: 14px 10px;
-  width:200px;
-  outline:none;
-  color:white;
-  border-radius: 24px;
-  transition: 0.25s;
+  border-radius: 20px;
+  box-shadow: 5px 5px 10px rgba(77, 77, 77, 0.2);
+  display:grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 100px 100px 60px;
+  align-items: center;
 }
 
-.boxL input[type="email"]:focus,.boxL input[type="password"]:focus{
-  width:280px;
-  border-color: #E98074;
+
+
+.boxL input[type="email"],.boxL input[type="password"]{
+  border-radius: 10px;
+  border:0;
+  background:white;
+  margin: 10px auto;
+  border:0;
+  padding: 10px 10px;
+  width:300px;
+  height: 50px;
+  outline:none;
+  font-size: 17px;
+  text-align: left;
+  padding-left: 55px;
 }
+
+
+
 
 .boxL input[type="submit"]{
   border:0;
+  height: 70px;
+  width: 200px;
   background: none;
   display:block;
   margin: 20px auto;
   text-align: center;
-  border:2px solid #E98074;
+  border:2px solid #f635a7;
+  color: #f635a7;
   padding: 14px 40px;
   outline:none;
-  color:white;
-  border-radius: 24px;
+  border-radius: 50px;
   transition: 0.25s;
   cursor: pointer;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  font-weight: bold;
 }
 
 .boxL input[type="submit"]:hover{
-   background:#E98074;
+  background:#f635a7;
+  color: white;
+}
+
+.box {
+  position: relative;
+}
+
+
+.box > i {
+  position: absolute;
+  left: 26px; 
+  top: 22px; 
+  font-size: 25px;
+  color: #f635a7 ;
+}
+
+@media screen and (max-height: 768px) { 
+  .boxL{ 
+    top: 400px;
+  }
+}
+
+
+@media screen and (max-width: 350px) { 
+  .boxL{ 
+    width:300px;
+    padding: 0px 0px;
+  }
+  
+  .boxL input[type="email"],.boxL input[type="password"],.boxL input[type="submit"]{
+    width: 250px;
+   }
+
+   
+.box > i {
+  position: absolute;
+  left: 39px; 
+  top: 22px; 
+}
 }

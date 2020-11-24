@@ -10,7 +10,8 @@ html,body{
 }
 
 .boxR{
-  width:900px;
+  font-size: 17px;
+  width:750px;
   height: 800px;
   padding:40px;
   position:absolute;
@@ -41,38 +42,29 @@ html,body{
 .box1 select {
   background: white;
   color:#0d1d4a;
-  width:300px;
   padding:10px;
   border:none;
   outline:none;
+  width:300px;
+  height: 50px;
+  outline:none;
+  font-size: 17px;
+  text-align: left;
   border-radius: 10px;
-  box-shadow: 8px 8px 7px rgba(197, 197, 197, 0.4);  
 }
 
-.box7 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-}
-
-.box8 {
-  grid-column-start: 1;
-  grid-column-end: 3;
-}
-
-.boxR h1{
-  font-weight: 500;
-}
 .boxR input[type="text"]{
+  border-radius: 10px;
   border:0;
   background:white;
-  display:block;
-  margin: 10px auto; 
-  text-align: left;
+  margin: 10px auto;
+  border:0;
   padding: 10px 10px;
   width:300px;
+  height: 50px;
   outline:none;
-  border-radius: 14px;
-  box-shadow: 8px 8px 7px rgba(197, 197, 197, 0.4);  
+  font-size: 17px;
+  text-align: left;
 }
 .boxR textarea{
   border:0;
@@ -83,22 +75,34 @@ html,body{
   padding: 10px 10px;
   width:300px;
   outline:none;
-  border-radius: 14px;
-  box-shadow: 8px 8px 7px rgba(197, 197, 197, 0.4);  
+  font-size: 17px;
+  border-radius: 10px; 
 }
 .boxR input[type="submit"]{
   border:0;
+  height: 50px;
+  width: 300px;
   background: none;
   display:block;
   margin: 20px auto;
   text-align: center;
-  border:2px solid #D83F87;
+  border:2px solid #f635a7;
+  color: #f635a7;
   padding: 14px 40px;
   outline:none;
-  border-radius: 24px;
+  border-radius: 10px;
   transition: 0.25s;
   cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
 }
+
+
+.boxR input[type="submit"]:hover{
+  background:#f635a7;
+  color: white;
+}
+
 .box {
   display: flex;
   flex-direction: column;
@@ -113,15 +117,6 @@ html,body{
   top: 0;
 }
 
-.box7 {
-  display: inline-block;
-}
-
-.box7 > label {
-  position: relative;
-  left: auto;
-  top: auto;
-}
 
 .box5 > span {
   position: absolute;
@@ -129,21 +124,117 @@ html,body{
   opacity: 0.5;
 }
 
-.box > input[type="checkbox"] {
-  display: none;
+.box6 > span {
+  position: absolute;
+  right: 70px;
+  opacity: 0.5;
 }
 
-.box7 > label::before {
-  content: '';
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background-color: #000;
-  vertical-align: middle;
-  margin-left: -10px;
-  margin-right: 10px;
+/* Checkbox */
+
+.box7 {
+  display: block;
+  margin: 20px -5px;
+  position: relative;
+}
+.box7 label {
+  padding: 14px 5px;
+  width: 300px;
+  height: 50px;
+  display: block;
+  text-align: left;
+  color: #0d1d4a;
+  cursor: pointer;
+  z-index: 2;
+  -webkit-transition: color 200ms ease-in;
+  transition: color 200ms ease-in;
+  overflow: hidden;
+  border-radius: 10px;
+  position: absolute;
+  left: 20px;
+  top: 0;
+}
+.box7 label:after {
+  width: 32px;
+  height: 32px;
+  content: "";
+  border: 2px solid #d1d7dc;
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
+  background-repeat: no-repeat;
+  background-position: 3px 5px;
+  border-radius: 50%;
+  z-index: 2;
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  cursor: pointer;
+  -webkit-transition: all 200ms ease-in;
+  transition: all 200ms ease-in;
+}
+.box7 input:checked ~ label:before {
+  -webkit-transform: translate(-50%, -50%) scale3d(56, 56, 1);
+          transform: translate(-50%, -50%) scale3d(56, 56, 1);
+  opacity: 1;
+}
+.box7 input:checked ~ label:after {
+  background-color: #f635a7;
+  border-color: #f635a7;
+}
+.box7 input {
+  width: 32px;
+  height: 32px;
+  -webkit-box-ordinal-group: 2;
+          order: 1;
+  z-index: 2;
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  cursor: pointer;
+  visibility: hidden;
 }
 
-.box7 > input[type="checkbox"]:checked + .box7 > label::before {
-    background-color: red;
+@media screen and (max-width: 768px) { 
+  .boxR{
+    font-size: 17px;
+    width:400px;
+    height: 1200px;
+    padding: 0px;
+    position:absolute;
+    top:600px;
+    left:50%;
+    transform: translate(-50%,-50%);
+    grid-template-columns: 1fr;
+  }
+  
+.header {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  margin: 15px 0px;
+  font-size: 15px;
+}
+.box > label {
+  position: absolute;
+  left: 60px;
+  top: -10px;
+}
+.box7 > label {
+  position: absolute;
+  left: 50px;
+  top: -10px;
+}
+.box {
+  margin: 15px 0px;
+}
+.box1 > label {
+  top: -20px;
+}
+
+.box8 {
+  margin: 40px 0px;
+}
 }

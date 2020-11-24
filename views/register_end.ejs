@@ -39,7 +39,7 @@
       <div class="form-wrapper">
     <form class="boxR" action="/user/register_end" method="post">
 
-        <div class="header"><h1>Заполните информацию о себе</h1></div>
+        <div class="header"><h1>Информация о вас</h1></div>
 
         <div class="box box1">
             <label for="">Ваш пол:</label>
@@ -74,14 +74,14 @@
         
 
         <div class="box box6">
-            <label for="">Длительность занятия (в минутах):</label>
-            <input type="text" name="lengthOfLesson" id="lengthOfLesson" placeholder="">
+            <label for="">Длительность занятия</label>
+            <input type="text" name="lengthOfLesson" id="lengthOfLesson" placeholder=""><span>минут</span>
         </div>
         
 
         <div class="box box7">
-            <label for="showMe">Показывать меня в поиске</label>
             <input type="checkbox" name="showMe" id="showMe" value="showMe">
+            <label for="showMe">Показывать меня в поиске</label>
         </div>
         
 
@@ -92,6 +92,7 @@
 
     </form>
 </div>
+<script src="/js/mainPage.js"></script>
 <script>
     document.getElementById('yearOfBirth').value = "<%= yearOfBirth %>";
     document.getElementById('additionalInfo').value = "<%= additionalInfo %>";
