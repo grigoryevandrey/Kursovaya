@@ -1,19 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Оплата</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/payment.css">
 </head>
+
 <body>
-    <form action="/purchase" method="POST">
-        <input type="text" name="price" id="price" value="<%= price%>">
-        <input type="text" name="teacherId" id="teacherId" value="<%= teacherId %>">
-        <input type="text" name="fullName" id="fullName" value="<%= fullName %>">
-        <input type="text" name="phoneOfCustomer" id="phoneOfCustomer" value="<%= phoneOfCustomer %>">
-        <input type="text" name="numberOfLessons" id="numberOfLessons" value="<%= numberOfLessons %>">
-        <input type="text" name="emailOfCustomer" id="emailOfCustomer" value="<%= emailOfCustomer %>">
-        <input type="submit" value="Оплатить">
-    </form>
+    <div class="wrapper">
+
+
+        <form class="confirmForm" action="/purchase" method="POST">
+
+            <div class="header">
+                Проверьте, верны ли ваши данные
+            </div>
+
+            <input type="text" name="teacherId" id="teacherId" value="<%= teacherId%>" readonly>
+
+            <div>
+                <label for="price">Итоговая цена</label>
+                <input type="text" name="price" id="price" value="<%= price%>" readonly>
+            </div>
+            
+
+            <div>
+                <label for="fullName">Ваше имя</label>
+                <input type="text" name="fullName" id="fullName" value="<%= fullName %>">
+            </div>
+            
+
+            <div>
+                <label for="phoneOfCustomer">Ваш телефон</label>
+                <input type="text" name="phoneOfCustomer" id="phoneOfCustomer" value="<%= phoneOfCustomer %>">
+            </div>
+            
+
+            <div>
+                <label for="numberOfLessons">Кол-во уроков, которое вы приобретаете</label>
+                <input type="text" name="numberOfLessons" id="numberOfLessons" value="<%= numberOfLessons %>">
+            </div>
+
+
+            <div>
+                <label for="emailOfCustomer">Ваш E-mail</label>
+                <input type="text" name="emailOfCustomer" id="emailOfCustomer" value="<%= emailOfCustomer %>">
+            </div>
+            
+
+            <div>
+                <input type="submit" value="Оплатить">
+            </div>
+            
+        </form>
+
+    </div>
 </body>
+
 </html>

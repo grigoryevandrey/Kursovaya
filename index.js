@@ -443,6 +443,15 @@ app.post("/buy", async (req, res) => {
 
     let price = numberOfLessons * teacherPrice;
 
+    console.log({
+        teacherPrice,
+        teacherId,
+        fullName,
+        phoneOfCustomer,
+        numberOfLessons,
+        emailOfCustomer
+    });
+
 res.render('payment', {
     price,
     teacherId,
@@ -464,6 +473,15 @@ app.post("/purchase", async (req, res) => {
         numberOfLessons,
         emailOfCustomer
     } = req.body;
+
+    console.log ({
+        price,
+        teacherId,
+        fullName,
+        phoneOfCustomer,
+        numberOfLessons,
+        emailOfCustomer
+    } );
     pool.query(
     `INSERT INTO deals (teacher_id, price, number_of_lessons_bought, full_name, email_of_customer, phone_of_customer, reviewed)
     VALUES ($1, $2, $3, $4, $5, $6, $7)`, [teacherId, price, numberOfLessons, fullName, emailOfCustomer, phoneOfCustomer, false], (err, results) => {
@@ -492,25 +510,25 @@ app.post("/review", async(req,res) => {
     let orderId = 0,
     fullName = '',
     emailOfCustomer = '',
-    rating = 1;
+    ratingRate = 1;
     let option = req.body.rating;
 
 
     switch (option){
         case "2": 
-        rating = 2;
+        ratingRate = 2;
         break;
         case "3": 
-        rating = 3;
+        ratingRate = 3;
         break;
         case "4": 
-        rating = 4;
+        ratingRate = 4;
         break;
         case "5": 
-        rating = 5;
+        ratingRate = 5;
         break;
         default:
-            rating = 1;
+            ratingRate = 1;
     }
 
     if(!phoneOfCustomer || !review) {
@@ -547,7 +565,8 @@ app.post("/review", async(req,res) => {
         additionalInfo = '',
         pricePerLesson = '',
         lengthOfLesson = '',
-        yearOfBirth = '';
+        yearOfBirth = '',
+        rating = '';
 
     let reviewResults = [];
     pool.query(
@@ -563,6 +582,7 @@ app.post("/review", async(req,res) => {
                 lastName = results.rows[0].last_name;
                 subject = results.rows[0].subject;
                 gender = results.rows[0].gender;
+                rating = results.rows[0].rating;
                 achievements = results.rows[0].achievements;
                 additionalInfo = results.rows[0].additional_info;
                 pricePerLesson = results.rows[0].price_per_lesson;
@@ -594,6 +614,7 @@ app.post("/review", async(req,res) => {
                     id: id,
                     name: name,
                     lastName: lastName,
+                    rating: rating,
                     subject: subject,
                     gender: gender,
                     achievements: achievements,
@@ -621,12 +642,12 @@ app.post("/review", async(req,res) => {
             });
         } else {
             pool.query(`INSERT INTO reviews (teacher_id, full_name, email_of_customer, review, rating)
-            VALUES ($1, $2, $3, $4, $5)`, [teacherId, fullName, emailOfCustomer, review, rating], (err, results) => {
+            VALUES ($1, $2, $3, $4, $5)`, [teacherId, fullName, emailOfCustomer, review, ratingRate], (err, results) => {
                 if(err){
                     throw err;
                 }
 
-                switch (rating) {
+                switch (ratingRate) {
                     case 1:      
                     pool.query(`UPDATE teacher_rating
                     SET one = one + 1,

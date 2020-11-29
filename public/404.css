@@ -1,0 +1,14 @@
+body {
+    background-color:  #6435a5;
+    text-align: center;
+    padding-top: 50px;
+    font-size: 30px;
+    color: white;
+}
+
+hr {    
+    margin-top: 50px;
+    height: 3px;
+    background-color: white;
+    border: none;
+}

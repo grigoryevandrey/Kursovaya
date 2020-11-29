@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="/nav.css">
     <link rel="stylesheet" href="/search.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
 </head>
 
 <body>
@@ -16,6 +17,28 @@
             <div class="logo">
                 <a href="/"><h4>Заголовок</h4></a>
             </div>
+            <ul class="nav-links">
+                <li>
+                  <a href="/users/login">Войти</a>
+                </li>
+                <li>
+                  <a href="/users/register">Зарегистрироваться</a>
+                </li>
+                <li>
+                  <a href="/search">Поиск</a>
+                </li>
+                <li>
+                  <a href="#">Связаться с нами</a>
+                </li>
+              </ul>
+            <div class="burger">
+              <div class="line1"></div>
+              <div class="line2"></div>
+              <div class="line3"></div>
+            </div>
+          </nav>
+
+          <div class="search-div">
             <div class="searchWrapper" id="searchWrapper">
                 <form class="searchForm" action="/search/go" method="POST">
     
@@ -32,12 +55,7 @@
     
                 </form>
             </div>
-            <div class="burger">
-              <div class="line1"></div>
-              <div class="line2"></div>
-              <div class="line3"></div>
-            </div>
-          </nav>
+          </div>
 
         <div class="resultsWrapper" id="resultsWrapper">
 
@@ -282,7 +300,7 @@ console.log(reviewsArray);
             megaWrapper.prepend(buyWindow);
 
             let closeBuy = document.createElement('button');
-            closeBuy.textContent = "X";
+            closeBuy.innerHTML = "<i class='fas fa-window-close'></i>";
             closeBuy.onclick = closeBuyWindow;
             buyWindow.append(closeBuy);
 
@@ -298,14 +316,23 @@ console.log(reviewsArray);
             teacherId.setAttribute('name', "teacherId");
             teacherId.value = resultsArray[i].id;
 
+            let teacherName = document.createElement('div');
+            teacherName.textContent = resultsArray[i].first_name + " " + resultsArray[i].last_name;
+            teacherName.classList.add('formHeader');
+
             let teacherPrice = document.createElement('input');
             teacherPrice.id = "teacherPrice";
             teacherPrice.setAttribute('type', "text");
             teacherPrice.setAttribute('name', "teacherPrice");
             teacherPrice.value = resultsArray[i].price_per_lesson;
 
+
+            
+
+
             let numberOfLessonsLabel = document.createElement('label');
-            numberOfLessonsLabel.textContent = "Введите количество уроков, которое вы бы хотели приобрести: ";
+            numberOfLessonsLabel.textContent = "Кол-во уроков, которое вы приобретаете: ";
+            numberOfLessonsLabel.setAttribute('for', "numberOfLessons");
 
             let numberOfLessonsInput = document.createElement('input');
             numberOfLessonsInput.id ="numberOfLessonsInput";
@@ -347,24 +374,49 @@ console.log(reviewsArray);
 
             let backgroundStuff = document.createElement('div');
             backgroundStuff.classList.add('backgroundStuff');
+
+
+            let priceDiv = document.createElement('div');
+            priceDiv.textContent = "Цена за один урок: " +  resultsArray[i].price_per_lesson + " руб."; 
+            priceDiv.classList.add('formHeader');  
+
+            let nameDiv = document.createElement('div');
+
+            let phoneDiv = document.createElement('div');
+
+            let numberOfLessonsDiv = document.createElement('div');
+
+            let emailDiv = document.createElement('div');
+
+            let submitDiv = document.createElement('div'); 
+
+
+
+            nameDiv.append(fullNameLabel);
+            nameDiv.append(fullName);
+
             
-            buyForm.append(teacherPrice);
+            phoneDiv.append(phoneLabel);
+            phoneDiv.append(phoneOfCustomer);
+
+            numberOfLessonsDiv.append(numberOfLessonsLabel);
+            numberOfLessonsDiv.append(numberOfLessonsInput);
+            
+            emailDiv.append(emailLabel);
+            emailDiv.append(emailOfCustomer);
+            
+            submitDiv.append(submitButton);
+
+            buyForm.append(teacherName);
+            buyForm.append(priceDiv);
+            buyForm.append(nameDiv);
+            buyForm.append(phoneDiv);
+            buyForm.append(numberOfLessonsDiv);
+            buyForm.append(emailDiv);
+            buyForm.append(submitDiv);
             buyForm.append(teacherId);
+            buyForm.append(teacherPrice);
 
-            buyForm.append(fullNameLabel);
-            buyForm.append(fullName);
-
-            
-            buyForm.append(phoneLabel);
-            buyForm.append(phoneOfCustomer);
-
-            buyForm.append(numberOfLessonsLabel);
-            buyForm.append(numberOfLessonsInput);
-            
-            buyForm.append(emailLabel);
-            buyForm.append(emailOfCustomer);
-            
-            buyForm.append(submitButton);
             buyWindow.append(buyForm);
 
             megaWrapper.append(backgroundStuff);
@@ -391,6 +443,7 @@ console.log(reviewsArray);
         }
     </script>
     <script src="/js/search.js"></script>
+    <script src="/js/mainPage.js"></script>
 </body>
 
 </html>

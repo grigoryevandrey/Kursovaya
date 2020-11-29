@@ -1,27 +1,32 @@
-
-.mainBox{
-    width:800px;
-    height: 800px;
-    padding:40px;
-    position:absolute;
-    top:55%;
-    left:50%;
-    transform: translate(-50%,-50%);
-    text-align: center;
-    color:white; 
-   font-size: 17px;
-  text-shadow: 8px 8px 7px  #b2b4b9;
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-.reviewBox > input,
-.reviewBox > textarea {
-  display:block;
+.mainBox {
+  width: 800px;
+  padding: 40px;
+  /* min-height: 800px;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+  text-align: center;
+  color: white;
+  font-size: 17px;
+  text-shadow: 8px 8px 7px #b2b4b9;
+}
+
+/* .reviewBox>input,
+.reviewBox>textarea {
+  display: block;
   margin: 20px auto;
   text-align: center;
   padding: 14px 10px;
-  width:200px;
-  outline:none;
-}
+  width: 200px;
+  outline: none;
+} */
 
 .headbox {
   background-color: #f1f4f9;
@@ -55,15 +60,15 @@
 #subject {
   grid-column: 2/4;
   justify-self: start;
-  padding-top: 25px;
 }
 
 #rating {
   grid-column: 2/4;
   justify-self: start;
+  padding-top: 25px;
 }
 
-#rating > span {
+#rating>span {
   font-size: 20px;
   font-weight: bold;
 }
@@ -71,7 +76,7 @@
 .bodyBox {
   margin-top: 30px;
   border-radius: 20px;
-  color: #0d1d4a;  
+  color: #0d1d4a;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 50px 50px 200px;
@@ -90,7 +95,7 @@
   border-radius: 5px;
   background-color: #f1f4f9;
   grid-row: 1/4;
-  grid-column: 2/3; 
+  grid-column: 2/3;
   padding: 10px;
   text-align: start;
   box-shadow: 8px 8px 7px #b2b4b9;
@@ -98,7 +103,7 @@
 
 #yearOfBirth {
   border-radius: 5px;
-  background-color: #f1f4f9; 
+  background-color: #f1f4f9;
   padding: 10px;
   text-align: start;
   box-shadow: 8px 8px 7px #b2b4b9;
@@ -106,7 +111,7 @@
 
 #lengthOfLesson {
   border-radius: 5px;
-  background-color: #f1f4f9; 
+  background-color: #f1f4f9;
   padding: 10px;
   text-align: start;
   box-shadow: 8px 8px 7px #b2b4b9;
@@ -116,8 +121,8 @@
   border-radius: 5px;
   background-color: #f1f4f9;
   padding: 10px;
-  text-align: start; 
-  box-shadow: 8px 8px 7px #b2b4b9; 
+  text-align: start;
+  box-shadow: 8px 8px 7px #b2b4b9;
   grid-column: 1/3;
   display: flex;
   justify-content: space-around;
@@ -129,7 +134,7 @@
   font-size: 25px;
 }
 
-#buyBtn > button {
+#buyBtn>button {
   text-decoration: none;
   border: none;
   background: none;
@@ -145,9 +150,9 @@
   box-shadow: 8px 8px 7px #b2b4b9;
 }
 
-#buyBtn > button:hover {
-  background-color: #f635a7 ;
-  box-shadow: 8px 8px 7px #909296; 
+#buyBtn>button:hover {
+  background-color: #f635a7;
+  box-shadow: 8px 8px 7px #909296;
 }
 
 #gender {
@@ -157,55 +162,421 @@
 
 /* Отзывы к тичеру */
 
-.reviews { 
+.reviews {
   background-color: #f1f4f9;
   box-shadow: 8px 8px 7px #b2b4b9;
   display: flex;
   grid-column: 1/3;
+  border-radius: 10px;
+  position: relative;
 }
 
 .pageReviewsContainer {
   width: 100%;
-  display:none;
+  display: none;
+  position: relative;
+  height: 1000px;
+  border-radius: 20px;
 }
 
 .visible-review-page {
-  display:flex;
+  display: flex;
   flex-direction: column;
-  justify-content: space-around;
-} 
+  justify-content: start;
+  padding-bottom: 50px;
+}
 
 .searchReviewsContainer {
   display: grid;
   margin: 30px;
+  background: white;
+
+  border-radius: 10px;
+}
+
+.searchReviewsContainer>div {
+  padding: 10px;
 }
 
 #ratingCont {
-  border: 1px solid red;
   text-align: start;
 }
 
 #nameReviewsCont {
-  border: 1px solid red;
-  text-align: start;  
+  text-align: start;
   grid-column: 1/3;
 }
 
 #dateCont {
-  border: 1px solid red;
   text-align: end;
 }
 
 #reviewCont {
-  border: 1px solid red;
   grid-column: 1/3;
   text-align: start;
 }
 
+.prevArrow {
+  font-size: 50px;
+  position: absolute;
+  bottom: 30px;
+  left: 50px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.nextArrow {
+  font-size: 50px;
+  position: absolute;
+  bottom: 30px;
+  right: 50px;
+  cursor: pointer;
+  z-index: 10;
+}
+
 /* Поле для отзыва */
 
-.reviewBox {
+#teacherId {
   display: none;
 }
 
+.reviewBox {
+  grid-column: 1/3;
+  background-color: #f1f4f9;
+  box-shadow: 8px 8px 7px #b2b4b9;
+  border-radius: 10px;
+  display: grid;
+  justify-content: center;
+  padding: 20px 0px;
+}
+
+.reviewBox>div {
+  padding: 10px;
+}
+
+.ratingReview {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.ratingReview>select {
+  background: white;
+  color: #0d1d4a;
+  padding: 10px;
+  border: none;
+  outline: none;
+  width: 400px;
+  height: 50px;
+  outline: none;
+  font-size: 17px;
+  text-align: left;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.customerPhone,
+.reviewType {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.reviewType>textarea {
+  border: 0;
+  background: white;
+  display: block;
+  margin: 10px auto;
+  text-align: left;
+  padding: 10px 10px;
+  width: 400px;
+  outline: none;
+  font-size: 17px;
+  border-radius: 10px;
+}
+
+.customerPhone>input {
+  border-radius: 10px;
+  border: 0;
+  background: white;
+  margin: 10px auto;
+  border: 0;
+  padding: 10px 10px;
+  width: 400px;
+  height: 50px;
+  outline: none;
+  font-size: 17px;
+  text-align: left;
+}
+
+
+.submitReview>input {
+  border: 0;
+  height: 50px;
+  width: 300px;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #f635a7;
+  color: #f635a7;
+  padding: 14px 40px;
+  outline: none;
+  border-radius: 10px;
+  transition: 0.25s;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.submitReview>input:hover {
+  background: #f635a7;
+  color: white;
+}
+
+/* модальное окно */
+.buyWindow {
+  width:500px;
+  padding:40px;
+  position: fixed;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+  background: #f1f4f9;
+  color: #0d1d4a; 
+  z-index: 8;
+  border-radius: 20px;
+  box-shadow: 25px 25px 50px #9599a1; 
+}
+
+.buyWindow > button {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 40px;
+  color: #f635a7;
+  cursor: pointer;
+}
+
+.buyForm > input {
+  display:block;
+  margin: 20px auto;
+  text-align: center;
+  width:200px;
+  outline:none;
+}
+
+.backgroundStuff {
+  position: fixed;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  height:100vh;
+  width: 100vw;
+  background-color: rgba(255, 255, 255, 0.9);  
+  z-index: 7;
+}
+
+.buyForm > div > input {
+  border-radius: 10px;
+  border:0;
+  background:white;
+  margin: 10px auto;
+  border:0;
+  padding: 10px 10px;
+  width:400px;
+  height: 50px;
+  outline:none;
+  font-size: 17px;
+  text-align: left;
+}
+
+.buyForm > div > input[type="submit"]{
+  border:0;
+  height: 50px;
+  width: 300px;
+  background: none;
+  display:block;
+  margin: 20px auto;
+  text-align: center;
+  border:2px solid #f635a7;
+  color: #f635a7;
+  padding: 14px 40px;
+  outline:none;
+  border-radius: 10px;
+  transition: 0.25s;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.buyForm > div > input[type="submit"]:hover {
+  background:#f635a7;
+  color: white;
+}
+
+#teacherId {
+  display: none;
+}
+
+#teacherPrice {
+  display: none;
+}
+
+.buyForm {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.buyForm > div {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.formHeader {
+  color: #0d1d4a;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.fade {
+  animation-name: fade;
+  animation-duration: 1s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.1;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .mainBox {
+    width: 400px;
+    padding: 0px;
+  }
+  .headbox {
+    width: 400px;
+    grid-template-columns: 250px 150px;
+    grid-template-rows: 70px 70px 70px;
+    align-items: center;
+  }
+  #avatarCont > img {
+    height: 125px;
+    width: 100px;
+    margin-top: 30px;
+   } 
+   #name {
+     grid-column: 1/2;
+     width: 100%;
+     text-align: start;
+     padding-left: 30px;
+   }
+   #rating {
+     grid-column: 1/2;
+     width: 100%;
+     text-align: start;
+     padding-left: 30px;
+  padding-top: 0px;
+   }
+  #avatarCont {
+    padding: 10px;
+    grid-row: 1/3;
+    grid-column: 2/3;
+  }
+  #name {
+    align-self: center;
+  }
+  #subject {
+    padding-top: 0px;
+  }
+    #subject {
+      padding-left: 30px;
+    grid-column: 1/3;
+  }
+  .bodyBox {
+    width: 400px;
+    grid-template-columns: 400px;
+  }
+
+  #lengthOfLesson {
+    grid-column: 1;
+  }
+
+  #additionalInfo {
+    grid-column: 1/2;
+    grid-row: 4/5;
+  }
+  #buyFormBottom {
+    grid-column: 1/2;
+    grid-row: 5/6;
+  }
+  .reviews {
+    grid-column: 1/2;
+    grid-row: 6/7;
+  }
+  .reviewBox {
+    grid-column: 1/2;
+    grid-row: 7/8;
+  }
+
+  .ratingReview > select,
+  .reviewType>textarea,
+.customerPhone>input,
+.submitReview>input {
+  width: 300px;
+}
+ }
+
+ @media screen and (max-width: 400px) {
+  .mainBox {
+    width: 300px;
+    padding: 0px;
+  }
+  .headbox {
+    width: 300px;
+    grid-template-columns: 150px;
+    grid-template-rows: 120px 70px 70px;
+    align-items: center;
+  }
+  #avatarCont {
+    padding: 0px;
+  }
+  #avatarCont > img {
+    margin-top: 0 px;
+   } 
+  #name {
+    align-self: center;
+  }
+  #subject {
+    padding-top: 0px;
+  }
+  .bodyBox {
+    width: 300px;
+    grid-template-columns: 300px;
+  }
+
+
+  .ratingReview > select,
+  .reviewType>textarea,
+.customerPhone>input,
+.submitReview>input {
+  width: 250px;
+}
+
+#buyFormBottom > div > button {
+  width: 150px;
+}
+ }
 

@@ -1,276 +1,508 @@
-<!DOCTYPE html>
-<html lang="en">
+  <!DOCTYPE html>
+  <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= name%> <%= lastName%></title>
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="stylesheet" href="/nav.css">
-  <link rel="stylesheet" href="/userPage.css">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= name%> <%= lastName%></title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/nav.css">
+    <link rel="stylesheet" href="/userPage.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
+  </head>
 
-</head>
-
-<body>
-  <nav>
-    <div class="logo">
-      <a href="/"><h4>Заголовок</h4></a>
-    </div>
-    <ul class="nav-links">
-      <li>
-        <a href="/users/login">Войти</a>
-      </li>
-      <li>
-        <a href="/users/register">Зарегистрироваться</a>
-      </li>
-      <li>
-        <a href="/search">Поиск</a>
-      </li>
-      <li>
-        <a href="#">Связаться с нами</a>
-      </li>
-    </ul>
-    <div class="burger">
-      <div class="line1"></div>
-      <div class="line2"></div>
-      <div class="line3"></div>
-    </div>
-  </nav>
-
-
-  <div class="mainBox">
-    <div class="headbox">    
-      <div id="avatarCont"><img id="avatar" height="200px" width="160px" alt="Нет аватара"></div>
-      <div id="name"><%= name%> <%= lastName%></div>
-      <div id="subject"><%= subject%></div>
-      <div id="rating">Средняя оценка: <span><%= rating%></span></div> 
-   </div>
-    <div class="bodyBox">   
-      <div id="gender">Пол: <%= gender%></div>
-      <div id="yearOfBirth">Год рождения: <%= yearOfBirth%></div>
-      <div id="lengthOfLesson">Длительность занятия: <%= lengthOfLesson%></div>
-      <div id="achievements">Достижения: <%= achievements%></div>
-      <div id="additionalInfo">Доп инфа: <%= additionalInfo%></div>
-      <div id="buyFormBottom">
-        <div id="pricePerLesson"><%= pricePerLesson%> руб/занятие
-        </div>
-        <div id="buyBtn">
-          <button>
-            Купить уроки
-          </button>
-        </div>
+  <body>
+    <nav>
+      <div class="logo">
+        <a href="/"><h4>Заголовок</h4></a>
       </div>
-      
-    <div class="reviews" id="reviews">
+      <ul class="nav-links">
+        <li>
+          <a href="/users/login">Войти</a>
+        </li>
+        <li>
+          <a href="/users/register">Зарегистрироваться</a>
+        </li>
+        <li>
+          <a href="/search">Поиск</a>
+        </li>
+        <li>
+          <a href="#">Связаться с нами</a>
+        </li>
+      </ul>
+      <div class="burger">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+      </div>
+    </nav>
 
-
+<div class="wrapper">
+    <div class="mainBox">
+      <div class="headbox">    
+        <div id="avatarCont"><img id="avatar" height="200px" width="160px" alt="Нет аватара"></div>
+        <div id="name"><%= name%> <%= lastName%> </div>
+        <div id="rating">Средняя оценка: <span><%= rating%></span></div> 
+        
+        <div id="subject"><%= subject%></div>
     </div>
+      <div class="bodyBox">   
+        <div id="gender">Пол: <%= gender%></div>
+        <div id="yearOfBirth">Год рождения: <%= yearOfBirth%></div>
+        <div id="lengthOfLesson">Длительность занятия: <%= lengthOfLesson%></div>
+        <div id="achievements">Достижения: <%= achievements%></div>
+        <div id="additionalInfo">Доп инфа: <%= additionalInfo%></div>
+        <div id="buyFormBottom">
+          <div id="pricePerLesson"><%= pricePerLesson%> руб/занятие
+          </div>
+          <div id="buyBtn">
+            <button>
+              Купить уроки
+            </button>
+          </div>
+        </div>
+        
+      <div class="reviews" id="reviews">
+
+
+      </div>
+      <form action="/review" method="post" class="reviewBox">
+
+        
+        <div class="revHeader">
+          <h2>Оставить отзыв</h2> 
+        </div>
+
+        <div class="ratingReview">        
+          <label for="ratingRate">Оценка: </label>
+          <select name="ratingRate" id="ratingRate">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+
+
+
+        <input type="text" name="teacherId" id="teacherId" value="<%= id%>">
+
+        <div class="customerPhone">
+          <label for="phoneOfCustomer">Ваш номер телефона: </label>
+          <input type="text" name="phoneOfCustomer" id="phoneOfCustomer">
+        </div>
+
+
+        <div class="reviewType">
+          <label for="review">Ваш отзыв:</label>
+          <textarea name="review" id="review" rows="8" cols="40"></textarea>
+        </div>
+
+
+        <div class="submitReview">
+          <input type="submit" name="" value="Оставить отзыв">
+        </div>
+
+
+      </form>
+    </div>
+
+
+
+     
+    </div>
+
   </div>
-
-
-
-    <form action="/review" method="post" class="reviewBox">
-
-      <label for="rating">Оценка: </label>
-      <select name="rating" id="rating">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
-
-      <input type="text" name="teacherId" id="teacherId" value="<%= id%>">
-
-      <label for="phoneOfCustomer">Ваш номер телефона: </label>
-      <input type="text" name="phoneOfCustomer" id="phoneOfCustomer">
-
-      <label for="review">Ваш отзыв:</label>
-      <textarea name="review" id="review" rows="8" cols="40"></textarea>
-
-      <input type="submit" name="" value="Оставить отзыв">
-
-    </form>
-  </div>
-  <script>
-    var Base64 = {
-      _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
-      encode: function (e) {
-        var t = "";
-        var n, r, i, s, o, u, a;
-        var f = 0;
-        e = Base64._utf8_encode(e);
-        while (f < e.length) {
-          n = e.charCodeAt(f++);
-          r = e.charCodeAt(f++);
-          i = e.charCodeAt(f++);
-          s = n >> 2;
-          o = (n & 3) << 4 | r >> 4;
-          u = (r & 15) << 2 | i >> 6;
-          a = i & 63;
-          if (isNaN(r)) {
-            u = a = 64
-          } else if (isNaN(i)) {
-            a = 64
+    <script>
+      var Base64 = {
+        _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+        encode: function (e) {
+          var t = "";
+          var n, r, i, s, o, u, a;
+          var f = 0;
+          e = Base64._utf8_encode(e);
+          while (f < e.length) {
+            n = e.charCodeAt(f++);
+            r = e.charCodeAt(f++);
+            i = e.charCodeAt(f++);
+            s = n >> 2;
+            o = (n & 3) << 4 | r >> 4;
+            u = (r & 15) << 2 | i >> 6;
+            a = i & 63;
+            if (isNaN(r)) {
+              u = a = 64
+            } else if (isNaN(i)) {
+              a = 64
+            }
+            t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this
+              ._keyStr.charAt(a)
           }
-          t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this
-            ._keyStr.charAt(a)
+          return t
+        },
+        decode: function (e) {
+          var t = "";
+          var n, r, i;
+          var s, o, u, a;
+          var f = 0;
+          e = e.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+          while (f < e.length) {
+            s = this._keyStr.indexOf(e.charAt(f++));
+            o = this._keyStr.indexOf(e.charAt(f++));
+            u = this._keyStr.indexOf(e.charAt(f++));
+            a = this._keyStr.indexOf(e.charAt(f++));
+            n = s << 2 | o >> 4;
+            r = (o & 15) << 4 | u >> 2;
+            i = (u & 3) << 6 | a;
+            t = t + String.fromCharCode(n);
+            if (u != 64) {
+              t = t + String.fromCharCode(r)
+            }
+            if (a != 64) {
+              t = t + String.fromCharCode(i)
+            }
+          }
+          t = Base64._utf8_decode(t);
+          return t
+        },
+        _utf8_encode: function (e) {
+          e = e.replace(/\r\n/g, "\n");
+          var t = "";
+          for (var n = 0; n < e.length; n++) {
+            var r = e.charCodeAt(n);
+            if (r < 128) {
+              t += String.fromCharCode(r)
+            } else if (r > 127 && r < 2048) {
+              t += String.fromCharCode(r >> 6 | 192);
+              t += String.fromCharCode(r & 63 | 128)
+            } else {
+              t += String.fromCharCode(r >> 12 | 224);
+              t += String.fromCharCode(r >> 6 & 63 | 128);
+              t += String.fromCharCode(r & 63 | 128)
+            }
+          }
+          return t
+        },
+        _utf8_decode: function (e) {
+          var t = "";
+          var n = 0;
+          var r = c1 = c2 = 0;
+          while (n < e.length) {
+            r = e.charCodeAt(n);
+            if (r < 128) {
+              t += String.fromCharCode(r);
+              n++
+            } else if (r > 191 && r < 224) {
+              c2 = e.charCodeAt(n + 1);
+              t += String.fromCharCode((r & 31) << 6 | c2 & 63);
+              n += 2
+            } else {
+              c2 = e.charCodeAt(n + 1);
+              c3 = e.charCodeAt(n + 2);
+              t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
+              n += 3
+            }
+          }
+          return t
         }
-        return t
-      },
-      decode: function (e) {
-        var t = "";
-        var n, r, i;
-        var s, o, u, a;
-        var f = 0;
-        e = e.replace(/[^A-Za-z0-9\+\/\=]/g, "");
-        while (f < e.length) {
-          s = this._keyStr.indexOf(e.charAt(f++));
-          o = this._keyStr.indexOf(e.charAt(f++));
-          u = this._keyStr.indexOf(e.charAt(f++));
-          a = this._keyStr.indexOf(e.charAt(f++));
-          n = s << 2 | o >> 4;
-          r = (o & 15) << 4 | u >> 2;
-          i = (u & 3) << 6 | a;
-          t = t + String.fromCharCode(n);
-          if (u != 64) {
-            t = t + String.fromCharCode(r)
-          }
-          if (a != 64) {
-            t = t + String.fromCharCode(i)
-          }
-        }
-        t = Base64._utf8_decode(t);
-        return t
-      },
-      _utf8_encode: function (e) {
-        e = e.replace(/\r\n/g, "\n");
-        var t = "";
-        for (var n = 0; n < e.length; n++) {
-          var r = e.charCodeAt(n);
-          if (r < 128) {
-            t += String.fromCharCode(r)
-          } else if (r > 127 && r < 2048) {
-            t += String.fromCharCode(r >> 6 | 192);
-            t += String.fromCharCode(r & 63 | 128)
-          } else {
-            t += String.fromCharCode(r >> 12 | 224);
-            t += String.fromCharCode(r >> 6 & 63 | 128);
-            t += String.fromCharCode(r & 63 | 128)
-          }
-        }
-        return t
-      },
-      _utf8_decode: function (e) {
-        var t = "";
-        var n = 0;
-        var r = c1 = c2 = 0;
-        while (n < e.length) {
-          r = e.charCodeAt(n);
-          if (r < 128) {
-            t += String.fromCharCode(r);
-            n++
-          } else if (r > 191 && r < 224) {
-            c2 = e.charCodeAt(n + 1);
-            t += String.fromCharCode((r & 31) << 6 | c2 & 63);
-            n += 2
-          } else {
-            c2 = e.charCodeAt(n + 1);
-            c3 = e.charCodeAt(n + 2);
-            t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
-            n += 3
-          }
-        }
-        return t
       }
-    }
 
-    document.addEventListener('DOMContentLoaded', function () {
-      if ( <%= id %> ) {
-        document.getElementById('avatar').src = "/userPhotos/" + <%= id %> +".jpg";
-      }
-      let lengthReviewsArray = "<%= reviewLength %>";
-      let reviewsArray = {};
-      let counter = 1;
-      reviewsArray  = <%- resultsReviewFunction() %> ;
-      reviewsArray = JSON.parse(reviewsArray);
-
-      let reviewsContainer = document.getElementById('reviews');
-      let pageReviewsContainer = '';
-
-
-      for (let i = 0; i < lengthReviewsArray; i++) {
-
-        if (counter === 1) {
-          pageReviewsContainer = document.createElement('div');
-          pageReviewsContainer.id = 'pageReviewsContainer';
-          pageReviewsContainer.className = 'pageReviewsContainer';
+      document.addEventListener('DOMContentLoaded', function () {
+        if ( <%= id %> ) {
+          document.getElementById('avatar').src = "/userPhotos/" + <%= id %> +".jpg";
         }
+        let lengthReviewsArray = "<%= reviewLength %>";
+        let reviewsArray = {};
+        let counter = 1;
+        let currentPageRevs = 0;
+        reviewsArray  = <%- resultsReviewFunction() %> ;
+        reviewsArray = JSON.parse(reviewsArray);
 
-        let searchReviewsContainer = document.createElement('div');
-                searchReviewsContainer.id = 'searchReviewsContainer';
-                searchReviewsContainer.className = 'searchReviewsContainer';
+        let reviewsContainer = document.getElementById('reviews');
+        let pageReviewsContainer = '';
 
-                if (reviewsArray[0].message === "Нет отзывов"){
-                    let noReviewsCont = document.createElement('div');
-                noReviewsCont.id = 'noReviewsCont';
-                noReviewsCont.className = 'noReviewsCont';
-                noReviewsCont.textContent = `Нет отзывов`;
-                searchReviewsContainer.append(noReviewsCont);
 
+        for (let i = 0; i < lengthReviewsArray; i++) {
+
+          if (counter === 1) {
+            pageReviewsContainer = document.createElement('div');
+            pageReviewsContainer.id = 'pageReviewsContainer';
+            pageReviewsContainer.className = 'pageReviewsContainer';
+          }
+
+          let searchReviewsContainer = document.createElement('div');
+                  searchReviewsContainer.id = 'searchReviewsContainer';
+                  searchReviewsContainer.className = 'searchReviewsContainer';
+
+                  if (reviewsArray[0].message === "Нет отзывов"){
+                      let noReviewsCont = document.createElement('div');
+                  noReviewsCont.id = 'noReviewsCont';
+                  noReviewsCont.className = 'noReviewsCont';
+                  noReviewsCont.textContent = `Нет отзывов`;
+                  searchReviewsContainer.append(noReviewsCont);
+
+                  }
+                  else{
+
+                    
+                  let ratingCont = document.createElement('div');
+                  ratingCont.id = 'ratingCont';
+                  ratingCont.className = 'ratingCont';
+                  ratingCont.innerHTML = `Оценка: <span>${reviewsArray[i].rating}</span>`;
+                  searchReviewsContainer.append(ratingCont);
+
+
+                  let dateCont = document.createElement('div');
+                  dateCont.id = 'dateCont';
+                  dateCont.className = 'dateCont';
+                  dateCont.textContent = `Дата: ${i}`;
+                  searchReviewsContainer.append(dateCont);
+
+                      let nameReviewsCont = document.createElement('div');
+                  nameReviewsCont.id = 'nameReviewsCont';
+                  nameReviewsCont.className = 'nameReviewsCont';
+                  nameReviewsCont.textContent = `Написал: ${reviewsArray[i].full_name}`;
+                  searchReviewsContainer.append(nameReviewsCont);
+
+                    
+
+
+                  let reviewCont = document.createElement('div');
+                  reviewCont.id = 'reviewCont';
+                  reviewCont.className ='reviewCont';
+                  reviewCont.textContent = `Отзыв: ${reviewsArray[i].review}`;
+                  searchReviewsContainer.append(reviewCont);
+
+                  
                 }
-                else{
+
+                pageReviewsContainer.append(searchReviewsContainer);
+
+                if (counter === 5) {
+                  let prevArrow = document.createElement('div');
+                  prevArrow.classList.add('prevArrow');
+                  prevArrow.innerHTML = '<i class="fas fa-arrow-left"></i>';
+                  pageReviewsContainer.append(prevArrow);
+                  
+                  let nextArrow = document.createElement('div');
+                  nextArrow.classList.add('nextArrow');
+                  nextArrow.innerHTML = '<i class="fas fa-arrow-right"></i>';
+                  pageReviewsContainer.append(nextArrow);
+
+                  prevArrow.addEventListener('click', prevRevPage);
+                  nextArrow.addEventListener('click', nextRevPage);
+
+                  reviews.append(pageReviewsContainer);
 
                   
-                let ratingCont = document.createElement('div');
-                ratingCont.id = 'ratingCont';
-                ratingCont.className = 'ratingCont';
-                ratingCont.innerHTML = `Оценка: <span>${reviewsArray[i].rating}</span>`;
-                searchReviewsContainer.append(ratingCont);
-
-
-                let dateCont = document.createElement('div');
-                dateCont.id = 'dateCont';
-                dateCont.className = 'dateCont';
-                dateCont.textContent = `Дата: ${i}`;
-                searchReviewsContainer.append(dateCont);
-
-                    let nameReviewsCont = document.createElement('div');
-                nameReviewsCont.id = 'nameReviewsCont';
-                nameReviewsCont.className = 'nameReviewsCont';
-                nameReviewsCont.textContent = `Написал: ${reviewsArray[i].full_name}`;
-                searchReviewsContainer.append(nameReviewsCont);
-
-                  
-
-
-                let reviewCont = document.createElement('div');
-                reviewCont.id = 'reviewCont';
-                reviewCont.className ='reviewCont';
-                reviewCont.textContent = `Отзыв: ${reviewsArray[i].review}`;
-                searchReviewsContainer.append(reviewCont);
-
+                  counter = 1;
+                } else { 
+                counter++;
+                }
+                
                 
               }
 
-              pageReviewsContainer.append(searchReviewsContainer);
-              
+              if (counter !== 1) {
 
-              if (counter === 5) {
                 reviews.append(pageReviewsContainer);
-                counter = 1;
-              } else { 
-              counter++;
+
+                
+              // const nextArrowDoc = document.querySelector('.nextArrow');
+              // nextArrowDoc.addEventListener('click', nextRevPage);
               }
-              
-              
-            }
 
-            let reviewPages = document.querySelectorAll('#pageReviewsContainer');
+              let reviewPages = document.querySelectorAll('#pageReviewsContainer');
 
-            reviewPages[0].classList.add('visible-review-page');
-    }, false);
-  </script>
-</body>
+              reviewPages[0].classList.add('visible-review-page');
 
-</html>
+
+              let prevArrow = document.createElement('div');
+                  prevArrow.classList.add('prevArrow');
+                  prevArrow.innerHTML = '<i class="fas fa-arrow-left"></i>';
+                  reviews.append(prevArrow);
+                  
+                  let nextArrow = document.createElement('div');
+                  nextArrow.classList.add('nextArrow');
+                  nextArrow.innerHTML = '<i class="fas fa-arrow-right"></i>';
+                  reviews.append(nextArrow);
+
+                  prevArrow.addEventListener('click', prevRevPage);
+                  nextArrow.addEventListener('click', nextRevPage);
+
+              function nextRevPage() {
+                const reviewPages = document.querySelectorAll('#pageReviewsContainer');
+
+                reviewPages[currentPageRevs].classList.remove('visible-review-page', 'fade');
+
+                currentPageRevs++;
+
+                if (currentPageRevs >= reviewPages.length) {
+                  currentPageRevs = 0;
+                }
+                console.log(currentPageRevs);
+                reviewPages[currentPageRevs].classList.add('visible-review-page', 'fade');
+              }
+
+              function prevRevPage() {
+                const reviewPages = document.querySelectorAll('#pageReviewsContainer');
+
+                reviewPages[currentPageRevs].classList.remove('visible-review-page', 'fade');
+
+                currentPageRevs--;
+
+                if (currentPageRevs < 0) {
+                  currentPageRevs = reviewPages.length - 1; 
+                }
+                console.log(currentPageRevs);
+                reviewPages[currentPageRevs].classList.add('visible-review-page', 'fade');              
+              }
+
+              let buyBtn = document.querySelector('#buyBtn > button');
+
+                  buyBtn.addEventListener('click', function () {
+
+                          let buyWindow = document.createElement('div');
+                          buyWindow.style.display = 'block';
+                          buyWindow.className = 'buyWindow';
+                          document.body.prepend(buyWindow);
+
+                          let closeBuy = document.createElement('button');
+                          closeBuy.innerHTML = "<i class='fas fa-window-close'></i>";
+                          closeBuy.onclick = closeBuyWindow;
+                          buyWindow.append(closeBuy);
+
+                          let buyForm = document.createElement('form');
+                          buyForm.className = "buyForm";
+                          buyForm.setAttribute('method', "POST");
+                          buyForm.setAttribute('action', "/buy");
+
+
+                          let teacherId = document.createElement('input');
+                          teacherId.id ="teacherId";
+                          teacherId.setAttribute('type', "text");
+                          teacherId.setAttribute('name', "teacherId");
+                          teacherId.value = <%= id%>;
+
+                          let teacherName = document.createElement('div');
+                          teacherName.textContent = "<%= name%>" + " " + "<%= lastName%>";
+                          teacherName.classList.add('formHeader');
+
+                          let teacherPrice = document.createElement('input');
+                          teacherPrice.id = "teacherPrice";
+                          teacherPrice.setAttribute('type', "text");
+                          teacherPrice.setAttribute('name', "teacherPrice");
+                          teacherPrice.value = <%= pricePerLesson%>;
+
+
+
+
+
+                          let numberOfLessonsLabel = document.createElement('label');
+                          numberOfLessonsLabel.textContent = "Кол-во уроков, которое вы приобретаете: ";
+                          numberOfLessonsLabel.setAttribute('for', "numberOfLessons");
+
+                          let numberOfLessonsInput = document.createElement('input');
+                          numberOfLessonsInput.id ="numberOfLessonsInput";
+                          numberOfLessonsInput.setAttribute('type', "text");
+                          numberOfLessonsInput.setAttribute('name', "numberOfLessons");
+
+
+                          let fullName = document.createElement('input');
+                          fullName.id = "fullName";
+                          fullName.setAttribute('type', "text");
+                          fullName.setAttribute('name', "fullName");
+
+                          let fullNameLabel = document.createElement('label');
+                          fullNameLabel.textContent = "Ваше имя: ";
+                          fullNameLabel.setAttribute("for", "fullName");
+
+                          let emailOfCustomer = document.createElement('input');
+                          emailOfCustomer.id = "emailOfCustomer";
+                          emailOfCustomer.setAttribute('type', "email");
+                          emailOfCustomer.setAttribute('name', "emailOfCustomer");
+
+                          let emailLabel = document.createElement('label');
+                          emailLabel.textContent = "E-mail: ";
+                          emailLabel.setAttribute("for", "emailOfCustomer");
+
+                          let phoneOfCustomer = document.createElement('input');
+                          phoneOfCustomer.id = "phoneOfCustomer";
+                          phoneOfCustomer.setAttribute('type', "text");
+                          phoneOfCustomer.setAttribute('name', "phoneOfCustomer");
+
+                          let phoneLabel = document.createElement('label');
+                          phoneLabel.textContent = "Номер телефона: ";
+                          phoneLabel.setAttribute("for", "phoneOfCustomer");
+
+
+                          let submitButton = document.createElement('input');
+                          submitButton.setAttribute('type', "submit");
+                          submitButton.setAttribute('value', "Перейти к оплате");
+
+                          let backgroundStuff = document.createElement('div');
+                          backgroundStuff.classList.add('backgroundStuff');
+
+
+                          let priceDiv = document.createElement('div');
+                          priceDiv.textContent = "Цена за один урок: " +  "<%= pricePerLesson%>" + " руб."; 
+                          priceDiv.classList.add('formHeader');  
+
+                          let nameDiv = document.createElement('div');
+
+                          let phoneDiv = document.createElement('div');
+
+                          let numberOfLessonsDiv = document.createElement('div');
+
+                          let emailDiv = document.createElement('div');
+
+                          let submitDiv = document.createElement('div'); 
+
+
+
+                          nameDiv.append(fullNameLabel);
+                          nameDiv.append(fullName);
+
+
+                          phoneDiv.append(phoneLabel);
+                          phoneDiv.append(phoneOfCustomer);
+
+                          numberOfLessonsDiv.append(numberOfLessonsLabel);
+                          numberOfLessonsDiv.append(numberOfLessonsInput);
+
+                          emailDiv.append(emailLabel);
+                          emailDiv.append(emailOfCustomer);
+
+                          submitDiv.append(submitButton);
+
+                          buyForm.append(teacherName);
+                          buyForm.append(priceDiv);
+                          buyForm.append(nameDiv);
+                          buyForm.append(phoneDiv);
+                          buyForm.append(numberOfLessonsDiv);
+                          buyForm.append(emailDiv);
+                          buyForm.append(submitDiv);
+                          buyForm.append(teacherId);            
+                          buyForm.append(teacherPrice);
+
+                          buyWindow.append(buyForm);
+
+                          document.body.append(backgroundStuff);
+
+
+
+
+
+
+                          function closeBuyWindow() {
+                              buyWindow.style.display = 'none';
+                              backgroundStuff.remove();
+                          }
+                              });
+                          
+      }, false);
+    </script>
+    <script src="/js/nav.js"></script>
+  </body>
+
+  </html>

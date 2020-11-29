@@ -1,0 +1,13 @@
+body {
+    background-color:  #6435a5;
+    padding-top: 50px;
+    font-size: 30px;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+.wrapper > a {
+    color: white;
+    text-decoration: underline;
+    text-transform: uppercase;
+}
