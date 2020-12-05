@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
   <meta charset="utf-8">
@@ -22,16 +22,25 @@
     </div>
     <ul class="nav-links">
       <li>
-        <a href="/users/login">Войти</a>
-      </li>
-      <li>
-        <a href="/users/register">Зарегистрироваться</a>
-      </li>
-      <li>
         <a href="/search">Поиск</a>
       </li>
-      <li>
+      <li id="showIfNotLogged">
+        <a  href="/users/login">Войти</a>
+      </li>
+      <li id="showIfNotLogged">
+        <a href="/users/register">Зарегистрироваться</a>
+      </li>
+      <!-- <li>
         <a href="#">Связаться с нами</a>
+      </li> -->
+      <li id="showIfLogged" class="hide">
+        <a href="/profile/">Моя страница</a>
+      </li>
+      <li id="showIfLogged" class="hide">
+        <a href="/users/register_end">Настройки</a>
+      </li>
+      <li id="showIfLogged" class="hide">
+        <a href="/users/logout">Выход</a>
       </li>
     </ul>
     <div class="burger">
@@ -73,14 +82,14 @@
     <div class="white-content">
       <div class="slider-header"><h2>Наши эксперты</h2></div>
       <div class="carousel-container-teachers">
-        <i class="fas fa-angle-double-left" id="prevBtn" ></i>
-        <i class="fas fa-angle-double-right" id="nextBtn"></i>
+        <i class="fas fa-chevron-left" id="prevBtn" ></i>
+        <i class="fas fa-chevron-right" id="nextBtn"></i>
 
         <div class="carousel-slide">
           <div class="thirdRev" id="lastClone" name="teacherDivSlide">
             <div class="teacher-cont">
               <div class="avatar"><img id="avatar3" height="300px" width="200px" alt="Нет аватара"></div>
-            <div class="name">  </div>
+            <a class="name">  </a>
             <div class="average"></div>
             <div class="subject"></div>
             <div class="achievements"></div>
@@ -90,7 +99,7 @@
             <div class="teacher-cont">
 
             <div class="avatar"><img id="avatar1" height="300px" width="200px" alt="Нет аватара"></div>
-            <div class="name">  </div>
+            <a class="name">  </a>
             <div class="average"></div>
             <div class="subject"></div>
             <div class="achievements"></div>
@@ -100,7 +109,7 @@
           <div class="secondRev" name="teacherDivSlide">
             <div class="teacher-cont">
               <div class="avatar"><img id="avatar2" height="300px" width="200px" alt="Нет аватара"></div>
-            <div class="name">  </div>
+              <a class="name">  </a>
             <div class="average"></div>
             <div class="subject"></div>
             <div class="achievements"></div>
@@ -110,7 +119,7 @@
           <div class="thirdRev" name="teacherDivSlide">
             <div class="teacher-cont">
               <div class="avatar"> <img id="avatar3" height="300px" width="200px" alt="Нет аватара"></div>
-            <div class="name">  </div>
+              <a class="name">  </a>
             <div class="average"></div>
             <div class="subject"></div>
             <div class="achievements"></div>
@@ -120,7 +129,7 @@
           <div class="firstRev" id="firstClone" name="teacherDivSlide">
             <div class="teacher-cont">
               <div class="avatar"><img id="avatar1" height="300px" width="50%" alt="Нет аватара"></div>
-            <div class="name">  </div>
+              <a class="name">  </a>
             <div class="average"></div>
             <div class="subject"></div>
             <div class="achievements"></div>
@@ -144,8 +153,8 @@
   <div class="second-slider-container">
     <div class="slider-header-review"><h2>Наши отзывы</h2></div>
       <div class="carousel-container-review">
-        <i class="fas fa-angle-double-left" id="prevBtnRev" ></i>
-        <i class="fas fa-angle-double-right" id="nextBtnRev"></i>
+        <i class="fas fa-chevron-left" id="prevBtnRev" ></i>
+        <i class="fas fa-chevron-right" id="nextBtnRev"></i>
 
         <div class="carousel-slide-review">
           <div class="thirdReview" id="lastCloneReview" name="reviewDivSlide">
@@ -191,7 +200,7 @@
       
   </div>
 
-  <div class="button-box" onclick="/search">
+  <div class="button-box">
 
       <h2>Найди своего учителя сейчас</h2>
 
@@ -202,6 +211,7 @@
     <div class="page-wrapper">
     </div>
     <div class="footer-content">
+      Тут типа подвал сайта. Всякая хрень, копирайты, соцсети итд
     </div>
 
     <div class="footer-bottom">
@@ -209,7 +219,6 @@
     </div>
   </div>
   <script src="/js/mainPage.js"></script>
-  <script src="/js/nav.js"></script>
   <script>
     var Base64 = {
       _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
@@ -332,7 +341,8 @@
     divname.forEach((item, ind, arr) => {
     arr[ind].querySelector(`#avatar${i+1}`).src = `/userPhotos/${teachersResults[i].id}.jpg`;
 
-    arr[ind].querySelector('.name').innerHTML = teachersResults[i].first_name +"  " + teachersResults[i].last_name;
+    arr[ind].querySelector('.name').innerHTML = teachersResults[i].first_name +" " + teachersResults[i].last_name;
+    arr[ind].querySelector('.name').href = "/profile/" + teachersResults[i].id;
     arr[ind].querySelector('.average').innerHTML = `<span class="averSpan">Средняя оценка:  </span><span class="averNumSpan">${teachersResults[i].average}</span>`;
     arr[ind].querySelector('.achievements').innerHTML = `<span>Достижения: </span>${teachersResults[i].achievements}`;
     arr[ind].querySelector('.subject').innerHTML = `<span>Предмет: </span>${teachersResults[i].subject}`; 
@@ -365,21 +375,10 @@
       });
     });
 
-    // function notDisplay() {
-    //   let isOk = <%= okOk %>;
-    //   if(isOk){
-    //   document.getElementById("logHref").style.display = "none";
-    //   document.getElementById("regHref").style.display = "none";
-    //   }
-    //   else{
-    //   document.getElementById("logHref").style.display = "block";
-    //   document.getElementById("regHref").style.display = "block";
-    //   }
+    let isOk = <%= okOk %>;
 
-    // }
-
-    // notDisplay();
   </script>
+    <script src="/js/nav.js"></script>
 </body>
 
 </html>

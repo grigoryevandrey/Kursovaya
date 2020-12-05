@@ -13,22 +13,33 @@
 
 <body>
 
+
+
   <nav>
     <div class="logo">
       <a href="/"><h4>Заголовок</h4></a>
     </div>
     <ul class="nav-links">
       <li>
-        <a href="/users/login">Войти</a>
-      </li>
-      <li>
-        <a href="/users/register">Зарегистрироваться</a>
-      </li>
-      <li>
         <a href="/search">Поиск</a>
       </li>
-      <li>
+      <li id="showIfNotLogged">
+        <a  href="/users/login">Войти</a>
+      </li>
+      <li id="showIfNotLogged">
+        <a href="/users/register">Зарегистрироваться</a>
+      </li>
+      <!-- <li>
         <a href="#">Связаться с нами</a>
+      </li> -->
+      <li id="showIfLogged" class="hide">
+        <a href="/profile/">Моя страница</a>
+      </li>
+      <li id="showIfLogged" class="hide">
+        <a href="/users/register_end">Настройки</a>
+      </li>
+      <li id="showIfLogged" class="hide">
+        <a href="/users/logout">Выход</a>
       </li>
     </ul>
     <div class="burger">
@@ -59,7 +70,62 @@
 
   </form>
 
-  <script src="/js/mainPage.js"></script>
+  <div class="errors hide">
+    <button><i class='fas fa-window-close'></i></button>
+  </div>
+
+  <div class="messages hide">
+    <button><i class='fas fa-window-close'></i></button>
+  </div>
+
+  <script>
+    const errorDiv = document.querySelector('.errors');
+    const messagesDiv = document.querySelector('.messages');
+
+
+    if ("<%= messages.error%>") {
+      if ("<%= messages.error%>" === "Missing credentials"){
+        errorDiv.innerHTML += "Проверьте правильность введенных данных.";
+      }
+      else {
+        errorDiv.innerHTML += "<%= messages.error%>";
+      }
+      errorDiv.classList.remove('hide');
+    } 
+
+
+    errorDiv.addEventListener('click', event => {
+      if(event.target && (event.target.matches("button")||event.target.matches("i"))) {
+        hideErrors();
+      }
+    });
+
+    messagesDiv.addEventListener('click', event => {
+      if(event.target && (event.target.matches("button")||event.target.matches("i"))) {
+        hideMessages();
+      }
+    });
+
+    <% if(messages.success_msg) { %>
+      messagesDiv.innerHTML += "<%= messages.success_msg%>";
+      messagesDiv.classList.remove('hide');
+      <% } %>
+
+    setTimeout(hideErrors, 20000);
+    setTimeout(hideMessages, 20000);
+
+    function hideErrors() {
+      errorDiv.classList.add('hide');
+    }
+
+
+    function hideMessages() {
+      messagesDiv.classList.add('hide');
+    }
+    
+    let isOk = <%= okOk %>;
+  </script>
+  <script src="/js/nav.js"></script>
 </body>
 
 </html>

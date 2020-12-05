@@ -18,16 +18,25 @@
       </div>
       <ul class="nav-links">
         <li>
-          <a href="/users/login">Войти</a>
-        </li>
-        <li>
-          <a href="/users/register">Зарегистрироваться</a>
-        </li>
-        <li>
           <a href="/search">Поиск</a>
         </li>
-        <li>
+        <li id="showIfNotLogged">
+          <a  href="/users/login">Войти</a>
+        </li>
+        <li id="showIfNotLogged">
+          <a href="/users/register">Зарегистрироваться</a>
+        </li>
+        <!-- <li>
           <a href="#">Связаться с нами</a>
+        </li> -->
+        <li id="showIfLogged" class="hide">
+          <a href="/profile/">Моя страница</a>
+        </li>
+        <li id="showIfLogged" class="hide">
+          <a href="/users/register_end">Настройки</a>
+        </li>
+        <li id="showIfLogged" class="hide">
+          <a href="/users/logout">Выход</a>
         </li>
       </ul>
       <div class="burger">
@@ -111,10 +120,38 @@
 
 
      
+
+    <div class="errors hide">
+      <button><i class='fas fa-window-close'></i></button>
     </div>
 
-  </div>
     <script>
+         const errorDiv = document.querySelector('.errors');
+
+
+          if ("<%= errors%>") {
+
+              errorDiv.innerHTML += "<%=errors[0].message %>";
+
+            errorDiv.classList.remove('hide');
+          } 
+
+
+
+          errorDiv.addEventListener('click', event => {
+          if(event.target && (event.target.matches("button")||event.target.matches("i"))) {
+          hideErrors();
+          }
+          });
+
+
+          setTimeout(hideErrors, 20000);
+
+          function hideErrors() {
+          errorDiv.classList.add('hide');
+          }
+
+
       var Base64 = {
         _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
         encode: function (e) {
@@ -392,7 +429,7 @@
                           teacherPrice.id = "teacherPrice";
                           teacherPrice.setAttribute('type', "text");
                           teacherPrice.setAttribute('name', "teacherPrice");
-                          teacherPrice.value = <%= pricePerLesson%>;
+                          teacherPrice.value = "<%= pricePerLesson%>";
 
 
 
@@ -501,6 +538,9 @@
                               });
                           
       }, false);
+
+      
+    let isOk = <%= okOk %>;
     </script>
     <script src="/js/nav.js"></script>
   </body>

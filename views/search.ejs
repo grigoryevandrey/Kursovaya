@@ -15,22 +15,31 @@
     <div class="megaWrapper" id="megaWrapper">
         <nav>
             <div class="logo">
-                <a href="/"><h4>Заголовок</h4></a>
+              <a href="/"><h4>Заголовок</h4></a>
             </div>
             <ul class="nav-links">
-                <li>
-                  <a href="/users/login">Войти</a>
-                </li>
-                <li>
-                  <a href="/users/register">Зарегистрироваться</a>
-                </li>
-                <li>
-                  <a href="/search">Поиск</a>
-                </li>
-                <li>
-                  <a href="#">Связаться с нами</a>
-                </li>
-              </ul>
+              <li>
+                <a href="/search">Поиск</a>
+              </li>
+              <li id="showIfNotLogged">
+                <a  href="/users/login">Войти</a>
+              </li>
+              <li id="showIfNotLogged">
+                <a href="/users/register">Зарегистрироваться</a>
+              </li>
+              <!-- <li>
+                <a href="#">Связаться с нами</a>
+              </li> -->
+              <li id="showIfLogged" class="hide">
+                <a href="/profile/">Моя страница</a>
+              </li>
+              <li id="showIfLogged" class="hide">
+                <a href="/users/register_end">Настройки</a>
+              </li>
+              <li id="showIfLogged" class="hide">
+                <a href="/users/logout">Выход</a>
+              </li>
+            </ul>
             <div class="burger">
               <div class="line1"></div>
               <div class="line2"></div>
@@ -167,8 +176,13 @@
 let reviewsArray  = <%- resultsReviewFunction() %> ;
 reviewsArray = JSON.parse(reviewsArray);
 
-console.log(reviewsArray);
+console.log(resultsArray);
             document.getElementById('searchSelector').options[option - 1].selected = true;
+
+            if (lengthArray == 0) {
+                let searchResults = document.getElementById("resultsWrapper");  
+                searchResults.innerHTML = "<div class='noResultsMsg'>К сожалению, по вашему запросу мы ничего не нашли.</div>"        
+            }
 
             for (let i = 0; i < lengthArray; i++) {
 
@@ -186,6 +200,7 @@ console.log(reviewsArray);
                 avatar.id = 'avatar';
                 avatar.className = 'avatar';
                 avatar.src = "/userPhotos/" + resultsArray[i].id + ".jpg";
+                avatar.alt = "Нет фото"
                 avatarCont.append(avatar);
 
                 let nameCont = document.createElement('div');
@@ -438,12 +453,12 @@ console.log(reviewsArray);
 
         }, false);
 
-        function createBuyWindow() {
-            
-        }
+
+
+        let isOk = <%= okOk %>;
     </script>
     <script src="/js/search.js"></script>
-    <script src="/js/mainPage.js"></script>
+    <script src="/js/nav.js"></script>
 </body>
 
 </html>

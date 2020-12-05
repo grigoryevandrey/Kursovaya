@@ -44,9 +44,12 @@ app.get('/', (req, res) => {
     let teachers = [],
     reviews = [];
 
+
+
+
     pool.query(`SELECT * 
     FROM teacher_rating
-    WHERE average > 4`, (err, results) => {
+    WHERE average >= 4`, (err, results) => {
         if (err) {
             throw err;
         }
@@ -267,6 +270,7 @@ app.get('/profile/:id', function (req, res) {
             }
 
                 res.render('userPage', {
+                    okOk: req.isAuthenticated(),
                     id: id,
                     name: name,
                     lastName: lastName,
@@ -281,7 +285,8 @@ app.get('/profile/:id', function (req, res) {
                     resultsReviewFunction: function() {
                         return 'Base64.decode("' + Buffer.from(JSON.stringify(reviewResults)).toString('base64') + '")';
                     },
-                    reviewLength: reviewResults.length
+                    reviewLength: reviewResults.length,
+                    errors: []
                 });
                 });
 
@@ -297,16 +302,23 @@ app.get('/profile/:id', function (req, res) {
 });
 
 app.get('/users/register', checkAuthenticated, (req, res) => {
-    res.render('register');
+    res.render('register', {
+        okOk: req.isAuthenticated(),
+        errors: []
+    });
 });
 
 app.get('/users/login', checkAuthenticated, (req, res) => {
-    res.render('login');
+    res.render('login', {
+        okOk: req.isAuthenticated()
+    });
 });
 
-app.get('/users/userpage', (req, res) => {
-    res.render('userPage');
-});
+// app.get('/users/userpage', (req, res) => {
+//     res.render('userPage', {
+//         okOk: req.isAuthenticated(),
+//     });
+// });
 
 app.get('/users/logout', (req, res) => {
     req.logOut();
@@ -339,24 +351,28 @@ app.get('/users/register_end',checkNotAuthenticated, (req, res) => {
                 yearOfBirth = results.rows[0].year_of_birth;   
                 showMe = results.rows[0].show_me;
                res.render('register_end', {
+                okOk: req.isAuthenticated(),
                 gender: gender,
                 achievements: achievements,
                 additionalInfo: additionalInfo,
                 pricePerLesson: pricePerLesson,
                 lengthOfLesson: lengthOfLesson,
                 yearOfBirth: yearOfBirth,
-                showMe: showMe
+                showMe: showMe,
+                errors: []
             });
             }
             else{
                 res.render('register_end', {
+                    okOk: req.isAuthenticated(),
                     gender: gender,
                     achievements: achievements,
                     additionalInfo: additionalInfo,
                     pricePerLesson: pricePerLesson,
                     lengthOfLesson: lengthOfLesson,
                     yearOfBirth: yearOfBirth,
-                    showMe: showMe
+                    showMe: showMe,
+                    errors: []
                 });
             }
         });
@@ -415,6 +431,7 @@ app.get('/search', (req, res) => {
         }
 
         res.render('search', {
+            okOk: req.isAuthenticated(),
             resultatF: function() {
                 return 'Base64.decode("' + Buffer.from(JSON.stringify(resultat)).toString('base64') + '")';
             },
@@ -483,8 +500,8 @@ app.post("/purchase", async (req, res) => {
         emailOfCustomer
     } );
     pool.query(
-    `INSERT INTO deals (teacher_id, price, number_of_lessons_bought, full_name, email_of_customer, phone_of_customer, reviewed)
-    VALUES ($1, $2, $3, $4, $5, $6, $7)`, [teacherId, price, numberOfLessons, fullName, emailOfCustomer, phoneOfCustomer, false], (err, results) => {
+    `INSERT INTO deals (teacher_id, price, number_of_lessons_bought, full_name, email_of_customer, phone_of_customer, reviewed, date_of_deal)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`, [teacherId, price, numberOfLessons, fullName, emailOfCustomer, phoneOfCustomer, false, dateOfAction()], (err, results) => {
         if (err) {
             throw err
         }
@@ -533,7 +550,7 @@ app.post("/review", async(req,res) => {
 
     if(!phoneOfCustomer || !review) {
         errors.push({
-            message:"Заполните все поля"
+            message:"Заполните все поля. "
         });
     }
 
@@ -546,7 +563,7 @@ app.post("/review", async(req,res) => {
         
         if(results.rows.length == 0) {
             errors.push({
-            message: "Телефон указан неверно, либо вы уже оставляли отзыв"
+            message: "Телефон указан неверно, либо вы уже оставляли отзыв. "
             });
         }
         else {
@@ -611,6 +628,7 @@ app.post("/review", async(req,res) => {
                 }];
             }
                 res.render('userPage', {
+                    okOk: req.isAuthenticated(),
                     id: id,
                     name: name,
                     lastName: lastName,
@@ -641,8 +659,8 @@ app.post("/review", async(req,res) => {
                 errors
             });
         } else {
-            pool.query(`INSERT INTO reviews (teacher_id, full_name, email_of_customer, review, rating)
-            VALUES ($1, $2, $3, $4, $5)`, [teacherId, fullName, emailOfCustomer, review, ratingRate], (err, results) => {
+            pool.query(`INSERT INTO reviews (teacher_id, full_name, email_of_customer, review, rating, date_of_review)
+            VALUES ($1, $2, $3, $4, $5, $6)`, [teacherId, fullName, emailOfCustomer, review, ratingRate, dateOfAction()], (err, results) => {
                 if(err){
                     throw err;
                 }
@@ -764,24 +782,25 @@ app.post("/user/register", async (req, res) => {
 
     if (!name || !lastName || !email || !password || !password2 || !subject || !phone) {
         errors.push({
-            message: "Пожалуйста, заполните все поля"
+            message: "Пожалуйста, заполните все поля. "
         });
     }
 
-    if (password.length < 6) {
+    if (password.length < 8 || password.length > 20) {
         errors.push({
-            message: "Пароль должен состоять хотя бы из 6 символов"
+            message: "Пароль должен иметь от 8 до 20 символов. "
         });
     }
 
     if (password != password2) {
         errors.push({
-            message: "Пароли не совпадают"
+            message: "Пароли не совпадают. "
         });
     }
 
     if (errors.length > 0) {
         res.render('register', {
+            okOk: req.isAuthenticated(),
             errors
         });
         console.log({
@@ -820,6 +839,7 @@ app.post("/user/register", async (req, res) => {
                         message: 'Аккаунт с такой почтой уже существует'
                     });
                     res.render('register', {
+                        okOk: req.isAuthenticated(),
                         errors
                     });
                     console.log({
@@ -827,6 +847,7 @@ app.post("/user/register", async (req, res) => {
                     });
                 } else if (mistake === true) {
                     res.render('register', {
+                        okOk: req.isAuthenticated(),
                         errors
                     });
                     console.log({
@@ -834,9 +855,9 @@ app.post("/user/register", async (req, res) => {
                     });
                 } else {
                     pool.query(
-                        `INSERT INTO teacher (first_name, last_name, email, subject, password, phone)
-                        VALUES ($1, $2, $3, $4, $5, $6)
-                        RETURNING id, password`, [name, lastName, email, subject, hashedPassword, phone], (err, results) => {
+                        `INSERT INTO teacher (first_name, last_name, email, subject, password, phone, date_of_register)
+                        VALUES ($1, $2, $3, $4, $5, $6, $7)
+                        RETURNING id, password`, [name, lastName, email, subject, hashedPassword, phone, dateOfAction()], (err, results) => {
                             if (err) {
                                 throw err
                             }
@@ -851,7 +872,7 @@ app.post("/user/register", async (req, res) => {
                                     }
                                     
                             req.flash('success_msg', "Вы зарегистрированы! Пожалуйста, войдите в систему.");
-                            res.redirect('/users/register_end');
+                            res.redirect('/users/login');
                                 }
                             );
                         }
@@ -899,8 +920,8 @@ app.post("/search/go", async (req, res) =>{
     pool.query(
         `SELECT * 
         FROM teacher
-        LEFT JOIN teacher_info 
-        ON teacher_info.id=teacher.id
+        LEFT JOIN teacher_info ON teacher_info.id=teacher.id
+        LEFT JOIN teacher_rating ON teacher_rating.teacher_id=teacher.id
         WHERE subject = $1 AND show_me = $2`,[subject, true], async (err, results) => {
             if (err) {
                 throw (err);
@@ -913,6 +934,7 @@ app.post("/search/go", async (req, res) =>{
                 teachId[i] = results.rows[i].id;
             }
             
+
                 pool.query(`SELECT * 
                 FROM reviews`,async (err,resultss) => {
                 if(err){
@@ -930,13 +952,15 @@ app.post("/search/go", async (req, res) =>{
                 }
                 
                 if (!checker) {
-                    reviewResults[i].push ([{
+                    reviewResults[i] =  [{
                         message: "Нет отзывов"
-                    }])
+                    }];
                 }
             }
+        
 
             res.render('search', {
+                okOk: req.isAuthenticated(),
                 resultatF: function() {
                     return 'Base64.decode("' + Buffer.from(JSON.stringify(resultat)).toString('base64') + '")';
                 },
@@ -982,9 +1006,9 @@ app.post("/user/register_end", checkNotAuthenticated,  (req, res) => {
 
     let errors = [];
 
-    if (! yearOfBirth || !additionalInfo || !achievements || !pricePerLesson || !lengthOfLesson) {
+    if (!yearOfBirth || !additionalInfo || !achievements || !pricePerLesson || !lengthOfLesson) {
         errors.push({
-            message: "Заполните все поля"
+            message: "Пожалуйста, не оставляйте поля пустыми. "
         })
     }
 
@@ -1001,9 +1025,48 @@ app.post("/user/register_end", checkNotAuthenticated,  (req, res) => {
 // сделать проверку авторизован ли пользователь, и заносить по айдишнику юзера который это вносит 
 
 if (errors.length > 0) {
-    res.render('register_end', {
-        errors
-    });
+
+        pool.query(
+            `SELECT *
+            FROM teacher_info
+            WHERE id = $1`, [id], (err, results) => {
+                if (err) {
+                    throw (err);
+                }
+                if(results.rows.length > 0){    
+                    gender = results.rows[0].gender;
+                    achievements = results.rows[0].achievements;
+                    additionalInfo = results.rows[0].additional_info;
+                    pricePerLesson = results.rows[0].price_per_lesson;
+                    lengthOfLesson = results.rows[0].length_of_lesson;
+                    yearOfBirth = results.rows[0].year_of_birth;   
+                    showMe = results.rows[0].show_me;
+                   res.render('register_end', {
+                    okOk: req.isAuthenticated(),
+                    gender: gender,
+                    achievements: achievements,
+                    additionalInfo: additionalInfo,
+                    pricePerLesson: pricePerLesson,
+                    lengthOfLesson: lengthOfLesson,
+                    yearOfBirth: yearOfBirth,
+                    showMe: showMe,
+                    errors: errors
+                });
+                }
+                else{
+                    res.render('register_end', {
+                        okOk: req.isAuthenticated(),
+                        gender: gender,
+                        achievements: achievements,
+                        additionalInfo: additionalInfo,
+                        pricePerLesson: pricePerLesson,
+                        lengthOfLesson: lengthOfLesson,
+                        yearOfBirth: yearOfBirth,
+                        showMe: showMe,
+                        errors: errors
+                    });
+                }
+            });
     console.log({
         errors
     });
@@ -1055,10 +1118,20 @@ if (errors.length > 0) {
 });
 
 app.post('/user/login', passport.authenticate('local', {
-    successRedirect: "/users/register_end",
+    successRedirect: '/profile/',
     failureRedirect: "/users/login",
     failureFlash: true
 }));
+
+// app.post('/user/login', passport.authenticate('local'), (req, res) => {
+//     res.render("/users/register_end");
+// });
+
+// app.post('/user/login', passport.authenticate('local', {
+//     successRender: "/users/register_end",
+//     failureRedirect: "/users/login",
+//     failureFlash: true
+// }));
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
@@ -1067,6 +1140,7 @@ function checkAuthenticated(req, res, next) {
     }
     next();
 }
+
 
 
 function checkNotAuthenticated(req, res, next) {
@@ -1088,8 +1162,35 @@ app.use(function (req, res, next) {
 
 
 
+function dateOfAction() {
+    let now = new Date();
+    
+    let year = now.getFullYear();
+    let month = now.getMonth();
+    let day = now.getDate();
+    let hour = now.getHours();
+    let minute = now.getMinutes();
+
+    year = addZero(year);
+    month = addZero(month);
+    day = addZero(day);
+    hour = addZero(hour);
+    minute = addZero(minute);
+
+    let dateOfAction = `${day}.${month}.${year} в ${hour}:${minute}`;
 
 
+    return dateOfAction;
+}
+
+
+function addZero(num) {
+    if (num >= 0 && num < 10) {
+        return `0${num}`;
+    } else {
+        return num;
+    }
+}
 
 
 

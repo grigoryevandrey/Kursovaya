@@ -39,10 +39,7 @@ const teachersSlide = () => {
     
 
     nextBtn.addEventListener('click', () => {
-        if (counter >= carouselDivs.length - 1 ) return;
-         carouselSlide.style.transition = "transform 0.4s ease-in-out";
-         counter++;
-         carouselSlide.style.transform = `translateX(${(-size * counter)}px)`;
+        nextSlide();
              });
     
     prevBtn.addEventListener('click', () => {
@@ -65,6 +62,14 @@ const teachersSlide = () => {
                     carouselSlide.style.transform = `translateX(${(-size * counter)}px)`;
                  }
           });
+
+          function nextSlide() {
+            if (counter >= carouselDivs.length - 1 ) return;
+            carouselSlide.style.transition = "transform 0.4s ease-in-out";
+            counter++;
+            carouselSlide.style.transform = `translateX(${(-size * counter)}px)`;
+          }
+
              
 }
 
@@ -94,10 +99,7 @@ const reviewsSlide = () => {
     
 
     nextBtn.addEventListener('click', () => {
-        if (counter >= carouselDivs.length - 1 ) return;
-         carouselSlide.style.transition = "transform 0.4s ease-in-out";
-         counter++;
-         carouselSlide.style.transform = `translateX(${(-size * counter)}px)`;
+        nextSlide();
              });
     
     prevBtn.addEventListener('click', () => {
@@ -121,6 +123,13 @@ const reviewsSlide = () => {
                  }
           });
              
+          function nextSlide() {
+            if (counter >= carouselDivs.length - 1 ) return;
+            carouselSlide.style.transition = "transform 0.4s ease-in-out";
+            counter++;
+            carouselSlide.style.transform = `translateX(${(-size * counter)}px)`;
+          }
+
 }
 
 reviewsSlide();

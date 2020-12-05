@@ -103,3 +103,63 @@ html,body{
   top: 22px; 
 }
 }
+
+.errors {
+  position: fixed;
+  width: 100%;
+  min-height: 100px;
+  top:0%;
+  z-index: 8;
+  background-color:#f635a7;
+  color: white;
+  font-size: 30px;
+  padding-left: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.errors > button {
+  position: absolute;
+  right: 0px;
+  top: -4px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+}
+
+
+.messages {
+  position: fixed;
+  width: 100%;
+  min-height: 100px;
+  top:0%;
+  z-index: 8;
+  background-color:#7a52b2;
+  color: white;
+  font-size: 30px;
+  padding-left: 30px;
+  display: flex;
+  align-items: center; 
+}
+
+.messages > button{
+  position: absolute;
+  right: 0px;
+  top: -4px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+}
+
+.hide {
+  display: none;
+}
+

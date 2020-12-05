@@ -26,12 +26,12 @@ const authenticateUser = (email, password, done) => {
                          if (isMatch){
                              return done(null, user)
                          }else{
-                             return done(null, false, {message: "Пароль не подходит"});
+                             return done(null, false, {message: "Пароль не подходит."});
                          }
                     });
                    }
                    else{
-                       return done(null, false, {message: "Такая почта не зарегестрирована"});
+                       return done(null, false, {message: "Такая почта не зарегестрирована."});
                    }
                }
            );
