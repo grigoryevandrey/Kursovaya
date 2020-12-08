@@ -133,3 +133,13 @@ const reviewsSlide = () => {
 }
 
 reviewsSlide();
+
+const buttonRedirect = () => {
+    const btn = document.querySelector('.button-box button');
+
+    btn.addEventListener('click', () => {
+        location.href = "/search";
+    });
+}
+
+buttonRedirect();

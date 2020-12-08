@@ -648,3 +648,7 @@
   .hide {
     display: none;
   }
+
+  span {
+    font-weight: bolder;
+  }

@@ -114,7 +114,7 @@ html,body{
 
 .box > label {
   position: absolute;
-  left: 60px;
+  left: 20px;
   top: 0;
 }
 
@@ -239,6 +239,7 @@ html,body{
   margin: 40px 0px;
 }
 }
+
 
 .errors {
   position: fixed;

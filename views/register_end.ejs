@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Информация</title>
+    <title>Настройки</title>
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="/nav.css">
     <link rel="stylesheet" href="/aboutMe.css">
@@ -66,13 +66,13 @@
 
         <div class="box box3"> 
             <label for="">Информация: </label>
-            <textarea type="text" name="additionalInfo" id="additionalInfo" rows="10" cols="40"></textarea>
+            <textarea type="text" name="additionalInfo" id="additionalInfo" rows="10" cols="40" maxlength="250"></textarea>
         </div>
        
 
         <div class="box box4">
-            <label for="">Ваши достижения:</label>
-            <textarea type="text" name="achievements" id="achievements" rows="10" cols="40"></textarea>
+            <label for="">Достижения (макс 160 символов):</label>
+            <textarea type="text" name="achievements" id="achievements" rows="10" cols="40" maxlength="160"></textarea>
         </div>
         
 
@@ -116,8 +116,11 @@
        document.getElementById('gender').options[1].selected = true;
     }
     let showMe = "<%= showMe %>";
-    if (showMe) {
+
+
+    if (showMe === "true") {
         document.getElementById('showMe').checked = true;
+        console.log(showMe);
     }
 
         const errorDiv = document.querySelector('.errors');

@@ -301,9 +301,16 @@ app.get('/profile/:id', function (req, res) {
 
 });
 
-app.get('/users/register', checkAuthenticated, (req, res) => {
+// app.get('/users/register', checkAuthenticated, (req, res) => {
+//     res.render('register', {
+//         okOk: req.isAuthenticated(),
+//         errors: []
+//     });
+// });
+
+app.get('/users/register', (req, res) => {
     res.render('register', {
-        okOk: req.isAuthenticated(),
+        okOk: false,
         errors: []
     });
 });
@@ -322,7 +329,7 @@ app.get('/users/login', checkAuthenticated, (req, res) => {
 
 app.get('/users/logout', (req, res) => {
     req.logOut();
-    req.flash('success_msg', "Вы вышли из системы");
+    req.flash('success_msg', "Вы вышли из системы. ");
     res.redirect('/users/login');
 });
 
@@ -344,8 +351,8 @@ app.get('/users/register_end',checkNotAuthenticated, (req, res) => {
             }
             if(results.rows.length > 0){    
                 gender = results.rows[0].gender;
-                achievements = results.rows[0].achievements;
-                additionalInfo = results.rows[0].additional_info;
+                achievements = decodeURIComponent(results.rows[0].achievements);
+                additionalInfo = decodeURIComponent(results.rows[0].additional_info);
                 pricePerLesson = results.rows[0].price_per_lesson;
                 lengthOfLesson = results.rows[0].length_of_lesson;
                 yearOfBirth = results.rows[0].year_of_birth;   
@@ -528,7 +535,11 @@ app.post("/review", async(req,res) => {
     fullName = '',
     emailOfCustomer = '',
     ratingRate = 1;
-    let option = req.body.rating;
+    let option = req.body.ratingRate;
+
+
+    review = JSON.stringify(review);
+    review = review.escapeSpecialChars();
 
 
     switch (option){
@@ -934,7 +945,6 @@ app.post("/search/go", async (req, res) =>{
                 teachId[i] = results.rows[i].id;
             }
             
-
                 pool.query(`SELECT * 
                 FROM reviews`,async (err,resultss) => {
                 if(err){
@@ -943,6 +953,7 @@ app.post("/search/go", async (req, res) =>{
                 
             for (let i = 0; i < teachId.length; i++) {
                 let checker = false;
+                reviewResults[i] = [];
                 for (let j = 0; j < resultss.rows.length; j++) {
                     if (teachId[i] === resultss.rows[j].teacher_id) {
                     reviewResults[i].push(resultss.rows[j]);  
@@ -1006,10 +1017,23 @@ app.post("/user/register_end", checkNotAuthenticated,  (req, res) => {
 
     let errors = [];
 
+    additionalInfo = JSON.stringify(additionalInfo);
+    additionalInfo = additionalInfo.escapeSpecialChars();
+
+    achievements = JSON.stringify(achievements);
+    achievements = achievements.escapeSpecialChars();
+
+
     if (!yearOfBirth || !additionalInfo || !achievements || !pricePerLesson || !lengthOfLesson) {
         errors.push({
             message: "Пожалуйста, не оставляйте поля пустыми. "
         })
+    }
+
+    if (isNaN(yearOfBirth) || isNaN(pricePerLesson) || isNaN(lengthOfLesson)) {
+        errors.push({
+            message: "Поля года рождения, стоимости занятия и длительности занятия могут принимать только числовые значения. "
+        })       
     }
 
     switch (option){
@@ -1022,7 +1046,6 @@ app.post("/user/register_end", checkNotAuthenticated,  (req, res) => {
         default:
         gender = "'Err'";
     }
-// сделать проверку авторизован ли пользователь, и заносить по айдишнику юзера который это вносит 
 
 if (errors.length > 0) {
 
@@ -1166,7 +1189,7 @@ function dateOfAction() {
     let now = new Date();
     
     let year = now.getFullYear();
-    let month = now.getMonth();
+    let month = now.getMonth() + 1;
     let day = now.getDate();
     let hour = now.getHours();
     let minute = now.getMinutes();
@@ -1191,6 +1214,18 @@ function addZero(num) {
         return num;
     }
 }
+
+String.prototype.escapeSpecialChars = function() {
+    return this.replace(/\\n/g, "")
+               .replace(/\\'/g, "")
+               .replace(/\\"/g, '')
+               .replace(/\\&/g, "")
+               .replace(/\\r/g, "")
+               .replace(/\\t/g, "")
+               .replace(/\\b/g, "")
+               .replace(/\\f/g, "")
+               .replace(/\"/g, "");
+};
 
 
 

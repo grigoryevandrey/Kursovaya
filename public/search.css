@@ -94,7 +94,7 @@ nav {
 }
 
 .achCont {
-  margin-top: 20px;
+  margin: 10px 0px;
 }
 
 .averCont > span {
@@ -105,7 +105,14 @@ nav {
 
 .achCont,
 .infoCont {
-  color: #4d5670;
+  color: #0d1d4a;
+}
+
+
+.achCont > span,
+.infoCont > span {
+  color:#0d1d4a ;
+  font-weight: 900;
 }
 
 .buyFormRight {
@@ -159,6 +166,7 @@ nav {
 }
 
 .avatar {
+  cursor: pointer;
     height:200px;
     width:160px;
     box-shadow: 8px 8px 7px #b2b4b9;

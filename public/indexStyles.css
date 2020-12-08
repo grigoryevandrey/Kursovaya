@@ -215,7 +215,7 @@ nav {
   background-repeat: no-repeat;
   background-position: 35%;
   background-size: contain;
-  text-align: center;
+  text-align: start;
   font-size: 30px;
   display: flex;
   height: 100%;
@@ -495,7 +495,7 @@ nav {
   color:white;
   width: 100%;
   background-color:#6435a5;
-  text-align: center;
+  text-align: start;
   font-size: 30px;
   display: flex;
   height: 100%;

@@ -203,6 +203,10 @@ console.log(resultsArray);
                 avatar.alt = "Нет фото"
                 avatarCont.append(avatar);
 
+                avatar.addEventListener('click', () => {
+                    location.href = "/profile/" + resultsArray[i].id ;
+                });
+
                 let nameCont = document.createElement('div');
                 nameCont.id = 'nameCont';
                 nameCont.className = 'nameCont';
@@ -234,13 +238,13 @@ console.log(resultsArray);
                 let achCont = document.createElement('div');
                 achCont.id = 'achCont';
                 achCont.className = 'achCont';
-                achCont.textContent = "Достижения: " + resultsArray[i].achievements;
+                achCont.innerHTML = "<span>Достижения: </span>" + resultsArray[i].achievements;
                 searchContainer.append(achCont);
 
                 let infoCont = document.createElement('div');
                 infoCont.id = 'infoCont';
                 infoCont.className = 'infoCont';
-                infoCont.textContent = "Информация: " + resultsArray[i].additional_info;
+                infoCont.innerHTML = "<span>Информация: </span>" + resultsArray[i].additional_info;
                 searchContainer.append(infoCont);
 
                 let buyFormRight = document.createElement('div');

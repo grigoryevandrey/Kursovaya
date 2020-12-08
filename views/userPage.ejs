@@ -56,11 +56,11 @@
         <div id="subject"><%= subject%></div>
     </div>
       <div class="bodyBox">   
-        <div id="gender">Пол: <%= gender%></div>
-        <div id="yearOfBirth">Год рождения: <%= yearOfBirth%></div>
-        <div id="lengthOfLesson">Длительность занятия: <%= lengthOfLesson%></div>
-        <div id="achievements">Достижения: <%= achievements%></div>
-        <div id="additionalInfo">Доп инфа: <%= additionalInfo%></div>
+        <div id="gender"><span>Пол: </span><%= gender%></div>
+        <div id="yearOfBirth"><span>Год рождения:</span> <%= yearOfBirth%></div>
+        <div id="lengthOfLesson"><span>Длительность занятия:</span> <%= lengthOfLesson%></div>
+        <div id="achievements"><span>Достижения:</span> <%= achievements%></div>
+        <div id="additionalInfo"><span>Доп инфа:</span> <%= additionalInfo%></div>
         <div id="buyFormBottom">
           <div id="pricePerLesson"><%= pricePerLesson%> руб/занятие
           </div>
@@ -131,7 +131,12 @@
 
           if ("<%= errors%>") {
 
-              errorDiv.innerHTML += "<%=errors[0].message %>";
+
+            <% errors.forEach((err, i) => { %>
+              <% if (i === 0) { %>
+            errorDiv.innerHTML += "<%=err.message %>";
+            <% } %>
+             <% }) %>
 
             errorDiv.classList.remove('hide');
           } 
@@ -292,7 +297,7 @@
                   let dateCont = document.createElement('div');
                   dateCont.id = 'dateCont';
                   dateCont.className = 'dateCont';
-                  dateCont.textContent = `Дата: ${i}`;
+                  dateCont.textContent = `Отзыв оставлен: ${reviewsArray[i].date_of_review}`;
                   searchReviewsContainer.append(dateCont);
 
                       let nameReviewsCont = document.createElement('div');
